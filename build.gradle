@@ -15,10 +15,16 @@ repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+
+    // Add personal Bintray JCenter
+    maven {
+        url "https://dl.bintray.com/keylimepie/generic"
+    }
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+    compile 'com.barbarum.common:barbarum-common:nightly-build'
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.25'
 
