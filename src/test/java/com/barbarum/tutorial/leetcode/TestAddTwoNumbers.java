@@ -1,11 +1,20 @@
 package com.barbarum.tutorial.leetcode;
 
+import com.barbarum.common.testframework.FunctionUtil;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import static com.barbarum.tutorial.leetcode.pojo.ListNode.as;
 
 public class TestAddTwoNumbers {
+
+    private FunctionUtil util;
+
+    @Before
+    public void setUp() {
+        this.util = FunctionUtil.get(FunctionUtil.Type.JUNIT);
+    }
 
     @Test
     public void testAddTwoNumbers() {
