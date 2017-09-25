@@ -1,2 +1,10 @@
 language: java
 
+### Build Notifications
+notifications:
+  email:
+    recipients:
+      - account@barbarum.com
+    on_success: change
+    on_failure: always
+
