@@ -1,34 +1,30 @@
 package com.barbarum.tutorial.code;
 
-import java.util.List;
-import java.util.Map;
-
 public class RegularExpressionMatching {
 
-//    public static boolean isMatch(String s, String p) {
-//        List<String> group = new ArrayList<>();
-//        Map<Integer, Boolean> regexpFlags = new HashMap<>();
-//        computeRegexpGroup(p, group, regexpFlags);
-//
-//        int sIndex = 0;
-//
-//        for (int i = 0; i < group.size(); i++) {
-//            boolean isRegexp = regexpFlags.get(i);
-//            String groupItem = group.get(i);
-//            if (!isRegexp) {
-//                for (int j = 0; j < groupItem.length(); j++) {
-//                    if (sIndex == s.length() || s.charAt(sIndex++) != groupItem.charAt(j)) return false;
-//                }
-//            } else if (groupItem.length() == 1) {
-//                if (sIndex++ == s.length()) return false;
-//            } else {
-//                //
-//            }
-//        }
-//
-//    }
+    public static boolean isMatch(String s, String p) {
+        if (p.isEmpty()) return s.isEmpty();
 
-    private static void computeRegexpGroup(String pattern, List<String> group, Map<Integer, Boolean> regexpFlags) {
+        if (p.length() == 1) {
+            return s.length() == 1 && ((s.charAt(0) == p.charAt(0) || p.charAt(0) == '.'));
+        }
 
+        if (p.charAt(1) != '*') {
+            return !s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.') && isMatch(s.substring(1), p.substring(1));
+        }
+
+        while (!s.isEmpty()) {
+            // Match p without * from the start of s.
+            if (isMatch(s, p.substring(2))) {
+                return true;
+            }
+            // Since p without * is not matched, then s[0] must match p[0] or p[0] is ".".
+            if (!(s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')) {
+                return false;
+            }
+            s = s.substring(1);
+        }
+
+        return isMatch(s, p.substring(2));
     }
 }
