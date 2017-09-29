@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.leetcode.pojo;
+package com.barbarum.tutorial.code.pojo;
 
 public class ListNode {
     public int val;

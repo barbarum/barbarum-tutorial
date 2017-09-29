@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.leetcode;
+package com.barbarum.tutorial.code;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,11 +106,11 @@ public class LongestSubstring {
         int max = 0, start = 0;
         for (int i = 0; i < s.length(); i++) {
             int currentChar = s.charAt(i);
-            // Get the start pointer
+            // Get the build pointer
             start = Math.max(start, array[currentChar]);
             // calculate max length for current char
             max = Math.max(max, i - start + 1);
-            // Store the start pointer for matched char next time.
+            // Store the build pointer for matched char next time.
             array[currentChar] = i + 1;
         }
         return max;

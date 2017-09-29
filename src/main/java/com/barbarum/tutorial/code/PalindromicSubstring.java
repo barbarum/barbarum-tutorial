@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.leetcode;
+package com.barbarum.tutorial.code;
 
 /**
  * https://leetcode.com/problems/longest-palindromic-substring/description/

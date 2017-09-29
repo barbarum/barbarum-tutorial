@@ -1,6 +1,6 @@
-package com.barbarum.tutorial.leetcode;
+package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.leetcode.pojo.ListNode;
+import com.barbarum.tutorial.code.pojo.ListNode;
 
 import java.util.ArrayList;
 import java.util.List;

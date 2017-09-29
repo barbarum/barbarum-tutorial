@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.leetcode;
+package com.barbarum.tutorial.code;
 
 import org.junit.Test;
 

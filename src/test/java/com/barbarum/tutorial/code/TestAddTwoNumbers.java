@@ -1,11 +1,11 @@
-package com.barbarum.tutorial.leetcode;
+package com.barbarum.tutorial.code;
 
 import com.barbarum.common.testframework.FunctionUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.barbarum.tutorial.leetcode.pojo.ListNode.as;
+import static com.barbarum.tutorial.code.pojo.ListNode.as;
 
 public class TestAddTwoNumbers {
 
