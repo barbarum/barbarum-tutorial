@@ -27,7 +27,7 @@ public class ReactorClient {
     private static void transferData(String data) throws IOException {
         SocketChannel channel = SocketChannel.open();
         channel.configureBlocking(true);
-        boolean isConnected = channel.connect(new InetSocketAddress("127.0.0.1", 4333));
+        channel.connect(new InetSocketAddress("127.0.0.1", 4333));
         channel.write(ByteBuffer.wrap(data.getBytes()));
     }
 }

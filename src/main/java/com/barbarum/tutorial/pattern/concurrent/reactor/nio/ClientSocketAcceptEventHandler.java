@@ -9,12 +9,12 @@ import java.text.MessageFormat;
 public class ClientSocketAcceptEventHandler extends GenericSelectableEventHandler {
 
     @Override
-    boolean isInterested(SelectionKey key) {
+    protected boolean isInterested(SelectionKey key) {
         return key.isAcceptable() && (key.channel() instanceof ServerSocketChannel);
     }
 
     @Override
-    void doExecute(SelectionKey key) throws IOException {
+    protected void doExecute(SelectionKey key) throws IOException {
         ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
         System.out.println(MessageFormat.format("{0} - Handle new connection...", serverSocketChannel));
 

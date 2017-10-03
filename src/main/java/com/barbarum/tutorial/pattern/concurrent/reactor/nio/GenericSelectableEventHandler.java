@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public abstract class GenericSelectableEventHandler implements SelectableEventHandler {
 
 
-    abstract boolean isInterested(SelectionKey key);
+    protected  abstract boolean isInterested(SelectionKey key);
 
     @Override
     public final void execute(Supplier<SelectionKey> supplier) throws IOException {
@@ -23,5 +23,5 @@ public abstract class GenericSelectableEventHandler implements SelectableEventHa
         doExecute(key);
     }
 
-    abstract void doExecute(SelectionKey key) throws IOException;
+    protected abstract void doExecute(SelectionKey key) throws IOException;
 }

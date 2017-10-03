@@ -2,7 +2,9 @@ package com.barbarum.tutorial.code;
 
 public class RomanToIntegerNumber {
 
-    public static int romanToInt(String s) {
+    public static int romanToInt(String input) {
+        String s = input;
+
         if (s == null || s.isEmpty()) return 0;
 
         int[] romans = new int[]{'I', 'V', 'X', 'L', 'C', 'D', 'M'};

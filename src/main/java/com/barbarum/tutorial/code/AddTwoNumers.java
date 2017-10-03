@@ -16,11 +16,12 @@ import java.util.List;
 
 public class AddTwoNumers {
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static ListNode addTwoNumbers(ListNode a, ListNode b) {
         List<ListNode> list = new ArrayList<>();
         ListNode temp = new ListNode(0);
 
-        ListNode l1Current = l1, l2Current = l2;
+        ListNode l1Current = a;
+        ListNode l2Current = b;
         int resultIndex = 0;
 
         while (l1Current != null && l2Current != null) {

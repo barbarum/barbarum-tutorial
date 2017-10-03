@@ -62,7 +62,7 @@ public class LongestCommonPrefix {
             }
             while (!strs[i].startsWith(prefix)) {
                 prefix = prefix.substring(0, prefix.length() - 1);
-                if (prefix.equals("")) {
+                if ("".equals(prefix)) {
                     return prefix;
                 }
             }

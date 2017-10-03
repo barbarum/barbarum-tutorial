@@ -1,7 +1,6 @@
 package com.barbarum.tutorial.code;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.function.BiFunction;
 import java.util.stream.Stream;

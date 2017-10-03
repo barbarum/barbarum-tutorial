@@ -2,7 +2,10 @@ package com.barbarum.tutorial.code;
 
 public class RegularExpressionMatching {
 
-    public static boolean isMatch(String s, String p) {
+    public static boolean isMatch(String origin, String p) {
+
+        String s = origin;
+
         if (p.isEmpty()) return s.isEmpty();
 
         if (p.length() == 1) {

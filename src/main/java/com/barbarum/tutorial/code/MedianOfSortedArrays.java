@@ -2,22 +2,21 @@ package com.barbarum.tutorial.code;
 
 /**
  * https://leetcode.com/problems/median-of-two-sorted-arrays/description/
-
- There are two sorted arrays nums1 and nums2 of size m and n respectively.
-
- Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
-
- Example 1:
- nums1 = [1, 3]
- nums2 = [2]
-
- The median is 2.0
- Example 2:
- nums1 = [1, 2]
- nums2 = [3, 4]
-
- The median is (2 + 3)/2 = 2.5
-
+ * <p>
+ * There are two sorted arrays nums1 and nums2 of size m and n respectively.
+ * <p>
+ * Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+ * <p>
+ * Example 1:
+ * nums1 = [1, 3]
+ * nums2 = [2]
+ * <p>
+ * The median is 2.0
+ * Example 2:
+ * nums1 = [1, 2]
+ * nums2 = [3, 4]
+ * <p>
+ * The median is (2 + 3)/2 = 2.5
  */
 public class MedianOfSortedArrays {
 
@@ -35,7 +34,8 @@ public class MedianOfSortedArrays {
             return nums1.length % 2 == 0 ? (nums1[medianIndex - 1] + nums1[medianIndex]) / 2.0 : nums1[medianIndex];
         }
 
-        int mLength = nums1.length, nLength = nums2.length;
+        int mLength = nums1.length;
+        int nLength = nums2.length;
 
         int[] minIndex = new int[2];
         int[] maxIndex = new int[]{mLength - 1, nLength - 1};
@@ -104,8 +104,11 @@ public class MedianOfSortedArrays {
         }
     }
 
-    private static int findBiggestNumber(int[] a, int[] b, int aIndex, int bIndex, int step) {
+    private static int findBiggestNumber(int[] a, int[] b, int aStart, int bStart, int step) {
         int num = Integer.MIN_VALUE;
+
+        int aIndex = aStart;
+        int bIndex = bStart;
 
         while ((step--) >= 0) {
             if (aIndex < 0) {

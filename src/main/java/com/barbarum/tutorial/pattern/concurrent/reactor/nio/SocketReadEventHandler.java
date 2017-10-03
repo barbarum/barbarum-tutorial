@@ -19,12 +19,12 @@ public class SocketReadEventHandler extends GenericSelectableEventHandler {
     }
 
     @Override
-    boolean isInterested(SelectionKey key) {
+    protected boolean isInterested(SelectionKey key) {
         return key.isReadable() && (key.channel() instanceof SocketChannel);
     }
 
     @Override
-    void doExecute(SelectionKey key) throws IOException {
+    protected void doExecute(SelectionKey key) throws IOException {
         SocketChannel socket = (SocketChannel) key.channel();
 
         // Read dataRef from the socket

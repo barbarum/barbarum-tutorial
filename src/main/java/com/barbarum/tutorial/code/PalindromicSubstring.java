@@ -2,22 +2,21 @@ package com.barbarum.tutorial.code;
 
 /**
  * https://leetcode.com/problems/longest-palindromic-substring/description/
-
- Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
-
- Example:
-
- Input: "babad"
-
- Output: "bab"
-
- Note: "aba" is also a valid answer.
- Example:
-
- Input: "cbbd"
-
- Output: "bb"
-
+ * <p>
+ * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+ * <p>
+ * Example:
+ * <p>
+ * Input: "babad"
+ * <p>
+ * Output: "bab"
+ * <p>
+ * Note: "aba" is also a valid answer.
+ * Example:
+ * <p>
+ * Input: "cbbd"
+ * <p>
+ * Output: "bb"
  */
 public class PalindromicSubstring {
 
@@ -30,7 +29,8 @@ public class PalindromicSubstring {
             return s;
         }
 
-        int minStart = 0, maxEnd = 1;
+        int minStart = 0;
+        int maxEnd = 1;
         char[] charString = s.toCharArray();
 
         for (int i = 1; i < charString.length; i++) {
@@ -55,7 +55,9 @@ public class PalindromicSubstring {
     }
 
     private static int findDepth(char[] charString, int back, int forward) {
-        int depth = 0, start = back, end = forward;
+        int depth = 0;
+        int start = back;
+        int end = forward;
 
         while (start >= 0 && end < charString.length && charString[start--] == charString[end++]) {
             depth++;

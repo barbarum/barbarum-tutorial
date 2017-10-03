@@ -87,7 +87,8 @@ public class LongestSubstring {
             array[i] = -1;
         }
 
-        int max = 0, start = 0;
+        int max = 0;
+        int start = 0;
         for (int i = 0; i < s.length(); i++) {
             int currentChar = s.charAt(i);
             start = Math.max(start, array[currentChar - 32] + 1);

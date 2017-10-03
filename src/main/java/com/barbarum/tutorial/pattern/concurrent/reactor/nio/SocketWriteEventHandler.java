@@ -16,12 +16,12 @@ public class SocketWriteEventHandler extends GenericSelectableEventHandler {
     private AtomicBoolean hasProcessFinished = new AtomicBoolean(false);
 
     @Override
-    boolean isInterested(SelectionKey key) {
+    protected boolean isInterested(SelectionKey key) {
         return key.isWritable() && (key.channel() instanceof SocketChannel) && this.hasProcessFinished.get();
     }
 
     @Override
-    void doExecute(SelectionKey key) throws IOException {
+    protected void doExecute(SelectionKey key) throws IOException {
         SocketChannel socketChannel = (SocketChannel) key.channel();
         socketChannel.write(ByteBuffer.wrap(responseData.getBytes()));
 
@@ -30,7 +30,7 @@ public class SocketWriteEventHandler extends GenericSelectableEventHandler {
                 , this.responseData));
 
         socketChannel.close();
-        
+
         System.out.println(MessageFormat.format("{0} - socket closed.", socketChannel.toString()));
     }
 

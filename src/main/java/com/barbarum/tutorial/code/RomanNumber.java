@@ -5,7 +5,10 @@ package com.barbarum.tutorial.code;
  */
 public class RomanNumber {
 
-    public static String intToRoman(int num) {
+    public static String intToRoman(int input) {
+
+        int num = input;
+
         char[][] template = new char[4][3];
         template[0] = new char[]{'I', 'V', 'X'};
         template[1] = new char[]{'X', 'L', 'C'};
@@ -25,7 +28,8 @@ public class RomanNumber {
 
 
     private static String convert(int base, char[] template) {
-        int high = base / 5, temp = base % 5;
+        int high = base / 5;
+        int temp = base % 5;
 
         if (temp == 0) {
             return "" + (high == 1 ? template[1] : "");

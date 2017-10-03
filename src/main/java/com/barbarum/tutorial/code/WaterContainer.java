@@ -13,7 +13,9 @@ public class WaterContainer {
             return Math.min(height[0], height[1]);
         }
 
-        int start = 0, end = height.length - 1, result = 0;
+        int start = 0;
+        int end = height.length - 1;
+        int result = 0;
 
         while (start < end) {
             result = Math.max(result, (end - start) * Math.min(height[start], height[end]));
