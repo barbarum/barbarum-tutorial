@@ -45,11 +45,13 @@ public class Q2LookAndSay {
 
 
     public static String lookAndSay(String start, int num) {
-        if (num <= 0) {
+        int length = num;
+
+        if (length <= 0) {
             return "";
         }
         String data = start;
-        while ((num--) > 0) {
+        while ((length--) > 0) {
             data = lookAndSay(data);
         }
         return data;
