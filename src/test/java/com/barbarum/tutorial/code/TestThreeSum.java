@@ -33,11 +33,11 @@ public class TestThreeSum extends BasicTestCase {
 
         result = Arrays.asList(
                 Arrays.asList(-4, -2, 6),
-                Arrays.asList(-2, -2, 4),
                 Arrays.asList(-4, 0, 4),
+                Arrays.asList(-2, -2, 4),
                 Arrays.asList(-4, 1, 3),
-                Arrays.asList(-2, 0, 2),
-                Arrays.asList(-4, 2, 2));
+                Arrays.asList(-4, 2, 2),
+                Arrays.asList(-2, 0, 2));
 
         Assert.assertEquals(result, ThreeSum.effectiveThreeSum(new int[]{-4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6}));
     }
