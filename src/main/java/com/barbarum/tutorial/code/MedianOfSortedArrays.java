@@ -109,8 +109,9 @@ public class MedianOfSortedArrays {
 
         int aIndex = aStart;
         int bIndex = bStart;
+        int loop = step;
 
-        while ((step--) >= 0) {
+        while ((loop--) >= 0) {
             if (aIndex < 0) {
                 num = b[bIndex--];
                 continue;

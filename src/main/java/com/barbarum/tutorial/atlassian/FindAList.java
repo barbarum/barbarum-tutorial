@@ -24,7 +24,8 @@ public class FindAList {
         if (list1.size() < list2.size() || list2.isEmpty()) {
             return -1;
         }
-        int i = list1.size() - 1, j = list2.size() - 1;
+        int i = list1.size() - 1;
+        int j = list2.size() - 1;
         for (; i >= 0 && j >= 0; i--, j--) {
             if (!list1.get(i).equals(list2.get(j))) {
                 j = list2.size();

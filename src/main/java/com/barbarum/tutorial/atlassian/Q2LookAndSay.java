@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class LookAndSay {
+public class Q2LookAndSay {
     public static void main(String args[]) throws Exception {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
@@ -16,41 +16,41 @@ public class LookAndSay {
             start.append(input.get(i));
         }
 
-        System.out.println(LookAndSay(start.toString(), Integer.parseInt(input.get(input.size() - 1))));
+        System.out.println(lookAndSay(start.toString(), Integer.parseInt(input.get(input.size() - 1))));
     }
 
-    public static String LookAndSay(String num) {
+    public static String lookAndSay(String num) {
         if (num.isEmpty()) {
             return num;
         }
-
-        String data = "" + num;
-        if (data.length() == 1) {
-            return "" + 1 + data;
+        if (num.length() == 1) {
+            return "" + 1 + num;
         }
-        int start = 0, index = 1;
+
+        int start = 0;
+        int index = 1;
 
         StringBuilder builder = new StringBuilder();
 
-        for (; index < data.length(); index++) {
-            if (data.charAt(index) != data.charAt(index - 1)) {
-                builder.append(index - start).append(data.charAt(start));
+        for (; index < num.length(); index++) {
+            if (num.charAt(index) != num.charAt(index - 1)) {
+                builder.append(index - start).append(num.charAt(start));
                 start = index;
             }
         }
-        builder.append(index - start).append(data.charAt(start));
+        builder.append(index - start).append(num.charAt(start));
 
         return builder.toString();
     }
 
 
-    public static String LookAndSay(String start, int num) {
+    public static String lookAndSay(String start, int num) {
         if (num <= 0) {
             return "";
         }
         String data = start;
         while ((num--) > 0) {
-            data = LookAndSay(data);
+            data = lookAndSay(data);
         }
         return data;
     }

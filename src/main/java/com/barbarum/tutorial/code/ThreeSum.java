@@ -21,7 +21,9 @@ public class ThreeSum {
             }
 
             // Two sum && filter duplication
-            int target = 0 - nums[end], first = 0, last = end - 1;
+            int target = 0 - nums[end];
+            int first = 0;
+            int last = end - 1;
             while (first < last) {
                 if (nums[first] + nums[last] < target) {
                     first++;
@@ -65,9 +67,12 @@ public class ThreeSum {
         return result;
     }
 
-    private static List<List<Integer>> twoSum(int[] nums, int end, int target) {
+    private static List<List<Integer>> twoSum(int[] nums, int e, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         List<List<Integer>> result = new ArrayList<>();
+
+        int end = e;
+        
         while (--end >= 0) {
             if (map.containsKey(nums[end])) {
                 result.add(new ArrayList<>(Arrays.asList(nums[end], map.get(nums[end]), -target)));

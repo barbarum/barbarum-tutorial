@@ -104,7 +104,8 @@ public class LongestSubstring {
 
         int[] array = new int[128];
 
-        int max = 0, start = 0;
+        int max = 0;
+        int start = 0;
         for (int i = 0; i < s.length(); i++) {
             int currentChar = s.charAt(i);
             // Get the build pointer

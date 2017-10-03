@@ -63,7 +63,10 @@ public class AddTwoNumers {
         return list.get(0);
     }
 
-    public static ListNode addWithNewList(ListNode l1, ListNode l2) {
+    public static ListNode addWithNewList(ListNode a, ListNode b) {
+        ListNode l1 = a;
+        ListNode l2 = b;
+
         ListNode head = new ListNode(0);
         ListNode current = head;
 
