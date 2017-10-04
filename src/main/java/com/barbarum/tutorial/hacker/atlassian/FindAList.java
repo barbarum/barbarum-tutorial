@@ -1,10 +1,6 @@
-package com.barbarum.tutorial.atlassian;
+package com.barbarum.tutorial.hacker.atlassian;
 
-import java.io.*;
 import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
 
 public class FindAList {
 

@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.atlassian;
+package com.barbarum.tutorial.hacker.atlassian;
 
 import java.util.ArrayList;
 import java.util.List;
