@@ -12,7 +12,6 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
-import java.text.MessageFormat;
 import java.util.Iterator;
 
 public class EchoServer extends Server {
