@@ -1,18 +1,23 @@
 package com.barbarum.tutorial.hacker;
 
+import java.util.Scanner;
+
+import static com.barbarum.tutorial.hacker.HackerUtil.*;
+
 public class ArrayLeftRotation {
 
     public static void main(String[] args) {
-        int[] rotation = doLeftRotation(new int[]{0, 1, 2, 3, 4}, 12);
 
-        StringBuilder builder = new StringBuilder();
+        Scanner scanner = new Scanner(System.in);
 
-        for (int item : rotation) {
-            builder.append(item).append(" ");
-        }
+        int length = readInt(scanner);
+        int rotation = readInt(scanner);
+        int[] input = readArray(scanner, length);
 
-        System.out.println(builder.toString().trim());
+        int[] result = doLeftRotation(input, rotation);
+        println(result);
     }
+
 
     public static int[] doLeftRotation(int[] input, int rotation) {
         if (input == null || input.length == 0) {
@@ -28,5 +33,13 @@ public class ArrayLeftRotation {
         }
 
         return result;
+    }
+
+    private static void println(int[] rotation) {
+        StringBuilder builder = new StringBuilder();
+        for (int item : rotation) {
+            builder.append(item).append(" ");
+        }
+        System.out.println(builder.toString().trim());
     }
 }

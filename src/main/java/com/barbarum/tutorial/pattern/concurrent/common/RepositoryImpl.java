@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.pattern.concurrent.reactor.service;
+package com.barbarum.tutorial.pattern.concurrent.common;
 
 import java.io.UnsupportedEncodingException;
 

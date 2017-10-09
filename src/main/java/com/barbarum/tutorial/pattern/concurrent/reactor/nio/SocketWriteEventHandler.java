@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.pattern.concurrent.reactor.nio;
 
-import com.barbarum.tutorial.pattern.concurrent.reactor.service.RepositoryCentral;
+import com.barbarum.tutorial.pattern.concurrent.common.RepositoryCentral;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

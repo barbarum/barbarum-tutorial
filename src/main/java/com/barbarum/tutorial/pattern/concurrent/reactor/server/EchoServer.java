@@ -1,48 +1,40 @@
 package com.barbarum.tutorial.pattern.concurrent.reactor.server;
 
+import com.barbarum.tutorial.pattern.concurrent.common.Server;
 import com.barbarum.tutorial.pattern.concurrent.reactor.nio.SelectableEventHandler;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.text.MessageFormat;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class EchoServer {
-
-    private final InetAddress ip;
-    private final int port;
+public class EchoServer extends Server {
 
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
 
 
-    private AtomicBoolean isRunning = new AtomicBoolean(false);
-
-
-    public static final String DEFAULT_LOCAL_ADDRESS = "127.0.0.1";
-
-
-    private EchoServer(String ip, int port) throws UnknownHostException {
-        this(InetAddress.getByName(ip), port);
+    public EchoServer(String hostname, int port) throws UnknownHostException {
+        super(hostname, port);
     }
 
-    private EchoServer(InetAddress ip, int port) {
-        this.ip = ip;
-        this.port = port;
+    public EchoServer(int port) throws UnknownHostException {
+        super(port);
     }
 
-    private EchoServer(int port) throws UnknownHostException {
-        this(DEFAULT_LOCAL_ADDRESS, port);
+    public EchoServer(InetAddress ip, int port) {
+        super(ip, port);
     }
 
-    private void setUp() throws IOException {
-        System.out.println("Setting up echo server...");
+    @Override
+    protected void doSetUp() throws IOException {
         this.serverSocketChannel = ServerSocketChannel.open().bind(new InetSocketAddress(this.ip, this.port));
         this.serverSocketChannel.configureBlocking(false);
 
@@ -65,14 +57,9 @@ public class EchoServer {
         return this.serverSocketChannel.register(this.selector, ops, object);
     }
 
-    public void start() throws IOException {
-        if (!this.isRunning.compareAndSet(false, true)) {
-            System.out.println("Echo server already started.");
-            return;
-        }
-
-        System.out.println("Echo server has started.");
-        while (this.isRunning.get()) {
+    @Override
+    protected void doStart() throws IOException {
+        while (this.isRunning()) {
             this.selector.select();
 
             Iterator<SelectionKey> iterator = this.selector.selectedKeys().iterator();
@@ -85,20 +72,21 @@ public class EchoServer {
                 }
                 iterator.remove();
             }
-
         }
     }
 
 
-    public void shutDown() throws IOException {
-        if (!this.isRunning.compareAndSet(true, false)) {
-            System.err.println("Echo server is not running, skip the shut down operation.");
-            return;
-        }
+    @Override
+    protected void doShutdown() throws IOException {
         this.selector.close();
         this.serverSocketChannel.close();
 
         this.selector = null;
         this.serverSocketChannel = null;
+    }
+
+    @Override
+    protected SocketAddress getServerAddress() throws IOException {
+        return this.serverSocketChannel.getLocalAddress();
     }
 }
