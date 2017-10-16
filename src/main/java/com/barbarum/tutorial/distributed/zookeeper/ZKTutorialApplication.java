@@ -2,12 +2,14 @@ package com.barbarum.tutorial.distributed.zookeeper;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class MainApplication {
+public class ZKTutorialApplication {
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         final CountDownLatch latch = new CountDownLatch(1);
@@ -20,9 +22,9 @@ public class MainApplication {
 
         System.out.println(zk);
 
-        zk.getChildren("", false).forEach(item -> {
+        zk.getChildren("/", false).forEach(item -> {
             try {
-                System.out.println(zk.getData("/tutorial/" + item, false, new Stat()));
+                System.out.println(Arrays.toString(zk.getData("/" + item, false, null)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -30,6 +32,6 @@ public class MainApplication {
         System.out.println();
 
         zk.close();
-
     }
+
 }

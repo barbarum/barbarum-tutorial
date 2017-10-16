@@ -7,7 +7,6 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Optional;
 

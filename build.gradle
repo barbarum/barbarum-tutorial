@@ -27,7 +27,7 @@ dependencies {
     compile 'com.barbarum.common:barbarum-common:nightly-build'
 
     // The production code uses the SLF4J logging API at compile time
-    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
     compile 'com.google.guava:guava:23.0'
     compile 'io.netty:netty-all:4.1.16.Final'
@@ -35,9 +35,13 @@ dependencies {
     // Add distributed system dependencies.
     compile group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.10'
 
+    compile('org.apache.curator:curator-recipes:4.0.0') {
+        exclude group: 'org.apache.zookeeper', name: 'zookeeper'
+    }
+
     // Common libraries
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
-    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+//    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+//    compile group: 'commons-io', name: 'commons-io', version: '2.5'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the

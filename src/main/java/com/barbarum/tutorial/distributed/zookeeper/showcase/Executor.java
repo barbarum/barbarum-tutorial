@@ -1,14 +1,16 @@
 package com.barbarum.tutorial.distributed.zookeeper.showcase;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
-import java.io.*;
-import java.util.concurrent.Executors;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -83,8 +85,7 @@ public class Executor implements Watcher, Runnable, DataMonitorListener {
         if (data == null) return;
 
         try {
-            FileUtils.writeByteArrayToFile(new File(filename), data);
-
+            Files.write(data, new File(filename));
             System.out.println("Starting child...");
             child = Runtime.getRuntime().exec(exec);
 
@@ -114,7 +115,7 @@ public class Executor implements Watcher, Runnable, DataMonitorListener {
 
     private void streamCopy(InputStream inputStream, OutputStream outputStream) {
         try {
-            IOUtils.copy(inputStream, outputStream);
+            ByteStreams.copy(inputStream, outputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
