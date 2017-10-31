@@ -1,11 +1,9 @@
 package com.barbarum.tutorial.hacker.tutorial.day0;
 
 
-import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class RansomNote {

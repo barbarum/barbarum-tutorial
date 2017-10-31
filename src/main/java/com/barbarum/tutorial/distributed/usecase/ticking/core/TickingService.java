@@ -1,8 +1,8 @@
-package com.barbarum.tutorial.distributed.usecase.ticking;
+package com.barbarum.tutorial.distributed.usecase.ticking.core;
 
 
-import com.barbarum.tutorial.distributed.usecase.ticking.policy.SequenceOverflowPolicy;
-import com.barbarum.tutorial.distributed.usecase.ticking.policy.SystemClockBackoffPolicy;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.policy.SequenceOverflowPolicy;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.policy.SystemClockBackoffPolicy;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -10,19 +10,15 @@ import java.util.concurrent.atomic.AtomicLong;
  * Ticking service implementation
  * | 1 bit: Reversed Sign Bit | 41 bits: Timestamp | 5 bits: Cluster ID | 1 bit: reversed bit for expansion | 5 bits: Work ID | 11 bits: auto increase sequence in a millisecond
  */
-public class TickingService implements Tick {
+public class TickingService implements Ticking {
 
-    private final TickConfig config;
+    private final TickingConfig config;
 
     private SystemClockBackoffPolicy systemClockBackoffPolicy;
     private SequenceOverflowPolicy sequenceOverflowPolicy = new SequenceOverflowPolicy() {
         @Override
-        public void handle() {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        public void handle(long lastTimestamp) {
+            while ((System.currentTimeMillis() - lastTimestamp) == 0) ;
         }
     };
 
@@ -48,7 +44,7 @@ public class TickingService implements Tick {
     private final byte clusterIdShift = workIdReversedShift + workIdReversedBits;
     private final byte timestampShift = clusterIdShift + clusterIdBits;
 
-    public TickingService(TickConfig config) throws OverflowException {
+    public TickingService(TickingConfig config) throws OverflowException {
         this.config = config;
 
         if (config.getClusterId() > maxClusterId) {
@@ -69,7 +65,7 @@ public class TickingService implements Tick {
         long currentTimestamp = getCurrentTimestamp();
 
         if (currentTimestamp < this.getLastTimestamp()) {
-            this.systemClockBackoffPolicy.handle(this.getLastTimestamp() - currentTimestamp);
+            this.systemClockBackoffPolicy.handle(getEpochLastTimestamp());
             return next();
         }
         if (currentTimestamp > this.getLastTimestamp()) {
@@ -77,7 +73,7 @@ public class TickingService implements Tick {
             sequence = 0;
         }
         if ((sequence >> 10) > 0) {
-            this.sequenceOverflowPolicy.handle();
+            this.sequenceOverflowPolicy.handle(getEpochLastTimestamp());
             return next();
         }
 
@@ -90,6 +86,10 @@ public class TickingService implements Tick {
         sequence++;
 
         return id;
+    }
+
+    private long getEpochLastTimestamp() {
+        return this.getLastTimestamp() + baseEpochTimestamp;
     }
 
     private long getCurrentTimestamp() {
@@ -106,7 +106,7 @@ public class TickingService implements Tick {
     }
 
     @Override
-    public TickConfig getTickConfig() {
+    public TickingConfig getTickConfig() {
         return this.config;
     }
 

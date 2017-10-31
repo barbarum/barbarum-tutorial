@@ -1,9 +1,9 @@
 package com.barbarum.tutorial.distributed.usecase;
 
-import com.barbarum.tutorial.distributed.usecase.ticking.OverflowException;
-import com.barbarum.tutorial.distributed.usecase.ticking.TickConfig;
-import com.barbarum.tutorial.distributed.usecase.ticking.TickingMachine;
-import com.barbarum.tutorial.distributed.usecase.ticking.TickingService;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.OverflowException;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.TickingConfig;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.TickingMachine;
+import com.barbarum.tutorial.distributed.usecase.ticking.core.TickingService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -48,7 +48,7 @@ public class TestTicking {
 
     @Before
     public void setUp() throws IOException, OverflowException {
-        TickConfig config = new TickConfig();
+        TickingConfig config = new TickingConfig();
 
         CuratorFramework zkClient = CuratorFrameworkFactory.newClient(config.getZookeeperRoot(), new ExponentialBackoffRetry(1000, 5));
         TickingMachine machine = new TickingMachine(zkClient, config);

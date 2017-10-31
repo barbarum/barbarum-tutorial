@@ -1,9 +1,11 @@
-package com.barbarum.tutorial.distributed.usecase.ticking;
+package com.barbarum.tutorial.distributed.usecase.ticking.core;
+
+import com.barbarum.tutorial.distributed.usecase.ticking.zookeeper.TickingZKConfig;
 
 import java.io.IOException;
 import java.util.Properties;
 
-public class TickConfig {
+public class TickingConfig {
 
     private long clusterId;
     private long workId;
@@ -11,18 +13,13 @@ public class TickConfig {
 
     private Properties properties;
 
-    public static final String DEFAULT_PROPERTY_PATH = "ticking-config.properties";
 
-    //
-    public static final String PROPERTY_ZOOKEEPER_HOST = "zookeeper.host";
-    public static final String PROPERTY_ZOOKEEPER_ROOT = "zookeeper.root";
-
-    public TickConfig() throws IOException {
+    public TickingConfig() throws IOException {
         this.properties = new Properties();
-        this.properties.load(ClassLoader.getSystemResourceAsStream(DEFAULT_PROPERTY_PATH));
+        this.properties.load(ClassLoader.getSystemResourceAsStream(TickingZKConfig.DEFAULT_PROPERTY_PATH));
     }
 
-    public TickConfig(Properties properties) {
+    public TickingConfig(Properties properties) {
         this.properties = new Properties();
     }
 
@@ -35,7 +32,7 @@ public class TickConfig {
     }
 
     public String getZookeeperRoot() {
-        return this.properties.getProperty(PROPERTY_ZOOKEEPER_HOST) + this.properties.getProperty(PROPERTY_ZOOKEEPER_ROOT);
+        return this.properties.getProperty(TickingZKConfig.PROPERTY_ZOOKEEPER_HOST) + this.properties.getProperty(TickingZKConfig.PROPERTY_ZOOKEEPER_ROOT);
     }
 
     public void setLastTimestamp(long lastTimestamp) {
@@ -53,4 +50,6 @@ public class TickConfig {
     public void setWorkId(long workId) {
         this.workId = workId;
     }
+
+
 }

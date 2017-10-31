@@ -82,10 +82,9 @@ public class MedianOfSortedArrays {
 
     public static double findMedianSortedArraysWithCursor(int[] nums1, int[] nums2) {
         int[] cursors = new int[]{nums1.length - 1, nums2.length - 1};
-
         int totalLength = nums1.length + nums2.length;
 
-        for (int i = 0; i < (nums1.length + nums2.length - 1) / 2; i++) {
+        for (int i = 0; i < (totalLength - 1) / 2; i++) {
             if (cursors[0] < 0) {
                 cursors[1]--;
                 continue;
@@ -106,7 +105,6 @@ public class MedianOfSortedArrays {
 
     private static int findBiggestNumber(int[] a, int[] b, int aStart, int bStart, int step) {
         int num = Integer.MIN_VALUE;
-
         int aIndex = aStart;
         int bIndex = bStart;
         int loop = step;
