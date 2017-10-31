@@ -1,6 +1,5 @@
 package com.barbarum.tutorial.code.topn;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 import static java.util.Comparator.comparingInt;
@@ -16,7 +15,7 @@ public class FindKthSmallestInMSortedArray {
                 queue.offer(new Integer[]{i, 0});
             }
         }
-        
+
         for (int i = 0; i < k - 1; i++) {
             Integer[] smallest = queue.poll();
             if ((smallest[1]++) < matrix[smallest[0]].length - 1) {
