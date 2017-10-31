@@ -36,7 +36,7 @@ dependencies {
     compile group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.10'
 
     compile('org.apache.curator:curator-recipes:4.0.0') {
-        exclude group: 'org.apache.zookeeper', name: 'zookeeper'
+        exclude group: 'org.apache.zookeeper'
     }
 
     // Common libraries
