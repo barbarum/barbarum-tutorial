@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.subset;
 
 import java.util.Arrays;
 import java.util.Random;

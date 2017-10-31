@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;

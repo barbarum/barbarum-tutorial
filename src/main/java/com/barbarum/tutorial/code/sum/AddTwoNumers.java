@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.sum;
 
 import com.barbarum.tutorial.code.pojo.ListNode;
 

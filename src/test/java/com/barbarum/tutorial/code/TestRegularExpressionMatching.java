@@ -1,5 +1,6 @@
 package com.barbarum.tutorial.code;
 
+import com.barbarum.tutorial.code.regexp.RegularExpressionMatching;
 import org.junit.Test;
 
 import java.util.function.BiFunction;

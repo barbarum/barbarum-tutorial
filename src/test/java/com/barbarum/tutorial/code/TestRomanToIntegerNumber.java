@@ -1,5 +1,6 @@
 package com.barbarum.tutorial.code;
 
+import com.barbarum.tutorial.code.convert.RomanToIntegerNumber;
 import org.junit.Assert;
 import org.junit.Test;
 

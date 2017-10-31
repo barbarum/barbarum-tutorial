@@ -1,5 +1,6 @@
 package com.barbarum.tutorial.code;
 
+import com.barbarum.tutorial.code.subset.LongestCommonPrefix;
 import org.junit.Assert;
 import org.junit.Test;
 

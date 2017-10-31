@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.hierarchy;
 
 import java.util.Arrays;
 import java.util.Deque;

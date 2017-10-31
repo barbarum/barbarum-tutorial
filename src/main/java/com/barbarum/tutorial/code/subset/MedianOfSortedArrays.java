@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.subset;
 
 /**
  * https://leetcode.com/problems/median-of-two-sorted-arrays/description/
