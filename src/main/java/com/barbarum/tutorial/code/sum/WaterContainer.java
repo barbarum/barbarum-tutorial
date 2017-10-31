@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.sum;
 
 /**
  * https://leetcode.com/problems/container-with-most-water/description/

@@ -1,10 +1,7 @@
-package com.barbarum.tutorial.code;
-
-import com.google.common.hash.BloomFilter;
+package com.barbarum.tutorial.code.design;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class URLShortener {
