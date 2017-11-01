@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.sort;
 
-import com.barbarum.tutorial.helper.Helper;
+import com.barbarum.tutorial.util.ArrayUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class SortAlgorithm {
                 backward--;
             }
             if (forward <= backward) {
-                Helper.swap(data, forward, backward);
+                ArrayUtil.swap(data, forward, backward);
                 forward++;
                 backward--;
             }

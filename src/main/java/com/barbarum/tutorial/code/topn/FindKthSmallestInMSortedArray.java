@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.topn;
 
-import com.barbarum.tutorial.helper.ArrayUtil;
+import com.barbarum.tutorial.util.ArrayUtil;
 import com.google.common.base.Preconditions;
 
 import java.util.List;

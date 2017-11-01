@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.topn;
 
-import com.barbarum.tutorial.helper.Helper;
+import com.barbarum.tutorial.util.ArrayUtil;
 import com.barbarum.tutorial.code.sort.SortAlgorithm;
 
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public class FindNthMaxInArray {
             if (left == right) {
                 break;
             }
-            Helper.swap(data, left, right);
+            ArrayUtil.swap(data, left, right);
         }
 
         if (target == left) {

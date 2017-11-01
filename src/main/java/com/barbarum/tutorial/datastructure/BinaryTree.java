@@ -5,9 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
- *
+ * https://en.wikipedia.org/wiki/Binary_tree
+ * <p>
+ * Definition:
+ * In computer science, a binary tree is a tree data structure in which each node has at most two children, which are referred to as the left child and the right child.
+ * A recursive definition using just set theory notions is that a (non-empty) binary tree is a triple (L, S, R),where L and R are binary trees or the empty set and S is a singleton set.[1]
  */
 public class BinaryTree {
 
@@ -77,16 +82,20 @@ public class BinaryTree {
             return result;
         }
 
-        Optional.ofNullable(root.getLeft())
-                .ifPresent((item) -> traversalLDR(item, result, consumer));
+        if (root.getLeft() != null) {
+            traversalLDR(root.getLeft(), result, consumer);
+        }
 
-        Optional.ofNullable(consumer)
-                .ifPresent((action) -> action.accept(result.isEmpty() ? null : result.get(result.size() - 1), root));
+        if (consumer != null) {
+            consumer.accept(result.isEmpty() ? null : result.get(result.size() - 1), root);
+        }
 
         result.add(root);
 
-        Optional.ofNullable(root.getRight())
-                .ifPresent((item) -> traversalLDR(item, result, consumer));
+        if (root.getRight() != null) {
+            traversalLDR(root.getRight(), result, consumer);
+        }
+
         return result;
     }
 
@@ -179,88 +188,34 @@ public class BinaryTree {
     }
 
 
+    public static void heapify(int[] elements) {
+
+    }
+
+
+    public static void main(String args[]) {
+        printTree(BinarySearchTree.buildBST(new Integer[]{0, 1, 2, 3, 4, 5}));
+    }
+
     /**
-     * Binary Search Tree -> Lookup
+     * Count how many tree variants can be built for the given number of nodes.
      *
-     * @param root   root node
-     * @param target the searched data
-     * @param <T>    Generalized type
-     * @return true if found, otherwise false.
+     * @param nodes the given number of nodes.
+     * @return number of tree variants.
      */
-    public static <T extends Comparable<T>> boolean lookup(Node<T> root, T target) {
-        if (root == null) {
-            return false;
+    public static int countTrees(int nodes) {
+        if (nodes == 0 || nodes == 1) {
+            return 1;
         }
-        int result = target.compareTo(root.getData());
-        return result == 0 || lookup(result < 0 ? root.getLeft() : root.getRight(), target);
+
+        return IntStream.range(0, nodes)
+                .map(valve -> countTrees(valve) * countTrees((nodes - 1) - valve))
+                .sum();
+
     }
 
     /**
-     * Binary Search Tree -> Insert (Unbalanced)
-     *
-     * @param root   root node
-     * @param target the inserted data
-     * @param <T>    generalized type.
-     */
-    public static <T extends Comparable<T>> Node<T> insert(Node<T> root, T target) {
-        if (root == null) {
-            return new Node<T>(target);
-        }
-        int result = target.compareTo(root.getData());
-        if (result <= 0) {
-            root.setLeft(insert(root.getLeft(), target));
-        } else {
-            root.setRight(insert(root.getRight(), target));
-        }
-
-        return root;
-    }
-
-    /**
-     * Binary Search Tree -> Build (Unbalanced)
-     * <p>
-     * The method would try making the tree as balanced as possible.
-     * </p>
-     *
-     * @param data data array
-     * @param <T>  Generalized type.
-     * @return the new built binary search tree.
-     */
-    public static <T extends Comparable<T>> Node<T> buildBST(T[] data) {
-        if (data == null || data.length == 0) {
-            return null;
-        }
-        return buildBST(data, 0, data.length - 1);
-    }
-
-    private static <T extends Comparable<T>> Node<T> buildBST(T[] data, int start, int end) {
-        if (start > end || start >= data.length || end < 0) {
-            return null;
-        }
-        int middle = (start + end) / 2;
-        return new Node<T>(data[middle], buildBST(data, start, middle - 1), buildBST(data, middle + 1, end));
-    }
-
-
-    /**
-     * Binary Search Tree - Find the minimum data from the given tree.
-     *
-     * @param root root node.
-     * @param <T>  generalized type.
-     * @return minimum data, or null if the tree is empty.
-     */
-    public static <T extends Comparable<T>> T minValue(Node<T> root) {
-        if (root == null) {
-            return null;
-        }
-        return Optional.ofNullable(minValue(root.getLeft()))
-                .filter(item -> item.compareTo(root.getData()) <= 0)
-                .orElse(root.getData());
-    }
-
-
-    /**
-     * Binary Search Tree - double tree
+     * Binary Tree - double tree
      *
      * @param root the given root node.
      * @param <T>  generalized type.
@@ -272,9 +227,7 @@ public class BinaryTree {
 
         doubleTree(root.getLeft());
         doubleTree(root.getRight());
-
-        Node<T> node = Node.createLeftNode(root.getData(), root.getLeft());
-        root.setLeft(node);
+        root.setLeft(Node.createLeftNode(root.getData(), root.getLeft()));
     }
 
     /**
@@ -293,74 +246,5 @@ public class BinaryTree {
         return rootA.getData().equals(rootB.getData())
                 && sameTree(rootA.getLeft(), rootB.getLeft())
                 && sameTree(rootA.getRight(), rootB.getRight());
-    }
-
-    public static int countTrees(int nodes) {
-        if (nodes == 0 || nodes == 1) {
-            return 1;
-        }
-
-        int numOfTrees = 0;
-        for (int i = 0; i < nodes; i++) {
-            numOfTrees += countTrees(i) * countTrees(nodes - i - 1);
-        }
-
-        return numOfTrees;
-    }
-
-    /**
-     * Binary Search Tree - Examine if the given tree is a binary search tree.
-     *
-     * @param root the given root node.
-     * @param <T>  generalized type.
-     * @return true if it's, otherwise false.
-     */
-    public static <T extends Comparable<T>> boolean examine(Node<T> root) {
-        return root == null || examine(root, null, null);
-    }
-
-    private static <T extends Comparable<T>> boolean examine(Node<T> root, T minData, T maxData) {
-        // examine left child is less or equals to root node's data if exists.
-        if (minData != null && minData.compareTo(root.getData()) > 0) {
-            return false;
-        }
-
-        // examine right child is greater than root node's data if exists.
-        if (maxData != null && maxData.compareTo(root.getData()) <= 0) {
-            return false;
-        }
-
-        return examine(root.getLeft(), minData, root.getData())
-                && examine(root.getRight(), root.getData(), maxData);
-    }
-
-    /**
-     * Binary Search Tree - Convert a binary search tree to double linked list
-     *
-     * @param root the given root node.
-     * @param <T>  generalized type.
-     * @return head node
-     */
-    public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
-        List<Node<T>> result = traversalLDR(root, new ArrayList<>(), (previous, next) -> {
-            if (previous != null) {
-                previous.setNext(next);
-                next.setPrevious(previous);
-            }
-        });
-        if (result.isEmpty()) {
-            return null;
-        }
-        result.get(result.size() - 1).setNext(result.get(0));
-        return result.get(0);
-    }
-
-    public static void heapify(int[] elements) {
-
-    }
-
-
-    public static void main(String args[]) {
-        printTree(buildBST(new Integer[]{0, 1, 2, 3, 4, 5}));
     }
 }
