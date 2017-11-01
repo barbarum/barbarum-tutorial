@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.topn;
 
-import com.barbarum.tutorial.code.Helper;
+import com.barbarum.tutorial.helper.Helper;
 import com.barbarum.tutorial.code.sort.SortAlgorithm;
 
 import java.util.Arrays;

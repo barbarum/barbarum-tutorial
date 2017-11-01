@@ -3,7 +3,6 @@ package com.barbarum.tutorial.code.hierarchy;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.stream.Stream;
 
 public class SimplifyPath {
 

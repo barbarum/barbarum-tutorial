@@ -36,7 +36,8 @@ public class ExtendedRandom {
         long start = System.currentTimeMillis();
 
         int hit[] = new int[8];
-        long loop = 1L << 24, num = loop;
+        long loop = 1L << 24;
+        long num = loop;
 
         while ((num--) > 0) {
             hit[supplier.get()]++;

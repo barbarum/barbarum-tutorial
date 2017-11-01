@@ -17,7 +17,8 @@ public class BinaryNumberWithAlternatingBits {
         System.out.println(BinaryNumberWithAlternatingBits.hasAlternatingBits(7));
     }
 
-    public static boolean hasAlternatingBits(int n) {
+    public static boolean hasAlternatingBits(int m) {
+        int n = m;
         return ((n ^= (n >> 2)) & (n - 1)) == 0;
     }
 }
