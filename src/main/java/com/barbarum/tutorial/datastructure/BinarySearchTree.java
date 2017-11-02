@@ -1,8 +1,6 @@
 package com.barbarum.tutorial.datastructure;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * https://en.wikipedia.org/wiki/Binary_search_tree#Insertion
@@ -121,24 +119,24 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     /**
-     * Convert a binary search tree to double linked list
+     * Convert a binary search tree to double linked list.
      *
      * @param root the given root node.
      * @param <T>  generalized type.
      * @return head node
      */
     public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
-        List<Node<T>> result = traversalLDR(root, new ArrayList<>(), (previous, next) -> {
-            if (previous != null) {
-                previous.setNext(next);
-                next.setPrevious(previous);
-            }
-        });
+        LinkedList<Node<T>> result = traversalLDR(root, new LinkedList<>(),
+                (node) -> {
+                    node.setPrevious(node.getLeft());
+                    node.getLeft().setNext(node);
+                });
 
-        if (!result.isEmpty()) {
-            result.get(result.size() - 1).setNext(result.get(0));
+        if (result.isEmpty()) {
+            return null;
         }
-        
-        return result.isEmpty() ? null : result.get(0);
+
+        result.peekLast().setNext(result.peek());
+        return result.peek();
     }
 }

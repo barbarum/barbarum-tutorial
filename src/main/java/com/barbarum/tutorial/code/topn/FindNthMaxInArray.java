@@ -38,9 +38,9 @@ public class FindNthMaxInArray {
 
         if (target < left) {
             return quickSelect(data, target, start, left - 1);
+        } else {
+            return quickSelect(data, target, right + 1, end);
         }
-
-        return quickSelect(data, target, right + 1, end);
     }
 
     public static void main(String[] args) {

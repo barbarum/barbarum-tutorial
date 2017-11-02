@@ -1,9 +1,10 @@
 package com.barbarum.tutorial.datastructure;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.BiConsumer;
+import java.util.Queue;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -57,10 +58,10 @@ public class BinaryTree {
     }
 
     /**
-     * @see #traversalLDR(Node, List, BiConsumer)
+     * @see #traversalLDR(Node, LinkedList, Consumer)
      */
     public static <T extends Comparable<T>> List<T> traversalLDR(Node<T> root, List<T> result) {
-        List<Node<T>> nodeResult = traversalLDR(root, new ArrayList<>(), null);
+        Queue<Node<T>> nodeResult = traversalLDR(root, new LinkedList<>(), null);
         return nodeResult.stream()
                 .map(Node::getData)
                 .collect(Collectors.toList());
@@ -77,21 +78,20 @@ public class BinaryTree {
      * @param <T>    generalized type.
      * @return result
      */
-    public static <T extends Comparable<T>> List<Node<T>> traversalLDR(Node<T> root, List<Node<T>> result, BiConsumer<Node<T>, Node<T>> consumer) {
+    public static <T extends Comparable<T>> LinkedList<Node<T>> traversalLDR(Node<T> root, LinkedList<Node<T>> result, Consumer<Node<T>> consumer) {
         if (root == null) {
             return result;
         }
 
+        if (consumer != null && root.getLeft() != null) {
+            consumer.accept(root);
+        }
+
+        // Traversal LDR
         if (root.getLeft() != null) {
             traversalLDR(root.getLeft(), result, consumer);
         }
-
-        if (consumer != null) {
-            consumer.accept(result.isEmpty() ? null : result.get(result.size() - 1), root);
-        }
-
         result.add(root);
-
         if (root.getRight() != null) {
             traversalLDR(root.getRight(), result, consumer);
         }
