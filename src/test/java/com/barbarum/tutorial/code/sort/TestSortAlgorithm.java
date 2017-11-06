@@ -1,38 +1,39 @@
 package com.barbarum.tutorial.code.sort;
 
+import com.barbarum.tutorial.util.ArrayUtil;
 import com.barbarum.tutorial.util.AssertUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Consumer;
 
+import static com.barbarum.tutorial.util.ArrayUtil.*;
 import static org.junit.runners.Parameterized.Parameter;
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-class TestSortAlgorithm {
+public class TestSortAlgorithm {
 
     @Parameter()
-    private String description;
+    public Collection<?> testData;
 
     @Parameter(1)
-    private int[] testData;
+    public Collection<?> expectedData;
 
-    @Parameter(2)
-    private int[] expectedData;
-
-    @Parameters
-    public static Collection<List<?>> setUp() {
+    @Parameters(name = "{index}: Sort {0}")
+    public static Iterable<Object[]> setUp() {
         return AssertUtil.createDataset()
+
                 // Simple normal test cases
-                .add("Sort [3, 1]", "3, 1", "1, 3")
-                .add("Sort [2,3,1]", "2, 3, 1", "1, 2, 3")
+                .add("3, 1", "1, 3")
+                .add("2, 3, 1", "1, 2, 3")
+
                 // Edge cases
-                .add("Sort []", "", "")
-                .add("Sort [2]", "2", "2")
+                .add("", "")
+                .add("2", "2")
+
                 .toList();
     }
 
@@ -52,7 +53,9 @@ class TestSortAlgorithm {
     }
 
     private void execute(Consumer<int[]> consumer) {
-        AssertUtil.executeIntArray(this.description, consumer, this.testData, this.expectedData);
+        AssertUtil.executeIntArray(consumer
+                , convertIntArray(this.testData)
+                , convertIntArray(this.expectedData));
     }
 
 }

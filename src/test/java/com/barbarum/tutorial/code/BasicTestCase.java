@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import org.junit.runner.Runner;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 public abstract class BasicTestCase extends TestCase {
 
     private final FunctionUtil util = FunctionUtil.get(FunctionUtil.Type.JUNIT);
-    protected List<List<?>> dataset = new ArrayList<>();
+    protected List<Object[]> dataset = new ArrayList<>();
 
 
     public FunctionUtil getUtil() {
@@ -25,7 +26,7 @@ public abstract class BasicTestCase extends TestCase {
     }
 
     protected void addTestData(String testDescription, String sample, String expected) {
-        dataset.add(AssertUtil.generateTestData("Sort [3, 1]", "3 1", "1 3"));
+        dataset.add(AssertUtil.generateTestData("3 1", "1 3"));
     }
 
 }
