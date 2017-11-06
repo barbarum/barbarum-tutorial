@@ -18,11 +18,11 @@ import java.util.stream.IntStream;
 public class BinaryTree {
 
     /**
-     * Binary Tree - Counts the size of binary search tree.
+     * Binary Tree - Counts the size of binary lookup tree.
      *
      * @param root root node
      * @param <T>  generalized type.
-     * @return size of the current binary search tree.
+     * @return size of the current binary lookup tree.
      */
     public static <T extends Comparable<T>> int size(Node<T> root) {
         if (root == null) {

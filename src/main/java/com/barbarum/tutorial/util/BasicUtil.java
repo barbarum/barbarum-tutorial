@@ -1,5 +1,7 @@
 package com.barbarum.tutorial.util;
 
+import junit.framework.TestCase;
+
 public class BasicUtil {
 
 
@@ -33,6 +35,17 @@ public class BasicUtil {
      * @return true if it is, otherwise false.
      */
     public static boolean inRangeOf(int[] data, int index) {
+        return index >= 0 && index < data.length;
+    }
+
+    /**
+     * Check if the given index is in the range of the given data array.
+     *
+     * @param data  the given int array.
+     * @param index the given index.
+     * @return true if it is, otherwise false.
+     */
+    public static <T extends Object> boolean inRangeOf(T[] data, int index) {
         return index >= 0 && index < data.length;
     }
 }

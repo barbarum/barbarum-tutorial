@@ -7,7 +7,7 @@ import java.util.*;
  * <p>
  * Definition:
  * whose internal nodes each store a key (and optionally, an associated value) and each have two distinguished sub-trees, commonly denoted left and right.
- * The tree additionally satisfies the binary search tree property, which states that the key in each node must be greater than or equal to any key stored in the left sub-tree, and less than or equal to any key stored in the right sub-tree.
+ * The tree additionally satisfies the binary lookup tree property, which states that the key in each node must be greater than or equal to any key stored in the left sub-tree, and less than or equal to any key stored in the right sub-tree.
  */
 public class BinarySearchTree extends BinaryTree {
 
@@ -59,7 +59,7 @@ public class BinarySearchTree extends BinaryTree {
      *
      * @param data data array
      * @param <T>  Generalized type.
-     * @return the new built binary search tree.
+     * @return the new built binary lookup tree.
      */
     public static <T extends Comparable<T>> Node<T> buildBST(T[] data) {
         if (data == null || data.length == 0) {
@@ -93,7 +93,7 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     /**
-     * Examine if the given tree is a binary search tree.
+     * Examine if the given tree is a binary lookup tree.
      *
      * @param root the given root node.
      * @param <T>  generalized type.
@@ -119,7 +119,7 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     /**
-     * Convert a binary search tree to double linked list.
+     * Convert a binary lookup tree to double linked list.
      *
      * @param root the given root node.
      * @param <T>  generalized type.
