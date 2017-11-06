@@ -48,8 +48,7 @@ public class FindNthMaxInArray {
                 .stream("9 2 4 7 3 7 10".split(" ", -1))
                 .mapToInt(Integer::parseInt)
                 .toArray();
-        SortAlgorithm.quickSort(data, 0, data.length - 1);
-
+        SortAlgorithm.quickSort(data);
         System.out.println(Arrays.toString(data));
 
 
