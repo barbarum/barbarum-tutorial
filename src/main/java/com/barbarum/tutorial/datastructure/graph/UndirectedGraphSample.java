@@ -1,7 +1,5 @@
 package com.barbarum.tutorial.datastructure.graph;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.*;
 
 /**
@@ -90,7 +88,7 @@ public class UndirectedGraphSample {
         }
 
         // Initialize data structure
-        Stack<UndirectedGraphNode> stack = new Stack<>();
+        Deque<UndirectedGraphNode> stack = new LinkedList<>();
         HashSet<UndirectedGraphNode> visited = new HashSet<>();
         List<Integer> result = new ArrayList<>();
 
