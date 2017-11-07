@@ -13,12 +13,13 @@ public class BinaryNumberWithAlternatingBits {
 
     public static void main(String[] args) {
 
-        System.out.println(BinaryNumberWithAlternatingBits.hasAlternatingBits(5));
-        System.out.println(BinaryNumberWithAlternatingBits.hasAlternatingBits(7));
+        System.out.println(Integer.toBinaryString(5) + ":" + BinaryNumberWithAlternatingBits.hasAlternatingBits(5));
+        System.out.println(Integer.toBinaryString(7) + ":" + BinaryNumberWithAlternatingBits.hasAlternatingBits(7));
+        System.out.println(Integer.toBinaryString(-1) + ":" + BinaryNumberWithAlternatingBits.hasAlternatingBits(-1));
     }
 
     public static boolean hasAlternatingBits(int m) {
         int n = m;
-        return ((n ^= (n >> 2)) & (n - 1)) == 0;
+        return ((n ^= (n >>> 2)) & (n - 1)) == 0;
     }
 }
