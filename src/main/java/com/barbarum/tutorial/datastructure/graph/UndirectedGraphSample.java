@@ -24,27 +24,24 @@ public class UndirectedGraphSample {
         }
 
         Queue<UndirectedGraphNode> queue = new LinkedList<>(); // Space: O(E)
-        HashSet<UndirectedGraphNode> visited = new HashSet<>(); // Space: O(V)
         queue.offer(root);
 
-        HashMap<Integer, UndirectedGraphNode> newMapping = new HashMap<>(); // Space: O(V)
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> mapping = new HashMap<>(); // Space: O(V)
         UndirectedGraphNode newRoot = new UndirectedGraphNode(root.label);
-        newMapping.put(root.label, newRoot);
+        mapping.put(root, newRoot);
 
         // BFS to add neighbors for each vertex.
         while (!queue.isEmpty()) { // Time: O(E)
             UndirectedGraphNode oldNode = queue.poll();
 
-            // skip visited vertex
-            if (visited.contains(oldNode)) {
-                continue;
-            }
-            visited.add(oldNode);
-
             for (UndirectedGraphNode neighbor : oldNode.neighbors) {
-                queue.offer(neighbor);
-                newMapping.get(oldNode.label).neighbors
-                        .add(newMapping.computeIfAbsent(neighbor.label, UndirectedGraphNode::new));
+
+                // Use mapping as visited flag, and also we only add new vertices into the queue.
+                if (!mapping.containsKey(neighbor)) {
+                    queue.offer(neighbor);
+                }
+                mapping.get(oldNode).neighbors
+                        .add(mapping.computeIfAbsent(neighbor, (node) -> new UndirectedGraphNode(node.label)));
             }
         }
 
@@ -120,21 +117,6 @@ public class UndirectedGraphSample {
         UndirectedGraphNode(int x) {
             label = x;
             neighbors = new ArrayList<UndirectedGraphNode>();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            UndirectedGraphNode node = (UndirectedGraphNode) o;
-
-            return label == node.label;
-        }
-
-        @Override
-        public int hashCode() {
-            return label;
         }
     }
 
