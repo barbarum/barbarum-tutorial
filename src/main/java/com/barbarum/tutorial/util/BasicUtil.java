@@ -35,7 +35,7 @@ public class BasicUtil {
      * @return true if it is, otherwise false.
      */
     public static boolean inRangeOf(int[] data, int index) {
-        return index >= 0 && index < data.length;
+        return hasContent(data) && index >= 0 && index < data.length;
     }
 
     /**

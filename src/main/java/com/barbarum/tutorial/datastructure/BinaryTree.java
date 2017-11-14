@@ -1,9 +1,6 @@
 package com.barbarum.tutorial.datastructure;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -149,23 +146,30 @@ public class BinaryTree {
         if (root == null) {
             return;
         }
-        collectPaths(root, result, new ArrayList<>());
+        collectPaths(root, result, new LinkedList<>());
     }
 
-    private static <T extends Comparable<T>> void collectPaths(Node<T> root, List<List<T>> result, List<T> steps) {
+    private static <T extends Comparable<T>> void collectPaths(Node<T> root, List<List<T>> result, LinkedList<T> steps) {
         steps.add(root.getData());
+
         // Handle leaf case
-        if (root.getLeft() == null && root.getRight() == null) {
+        if (isLeaf(root)) {
             result.add(steps);
             return;
         }
+
         // Double children case
         if (root.getLeft() != null && root.getRight() != null) {
-            collectPaths(root.getLeft(), result, new ArrayList<>(steps));
-            collectPaths(root.getRight(), result, new ArrayList<>(steps));
+            collectPaths(root.getLeft(), result, new LinkedList<>(steps));
+            collectPaths(root.getRight(), result, new LinkedList<>(steps));
         }
+
         // Single child case
-        collectPaths(root.getLeft() == null ? root.getLeft() : root.getRight(), result, steps);
+        collectPaths(root.getLeft() != null ? root.getLeft() : root.getRight(), result, steps);
+    }
+
+    private static <T extends Comparable<T>> boolean isLeaf(Node<T> root) {
+        return root != null && root.getLeft() == null && root.getRight() == null;
     }
 
     /**
@@ -246,5 +250,43 @@ public class BinaryTree {
         return rootA.getData().equals(rootB.getData())
                 && sameTree(rootA.getLeft(), rootB.getLeft())
                 && sameTree(rootA.getRight(), rootB.getRight());
+    }
+
+    /**
+     * Definition of height balanced tree - the height differences of any node's left and right subtree is not greater than 1.
+     *
+     * @param root the given tree.
+     * @param <T>  generalized type.
+     * @return true if the tree is balanced, otherwise false
+     */
+    public static <T> boolean examineIfHeightBalanced(Node<T> root) {
+        return examineIfHeightBalanced(root, new HashMap<>());
+
+    }
+
+    private static <T> boolean examineIfHeightBalanced(Node<T> root, Map<Node<T>, Integer> mapping) {
+        if (root == null) {
+            return true;
+        }
+
+        int leftHeight = getHeight(root.getLeft(), mapping);
+        int rightHeight = getHeight(root.getRight(), mapping);
+
+        return Math.abs(leftHeight - rightHeight) <= 1
+                && examineIfHeightBalanced(root.getLeft(), mapping)
+                && examineIfHeightBalanced(root.getRight(), mapping);
+    }
+
+    private static <T> int getHeight(Node<T> node, Map<Node<T>, Integer> mapping) {
+        if (node == null) {
+            return 0;
+        }
+        if (mapping.containsKey(node)) {
+            return mapping.get(node);
+        }
+        int height = 1 + Math.max(getHeight(node.getLeft(), mapping), getHeight(node.getRight(), mapping));
+        mapping.put(node, height);
+
+        return height;
     }
 }

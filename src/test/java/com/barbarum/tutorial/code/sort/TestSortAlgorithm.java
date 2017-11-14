@@ -33,6 +33,7 @@ public class TestSortAlgorithm {
                 // Edge cases
                 .add("", "")
                 .add("2", "2")
+                .add("9, 2, 3, 2", "2, 2, 3, 9")
 
                 .toList();
     }

@@ -36,6 +36,10 @@ public class ArrayUtil {
         checkArgument(inRangeOf(data, aIndex), "index (%s) of item a must be between 0 and (%s)", aIndex, data.length);
         checkArgument(inRangeOf(data, bIndex), "index (%s) of item b must be between 0 and (%s)", bIndex, data.length);
 
+        if (aIndex == bIndex) {
+            return;
+        }
+
         int temp = data[aIndex];
         data[aIndex] = data[bIndex];
         data[bIndex] = temp;

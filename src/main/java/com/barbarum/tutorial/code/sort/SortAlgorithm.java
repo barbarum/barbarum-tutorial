@@ -19,36 +19,43 @@ public class SortAlgorithm {
     }
 
     private static void quickSort(int[] data, int start, int end) {
-        if (start == end) {
+        if (start >= end) {
             // sorted;
             return;
         }
 
+        int p = partition(data, start, end);
+
+        quickSort(data, start, p - 1);
+        quickSort(data, p + 1, end);
+    }
+
+    /**
+     * Lomuto partition scheme
+     * <p>
+     * 1. Pick the last element of an array as pivot.
+     * 2. Loop to find elements less than pivot, and compact them into the left side of the array.
+     * 3. The last position of the compact index stays are the position for pivot element. We swap this element if it's less than the element on the position.
+     */
+    private static int partition(int[] data, int start, int end) {
+
         int pivot = findPivot(data, start, end);
 
-        int forward = start;
-        int backward = end;
+        int index = start;
+        int current = start;
 
-        while (forward <= backward) {
-            while (data[forward] < pivot) {
-                forward++;
-            }
-            while (data[backward] > pivot) {
-                backward--;
-            }
-            if (forward <= backward) {
-                ArrayUtil.swap(data, forward, backward);
-                forward++;
-                backward--;
+        for (; current <= end - 1; current++) {
+            if (data[current] < pivot) {
+                ArrayUtil.swap(data, index, current);
+                index++;
             }
         }
 
-        if (start < backward) {
-            quickSort(data, start, backward);
+        if (data[index] != pivot) {
+            ArrayUtil.swap(data, index, end);
         }
-        if (end > forward) {
-            quickSort(data, forward, end);
-        }
+
+        return index;
     }
 
     private static int findPivot(int[] data, int start, int end) {
@@ -80,30 +87,30 @@ public class SortAlgorithm {
         if (data == null || data.length <= 1) {
             return;
         }
-        mergeSort(data, 0, data.length, Arrays.copyOf(data, data.length));
+        mergeSort(data, 0, data.length - 1, Arrays.copyOf(data, data.length));
     }
 
     private static void mergeSort(int[] origin, int start, int end, int[] workingCopy) {
-        if (start == end - 1) {
+        if (start == end) {
             return;
         }
 
         int median = (start + end) / 2;
 
         mergeSort(workingCopy, start, median, origin);
-        mergeSort(workingCopy, median, end, origin);
+        mergeSort(workingCopy, median + 1, end, origin);
 
         mergeSortConquer(origin, start, median, end, workingCopy);
     }
 
     private static void mergeSortConquer(int[] dest, int start, int median, int end, int[] src) {
         int left = start;
-        int right = median;
+        int right = median + 1;
 
-        for (int i = start; i < end; i++) {
-            if (left < median && (right == end || src[left] <= src[right])) {
+        for (int i = start; i <= end; i++) {
+            if (left <= median && (right > end || src[left] <= src[right])) {
                 dest[i] = src[left++];
-            } else if ((right < end) && (left == median || src[right] < src[left])) {
+            } else if ((right <= end) && (left > median || src[right] < src[left])) {
                 dest[i] = src[right++];
             }
         }
