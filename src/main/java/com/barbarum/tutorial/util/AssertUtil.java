@@ -5,6 +5,8 @@ import org.junit.Assert;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AssertUtil {
@@ -45,6 +47,29 @@ public class AssertUtil {
         Preconditions.checkArgument(consumer != null, "Consumer function must not be null.");
         consumer.accept(sample);
         Assert.assertArrayEquals(expected, sample);
+    }
+
+    public static void execute(int n, long loop, Function<Integer, Integer> supplier) {
+        long start = System.currentTimeMillis();
+
+        int hit[] = new int[n];
+        long num = loop;
+
+        while ((num--) > 0) {
+            hit[supplier.apply(n)]++;
+        }
+
+        long end = System.currentTimeMillis();
+
+        Arrays.stream(hit)
+                .mapToDouble(item -> item / (loop * 1.0) * 100)
+                .forEach(System.out::println);
+
+        System.out.println("Execution Time: " + (end - start) + "ms");
+    }
+
+    public static void execute(Supplier<Integer> supplier) {
+        execute(8, 1L << 24, (n) -> supplier.get());
     }
 
     public static class DatasetList {
