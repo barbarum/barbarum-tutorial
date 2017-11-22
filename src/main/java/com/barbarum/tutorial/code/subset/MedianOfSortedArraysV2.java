@@ -29,7 +29,7 @@ public class MedianOfSortedArraysV2 {
             return Math.min(a[aStart], b[bStart]);
         }
 
-        return findKthByBruteForce(a, b, k, aStart, aEnd, bStart, bEnd, aLen, bLen);
+        return findKthViaBinarySearch(a, b, k, aStart, aEnd, bStart, bEnd, aLen, bLen);
     }
 
     private static int findKthViaBinarySearch(int[] a, int[] b, int k, int aStart, int aEnd, int bStart, int bEnd, int aLen, int bLen) {

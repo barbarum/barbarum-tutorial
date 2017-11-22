@@ -15,7 +15,7 @@ public class WordBreakIIDP {
         }
 
         List<String> result = new LinkedList<>();
-        fillSentense(dp, s.length(), result, new LinkedList<>());
+        fillSentence(dp, s.length(), result, new LinkedList<>());
 
         return result;
     }
@@ -39,19 +39,19 @@ public class WordBreakIIDP {
         }
     }
 
-    private static void fillSentense(List<String>[] dp, int index, List<String> result, LinkedList<String> workingCopy) {
+    private static void fillSentence(List<String>[] dp, int index, List<String> result, LinkedList<String> workingCopy) {
         if (index == 0) {
-            addSentenseIntoCollection(workingCopy, result);
+            addSentenceIntoCollection(workingCopy, result);
             return;
         }
         for (String word : dp[index]) {
             workingCopy.addFirst(word);
-            fillSentense(dp, index - word.length(), result, workingCopy);
+            fillSentence(dp, index - word.length(), result, workingCopy);
             workingCopy.removeFirst();
         }
     }
 
-    private static void addSentenseIntoCollection(LinkedList<String> words, List<String> result) {
+    private static void addSentenceIntoCollection(LinkedList<String> words, List<String> result) {
         StringBuilder builder = new StringBuilder();
 
         for (String word : words) {

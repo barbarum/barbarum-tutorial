@@ -11,11 +11,13 @@ public class PalindromeNumber {
         if (num < 10) {
             return true;
         }
+
         int reverse = 0;
         while (reverse < num) {
             reverse = reverse * 10 + num % 10;
             num = num / 10;
         }
+
         return reverse == num || (reverse / 10 == num);
     }
 }

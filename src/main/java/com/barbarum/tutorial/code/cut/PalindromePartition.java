@@ -40,16 +40,16 @@ public class PalindromePartition {
     private static void fillResults(String string, boolean[][] dp, int end, LinkedList<String> suffix, List<List<String>> result) {
         // opt-out
         if (end < 0) {
-            result.add(suffix);
+            result.add(new LinkedList<>(suffix));
             return;
         }
 
         // loop index (end), find previous palindrome start.
         for (int start = 0; start <= end; start++) {
             if (dp[start][end]) {
-                LinkedList<String> newSuffix = new LinkedList<>(suffix);
-                newSuffix.addFirst(string.substring(start, end + 1));
-                fillResults(string, dp, start - 1, newSuffix, result);
+                suffix.addFirst(string.substring(start, end + 1));
+                fillResults(string, dp, start - 1, suffix, result);
+                suffix.removeFirst();
 
             }
         }
