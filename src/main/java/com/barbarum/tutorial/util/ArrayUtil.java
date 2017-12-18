@@ -1,12 +1,19 @@
 package com.barbarum.tutorial.util;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.barbarum.tutorial.util.BasicUtil.hasContent;
 import static com.barbarum.tutorial.util.BasicUtil.inRangeOf;
 import static com.google.common.base.Preconditions.checkArgument;
 
 public class ArrayUtil {
+
+    public static final String SPLITTER = ",";
+    public static final String ORIGINAL_SPLITTER_REGEXP = "[, -]+";
 
     /**
      * Check if the row of given matrix is valid (Not null, and not empty).
@@ -56,5 +63,33 @@ public class ArrayUtil {
                 .map(Object::toString)
                 .mapToInt(Integer::parseInt)
                 .toArray();
+    }
+
+    public static int[] convertIntCollection(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+
+        String temp = string.replaceAll(ORIGINAL_SPLITTER_REGEXP, SPLITTER);
+
+        return Arrays.stream(temp.split(",", -1))
+                .filter(BasicUtil::hasContent)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+
+    public static List<int[]> buildIntArrayCollection(String... strings) {
+        return Arrays.stream(strings)
+                .map(ArrayUtil::convertIntCollection)
+                .collect(Collectors.toList());
+    }
+
+    public static int[][] buildIntArrayMatrix(String... strings) {
+        List<int[]> result = buildIntArrayCollection(strings);
+        int matrix[][] = new int[result.size()][result.get(0).length];
+        for (int i = 0; i < matrix.length; i++) {
+            matrix[i] = result.get(i);
+        }
+        return matrix;
     }
 }

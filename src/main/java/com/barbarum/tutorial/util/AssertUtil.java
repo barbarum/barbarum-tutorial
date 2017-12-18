@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 public class AssertUtil {
 
 
-    public static final String SPLITOR = ",";
-    public static final String ORIGINAL_SPLITOR_REGEXP = "[, -]*";
+    public static final String SPLITTER = ",";
+    public static final String ORIGINAL_SPLITTER_REGEXP = "[, -]*";
 
     /**
      * Generate an test data, recorded in a list.
@@ -36,7 +36,7 @@ public class AssertUtil {
         if (string == null || string.isEmpty()) {
             return Collections.emptyList();
         }
-        String temp = string.replaceAll(ORIGINAL_SPLITOR_REGEXP, SPLITOR);
+        String temp = string.replaceAll(ORIGINAL_SPLITTER_REGEXP, SPLITTER);
         return Arrays.stream(temp.split(",", -1))
                 .filter(BasicUtil::hasContent)
                 .map(Integer::new)

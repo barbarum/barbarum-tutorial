@@ -1,11 +1,16 @@
-package com.barbarum.tutorial.code.wording;
+package com.barbarum.tutorial.code.string;
 
 import java.util.*;
 
 public class WordBreakIIDP {
 
     public static List<String> wordBreak(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0) {
+            return Collections.emptyList();
+        }
+
         List<String> dp[] = new ArrayList[s.length() + 1];
+
         dp[0] = new ArrayList<>();
 
         breakWords(s, wordDict, dp);

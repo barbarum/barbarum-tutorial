@@ -12,7 +12,7 @@ public class BasicUtil {
      * @return true if the string is not null and has at least one character, otherwise false.
      */
     public static boolean hasContent(String item) {
-        return item != null && !item.isEmpty();
+        return item != null && !item.trim().isEmpty();
     }
 
 

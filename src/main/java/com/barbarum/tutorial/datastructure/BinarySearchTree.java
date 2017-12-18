@@ -125,18 +125,39 @@ public class BinarySearchTree extends BinaryTree {
      * @param <T>  generalized type.
      * @return head node
      */
-    public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
-        LinkedList<Node<T>> result = traversalLDR(root, new LinkedList<>(),
-                (node) -> {
-                    node.setPrevious(node.getLeft());
-                    node.getLeft().setNext(node);
+    public static <T extends Comparable<T>> LinkedList<Node<T>> convert(Node<T> root) {
+        return traversalLDR(root, new LinkedList<>(),
+                (previous, current) -> {
+                    if (previous == null) {
+                        return;
+                    }
+                    current.setPrevious(previous);
+                    previous.setNext(current);
                 });
+    }
 
-        if (result.isEmpty()) {
-            return null;
+    public static void main(String args[]) {
+        Node<Integer> bst = BinarySearchTree.buildBST(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
+
+        List<Integer> list = traversalLDR(bst);
+
+        System.out.println(list);
+
+        LinkedList<Node<Integer>> result = convert(bst);
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Forward -> ");
+        for (Node<Integer> node = result.getFirst(); node != null; node = node.getNext()) {
+            builder.append(node.getData()).append(" ");
         }
 
-        result.peekLast().setNext(result.peek());
-        return result.peek();
+        builder.append("\n").append("Backward -> ");
+        for (Node<Integer> node = result.getLast(); node != null; node = node.getPrevious()) {
+            builder.append(node.getData()).append(" ");
+        }
+
+        System.out.println(builder.toString());
+
     }
 }

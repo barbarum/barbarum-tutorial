@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.wording;
+package com.barbarum.tutorial.code.string;
 
 
 import java.util.*;

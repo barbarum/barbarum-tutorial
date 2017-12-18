@@ -29,10 +29,10 @@ public class MedianOfSortedArraysV2 {
             return Math.min(a[aStart], b[bStart]);
         }
 
-        return findKthViaBinarySearch(a, b, k, aStart, aEnd, bStart, bEnd, aLen, bLen);
+        return binarySearch(a, b, k, aStart, aEnd, bStart, bEnd, aLen, bLen);
     }
 
-    private static int findKthViaBinarySearch(int[] a, int[] b, int k, int aStart, int aEnd, int bStart, int bEnd, int aLen, int bLen) {
+    private static int binarySearch(int[] a, int[] b, int k, int aStart, int aEnd, int bStart, int bEnd, int aLen, int bLen) {
         int aMidOffset = aLen * k / (aLen + bLen);
         int bMidOffset = k - aMidOffset - 1;
 
@@ -44,13 +44,5 @@ public class MedianOfSortedArraysV2 {
         } else {
             return findKth(a, b, k - aMidOffset - 1, aMid + 1, aEnd, bStart, bMid);
         }
-    }
-
-    private static int findKthByBruteForce(int[] a, int[] b, int k, int aStart, int aEnd, int bStart, int bEnd, int aLen, int bLen) {
-        int result = -1;
-        for (int i = aStart, j = bStart, r = k; r >= 0; r--) {
-            result = (j > bEnd || a[i] <= a[j]) ? a[i++] : b[j++];
-        }
-        return result;
     }
 }

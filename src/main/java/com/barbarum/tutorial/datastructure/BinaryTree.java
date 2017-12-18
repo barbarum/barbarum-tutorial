@@ -1,6 +1,7 @@
 package com.barbarum.tutorial.datastructure;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -46,7 +47,7 @@ public class BinaryTree {
      * Binary Tree - Print Tree in nature order
      */
     public static <T extends Comparable<T>> void printTree(Node<T> root) {
-        List<T> result = traversalLDR(root, new ArrayList<>());
+        List<T> result = traversalLDR(root);
 
         StringBuilder builder = new StringBuilder();
         result.forEach((item) -> builder.append(item).append(" "));
@@ -55,9 +56,9 @@ public class BinaryTree {
     }
 
     /**
-     * @see #traversalLDR(Node, LinkedList, Consumer)
+     * @see #traversalLDR(Node, LinkedList, BiConsumer)
      */
-    public static <T extends Comparable<T>> List<T> traversalLDR(Node<T> root, List<T> result) {
+    public static <T extends Comparable<T>> List<T> traversalLDR(Node<T> root) {
         Queue<Node<T>> nodeResult = traversalLDR(root, new LinkedList<>(), null);
         return nodeResult.stream()
                 .map(Node::getData)
@@ -75,20 +76,21 @@ public class BinaryTree {
      * @param <T>    generalized type.
      * @return result
      */
-    public static <T extends Comparable<T>> LinkedList<Node<T>> traversalLDR(Node<T> root, LinkedList<Node<T>> result, Consumer<Node<T>> consumer) {
+    public static <T extends Comparable<T>> LinkedList<Node<T>> traversalLDR(Node<T> root, LinkedList<Node<T>> result, BiConsumer<Node<T>, Node<T>> consumer) {
         if (root == null) {
             return result;
-        }
-
-        if (consumer != null && root.getLeft() != null) {
-            consumer.accept(root);
         }
 
         // Traversal LDR
         if (root.getLeft() != null) {
             traversalLDR(root.getLeft(), result, consumer);
         }
+
+        if (consumer != null) {
+            consumer.accept(result.peekLast(), root);
+        }
         result.add(root);
+
         if (root.getRight() != null) {
             traversalLDR(root.getRight(), result, consumer);
         }
