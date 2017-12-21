@@ -1,11 +1,9 @@
 package com.barbarum.tutorial.code.array;
 
-import com.barbarum.tutorial.util.ArrayUtil;
+import com.barbarum.tutorial.util.InputUtil;
 import com.barbarum.tutorial.util.PrintUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class Skyline {
@@ -83,7 +81,7 @@ public class Skyline {
     }
 
     public static void main(String args[]) {
-        List<int[]> builds = ArrayUtil.buildIntArrayCollection(
+        List<int[]> builds = InputUtil.buildIntArrayCollection(
                 "2, 9, 10",
                 "3, 6, 15",
                 "5, 12, 12",

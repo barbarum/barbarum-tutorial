@@ -2,7 +2,6 @@ package com.barbarum.tutorial.util;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,7 @@ import static com.barbarum.tutorial.util.BasicUtil.hasContent;
 import static com.barbarum.tutorial.util.BasicUtil.inRangeOf;
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class ArrayUtil {
+public class InputUtil {
 
     public static final String SPLITTER = ",";
     public static final String ORIGINAL_SPLITTER_REGEXP = "[, -]+";
@@ -80,7 +79,7 @@ public class ArrayUtil {
 
     public static List<int[]> buildIntArrayCollection(String... strings) {
         return Arrays.stream(strings)
-                .map(ArrayUtil::convertIntCollection)
+                .map(InputUtil::convertIntCollection)
                 .collect(Collectors.toList());
     }
 
@@ -91,5 +90,16 @@ public class ArrayUtil {
             matrix[i] = result.get(i);
         }
         return matrix;
+    }
+
+    public static List<String> convertToStringList(String string) {
+        if (string == null || string.isEmpty()) {
+            return null;
+        }
+        String temp = string.replaceAll(ORIGINAL_SPLITTER_REGEXP, SPLITTER);
+        return Arrays.stream(temp.split(",", -1))
+                .filter(BasicUtil::hasContent)
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 }

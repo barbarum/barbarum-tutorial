@@ -1,6 +1,5 @@
 package com.barbarum.tutorial.code.sort;
 
-import com.barbarum.tutorial.util.ArrayUtil;
 import com.barbarum.tutorial.util.AssertUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,7 @@ import org.junit.runners.Parameterized;
 import java.util.Collection;
 import java.util.function.Consumer;
 
-import static com.barbarum.tutorial.util.ArrayUtil.*;
+import static com.barbarum.tutorial.util.InputUtil.*;
 import static org.junit.runners.Parameterized.Parameter;
 import static org.junit.runners.Parameterized.Parameters;
 

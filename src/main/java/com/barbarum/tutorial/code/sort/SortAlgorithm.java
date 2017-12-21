@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.sort;
 
-import com.barbarum.tutorial.util.ArrayUtil;
+import com.barbarum.tutorial.util.InputUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,13 +46,13 @@ public class SortAlgorithm {
 
         for (; current <= end - 1; current++) {
             if (data[current] < pivot) {
-                ArrayUtil.swap(data, index, current);
+                InputUtil.swap(data, index, current);
                 index++;
             }
         }
 
         if (data[index] != pivot) {
-            ArrayUtil.swap(data, index, end);
+            InputUtil.swap(data, index, end);
         }
 
         return index;

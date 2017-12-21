@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.design;
+package com.barbarum.tutorial.design;
 
 import java.util.HashMap;
 import java.util.Map;

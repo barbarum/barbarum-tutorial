@@ -7,6 +7,27 @@ import java.util.*;
  */
 public class LongestCommonPrefix {
 
+    public static String longestCommonPrefixWithString(String[] strs) {
+        if (strs == null || strs.length == 0 || strs[0] == null || strs[0].isEmpty()) {
+            return "";
+        }
+
+        String prefix = strs[0];
+
+        for (int i = 1; i < strs.length; i++) {
+            if (strs[i] == null || strs[i].isEmpty()) {
+                return "";
+            }
+            while (!strs[i].startsWith(prefix)) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if ("".equals(prefix)) {
+                    return prefix;
+                }
+            }
+        }
+
+        return prefix;
+    }
 
     public static String longestCommonPrefix(String[] strs) {
         StringBuilder result = new StringBuilder();
@@ -47,27 +68,5 @@ public class LongestCommonPrefix {
             start++;
 
         } while (true);
-    }
-
-    public static String longestCommonPrefixWithString(String[] strs) {
-        if (strs == null || strs.length == 0 || strs[0] == null || strs[0].isEmpty()) {
-            return "";
-        }
-
-        String prefix = strs[0];
-
-        for (int i = 1; i < strs.length; i++) {
-            if (strs[i] == null || strs[i].isEmpty()) {
-                return "";
-            }
-            while (!strs[i].startsWith(prefix)) {
-                prefix = prefix.substring(0, prefix.length() - 1);
-                if ("".equals(prefix)) {
-                    return prefix;
-                }
-            }
-        }
-
-        return prefix;
     }
 }

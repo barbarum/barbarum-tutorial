@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.array;
 
-import com.barbarum.tutorial.util.ArrayUtil;
+import com.barbarum.tutorial.util.InputUtil;
 
 public class FindElementInSortedMatrix {
 
@@ -53,7 +53,7 @@ public class FindElementInSortedMatrix {
     }
 
     public static void main(String args[]) {
-        int matrix[][] = ArrayUtil.buildIntArrayMatrix("1,2,3", "4,5,6", "7,8,9");
+        int matrix[][] = InputUtil.buildIntArrayMatrix("1,2,3", "4,5,6", "7,8,9");
 
         for (int i = 0; i < 10; i++) {
             System.out.println(i + "->" + contains(matrix, i));

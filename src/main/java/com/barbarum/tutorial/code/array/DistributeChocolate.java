@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.array;
 
-import com.barbarum.tutorial.util.ArrayUtil;
+import com.barbarum.tutorial.util.InputUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +56,12 @@ public class DistributeChocolate {
 
         for (; current <= end - 1; current++) {
             if (m[current] < pivot) {
-                ArrayUtil.swap(m, current, firstLargerIndex++);
+                InputUtil.swap(m, current, firstLargerIndex++);
             }
         }
 
         if (m[firstLargerIndex] != pivot) {
-            ArrayUtil.swap(m, firstLargerIndex, end);
+            InputUtil.swap(m, firstLargerIndex, end);
         }
 
         return firstLargerIndex;

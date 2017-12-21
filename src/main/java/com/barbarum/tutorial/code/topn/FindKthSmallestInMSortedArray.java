@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.topn;
 
-import com.barbarum.tutorial.util.ArrayUtil;
+import com.barbarum.tutorial.util.InputUtil;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class FindKthSmallestInMSortedArray {
     public static int findKthSmallest(int[][] matrix, int k) {
         Preconditions.checkArgument(k >= 1, "K must be a positive number.");
         List<Node> elements = IntStream.range(0, matrix.length)
-                .filter((row) -> ArrayUtil.isValid(matrix, row))
+                .filter((row) -> InputUtil.isValid(matrix, row))
                 .mapToObj(row -> Node.createNode(matrix, row, 0))
                 .collect(Collectors.toList());
 

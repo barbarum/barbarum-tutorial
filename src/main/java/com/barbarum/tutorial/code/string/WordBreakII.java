@@ -5,66 +5,77 @@ import java.util.*;
 
 public class WordBreakII {
 
+    /**
+     * Break word by dynamic programming.
+     */
     public static List<String> wordBreak(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0) {
+            return Collections.emptyList();
+        }
+
+        List<String> cache[] = new ArrayList[s.length() + 1];
+        cache[0] = new ArrayList<>();
+
+        breakWords(s, wordDict, cache);
+
+        if (cache[s.length()] == null) {
+            return Collections.emptyList();
+        }
 
         List<String> result = new ArrayList<>();
-        Queue<Node> queue = new LinkedList<>();
-        Set<String> dict = convertDict(wordDict);
-
-        queue.add(new Node());
-
-        fillResult(s, result, dict, queue);
+        fillSentence(cache, s.length(), result, new LinkedList<>());
 
         return result;
     }
 
-    private static Set<String> convertDict(List<String> wordDict) {
-        return new HashSet<>(wordDict);
-    }
+    private static void breakWords(String s, List<String> dict, List<String>[] cache) {
+        for (int start = 0; start < s.length(); start++) {
+            if (cache[start] == null) {
+                continue;
+            }
 
-    private static void fillResult(String s, List<String> result, Set<String> dict, Queue<Node> queue) {
-
-        while (!queue.isEmpty()) {
-            Node node = queue.poll();
-            System.out.println("=>" + node.value);
-            if (node.size == s.length()) {
-                result.add(node.value);
-            } else {
-                queueNextBreak(s, node, dict, queue);
+            for (String word : dict) {
+                int end = start + word.length();
+                if (end > s.length() || !word.equals(s.substring(start, end))) {
+                    continue;
+                }
+                if (cache[end] == null) {
+                    cache[end] = new ArrayList<>();
+                }
+                cache[end].add(word);
             }
         }
     }
 
-    private static void queueNextBreak(String s, Node node, Set<String> dict, Queue<Node> queue) {
-        for (int tail = node.size + 1; tail <= s.length() && tail - node.size <= maxLength(dict); tail++) {
-            String subString = s.substring(node.size, tail);
-            if (dict.contains(subString)) {
-                queue.add(new Node(node.value + (node.size == 0 ? "" : " ") + subString, tail));
-            }
+    private static void fillSentence(List<String>[] dp, int index, List<String> result, Deque<String> workingCopy) {
+        if (index == 0) {
+            addSentenceIntoCollection(workingCopy, result);
+            return;
+        }
+        for (String word : dp[index]) {
+            workingCopy.push(word);
+            fillSentence(dp, index - word.length(), result, workingCopy);
+            workingCopy.pop();
         }
     }
 
-    private static int maxLength(Set<String> dict) {
-        return dict.stream()
-                .mapToInt(String::length)
-                .max().orElse(0);
-    }
-
-    private static class Node {
-        String value;
-        int size;
-
-        public Node() {
-            this.value = "";
+    private static void addSentenceIntoCollection(Deque<String> words, List<String> result) {
+        if (words.isEmpty()) {
+            return;
         }
 
-        public Node(String value, int size) {
-            this.value = value;
-            this.size = size;
+        StringBuilder builder = new StringBuilder();
+
+        for (String word : words) {
+            builder.append(word).append(" ");
         }
+
+        result.add(builder.substring(0, builder.length() - 1));
     }
 
     public static void main(String[] args) {
         System.out.println(wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
+        System.out.println(wordBreak("aaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
+
     }
 }

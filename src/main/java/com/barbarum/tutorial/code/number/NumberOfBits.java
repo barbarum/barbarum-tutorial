@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.counting;
+package com.barbarum.tutorial.code.number;
 
 public class NumberOfBits {
 

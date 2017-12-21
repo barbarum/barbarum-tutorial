@@ -2,7 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-import static com.barbarum.tutorial.util.ArrayUtil.swap;
+import static com.barbarum.tutorial.util.InputUtil.swap;
 
 public class NextGreaterNumberUsingSameDigits {
 
