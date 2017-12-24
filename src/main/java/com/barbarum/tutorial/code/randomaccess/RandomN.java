@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.random;
+package com.barbarum.tutorial.code.randomaccess;
 
 import com.barbarum.tutorial.util.AssertUtil;
 

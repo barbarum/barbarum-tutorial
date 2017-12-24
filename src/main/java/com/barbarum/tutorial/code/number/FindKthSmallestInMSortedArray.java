@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.topn;
+package com.barbarum.tutorial.code.number;
 
 import com.barbarum.tutorial.util.InputUtil;
 import com.google.common.base.Preconditions;

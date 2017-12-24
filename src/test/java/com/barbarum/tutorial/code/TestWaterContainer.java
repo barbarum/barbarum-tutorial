@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.sum.WaterContainer;
+import com.barbarum.tutorial.code.number.sum.WaterContainer;
 import org.junit.Assert;
 import org.junit.Test;
 

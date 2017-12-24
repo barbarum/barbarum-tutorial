@@ -1,10 +1,10 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.sum.AddTwoNumers;
+import com.barbarum.tutorial.code.number.sum.AddTwoNumers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.barbarum.tutorial.code.pojo.ListNode.as;
+import static com.barbarum.tutorial.datastructure.pojo.ListNode.as;
 
 public class TestAddTwoNumbers {
 

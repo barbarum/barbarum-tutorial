@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.pojo;
+package com.barbarum.tutorial.datastructure.pojo;
 
 public class ListNode {
     public int val;

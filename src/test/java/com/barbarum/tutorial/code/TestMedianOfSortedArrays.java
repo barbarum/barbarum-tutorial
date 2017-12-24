@@ -1,7 +1,7 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.subset.MedianOfSortedArrays;
-import com.barbarum.tutorial.code.subset.MedianOfSortedArraysV2;
+import com.barbarum.tutorial.code.array.MedianOfSortedArrays;
+import com.barbarum.tutorial.code.array.MedianOfSortedArraysV2;
 import org.junit.Assert;
 import org.junit.Test;
 

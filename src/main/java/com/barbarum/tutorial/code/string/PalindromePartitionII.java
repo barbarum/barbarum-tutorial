@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.cut;
+package com.barbarum.tutorial.code.string;
 
 public class PalindromePartitionII {
 

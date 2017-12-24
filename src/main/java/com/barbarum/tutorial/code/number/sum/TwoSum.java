@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.sum;
+package com.barbarum.tutorial.code.number.sum;
 
 import java.util.HashMap;
 import java.util.Map;

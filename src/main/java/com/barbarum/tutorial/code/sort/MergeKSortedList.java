@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.merge;
+package com.barbarum.tutorial.code.sort;
 
 
 public class MergeKSortedList {

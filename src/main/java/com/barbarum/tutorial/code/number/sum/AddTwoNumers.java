@@ -1,6 +1,6 @@
-package com.barbarum.tutorial.code.sum;
+package com.barbarum.tutorial.code.number.sum;
 
-import com.barbarum.tutorial.code.pojo.ListNode;
+import com.barbarum.tutorial.datastructure.pojo.ListNode;
 
 import java.util.ArrayList;
 import java.util.List;

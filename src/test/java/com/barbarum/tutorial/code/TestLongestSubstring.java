@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.subset.LongestSubstring;
+import com.barbarum.tutorial.code.string.LongestSubstring;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

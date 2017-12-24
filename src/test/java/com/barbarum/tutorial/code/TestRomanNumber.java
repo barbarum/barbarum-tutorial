@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.convert.RomanNumber;
+import com.barbarum.tutorial.code.number.RomanNumber;
 import org.junit.Assert;
 import org.junit.Test;
 

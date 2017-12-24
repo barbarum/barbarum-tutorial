@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.sum.ThreeSum;
+import com.barbarum.tutorial.code.number.sum.ThreeSum;
 import org.junit.Assert;
 import org.junit.Test;
 

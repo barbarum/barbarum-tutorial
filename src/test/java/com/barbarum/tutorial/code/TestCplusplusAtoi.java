@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code;
 
-import com.barbarum.tutorial.code.convert.CplusplusAtoi;
+import com.barbarum.tutorial.code.number.CplusplusAtoi;
 import org.junit.Assert;
 import org.junit.Test;
 

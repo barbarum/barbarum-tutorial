@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.convert;
+package com.barbarum.tutorial.code.number;
 
 /**
  * https://leetcode.com/problems/string-to-integer-atoi/description/

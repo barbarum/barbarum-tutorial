@@ -1,7 +1,7 @@
 package com.barbarum.tutorial.code;
 
 
-import com.barbarum.tutorial.code.sum.TwoSum;
+import com.barbarum.tutorial.code.number.sum.TwoSum;
 import org.junit.Assert;
 import org.junit.Test;
 

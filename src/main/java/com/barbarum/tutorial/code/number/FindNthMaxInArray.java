@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.topn;
+package com.barbarum.tutorial.code.number;
 
 import com.barbarum.tutorial.code.sort.SelectionAlgorithm;
 import com.barbarum.tutorial.code.sort.SortAlgorithm;
