@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.cut;
+package com.barbarum.tutorial.code.string;
 
 import java.text.MessageFormat;
 import java.util.Arrays;

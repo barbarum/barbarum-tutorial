@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code.array;
+package com.barbarum.tutorial.code.string;
 
 public class LongestNonRepeatingSubString {
 
