@@ -1,8 +1,8 @@
-package com.barbarum.tutorial.datastructure;
+package com.barbarum.tutorial.code.tree;
+
 
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

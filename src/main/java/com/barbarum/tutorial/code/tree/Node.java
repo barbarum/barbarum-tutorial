@@ -1,6 +1,6 @@
-package com.barbarum.tutorial.datastructure;
+package com.barbarum.tutorial.code.tree;
 
-class Node<T> {
+public class Node<T> {
     private T data;
     private Node<T> left;
     private Node<T> right;
@@ -27,16 +27,35 @@ class Node<T> {
         return left;
     }
 
-    public void setLeft(Node<T> left) {
+    public Node<T> setLeft(T left) {
+        return setLeft(new Node<T>(left));
+    }
+
+    public Node<T> setLeft(Node<T> left) {
         this.left = left;
+        return this.left;
     }
 
     public Node<T> getRight() {
         return right;
     }
 
-    public void setRight(Node<T> right) {
+    public Node<T> setRight(T right) {
+        return setRight(new Node<T>(right));
+    }
+
+    public Node<T> setRight(Node<T> right) {
         this.right = right;
+        return this.right;
+    }
+
+    public void setChildren(Node<T> left, Node<T> right) {
+        this.setLeft(left);
+        this.setRight(right);
+    }
+
+    public void setChildren(T left, T right) {
+        setChildren(new Node<T>(left), new Node<T>(right));
     }
 
     public Node<T> getPrevious() {

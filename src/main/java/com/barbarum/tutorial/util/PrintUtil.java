@@ -3,7 +3,6 @@ package com.barbarum.tutorial.util;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -36,9 +35,9 @@ public class PrintUtil {
         System.out.println(String.format("%s %s", prefix, target));
     }
 
-    public static void println(int[] input, Function<int[], Integer> consumer) {
+    public static <T> void println(int[] input, Function<int[], T> consumer) {
         println("Input ->", input);
-        Integer output = consumer.apply(input);
+        T output = consumer.apply(input);
         System.out.println(String.format("Output -> %s", output));
     }
 

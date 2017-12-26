@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.datastructure.graph;
+package com.barbarum.tutorial.code.graph;
 
 import java.util.*;
 

@@ -1,6 +1,8 @@
-package com.barbarum.tutorial.datastructure;
+package com.barbarum.tutorial.code.tree;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * https://en.wikipedia.org/wiki/Binary_search_tree#Insertion
@@ -125,15 +127,29 @@ public class BinarySearchTree extends BinaryTree {
      * @param <T>  generalized type.
      * @return head node
      */
-    public static <T extends Comparable<T>> LinkedList<Node<T>> convert(Node<T> root) {
-        return traversalLDR(root, new LinkedList<>(),
-                (previous, current) -> {
-                    if (previous == null) {
-                        return;
-                    }
-                    current.setPrevious(previous);
-                    previous.setNext(current);
-                });
+    public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
+        Node<T> head = new Node<T>(null);
+        convert(root, head);
+        if (head.getRight() != null) {
+            head.getRight().setLeft((Node<T>) null);
+        }
+        return head.getRight();
+    }
+
+    private static <T extends Comparable<T>> Node<T> convert(Node<T> root, Node<T> tail) {
+        if (root == null) {
+            return tail;
+        }
+
+        tail = convert(root.getLeft(), tail);
+
+        tail.setRight(root);
+        root.setLeft(tail);
+        tail = root;
+
+        tail = convert(root.getRight(), tail);
+
+        return tail;
     }
 
     public static void main(String args[]) {
@@ -143,17 +159,20 @@ public class BinarySearchTree extends BinaryTree {
 
         System.out.println(list);
 
-        LinkedList<Node<Integer>> result = convert(bst);
+        Node<Integer> result = convert(bst);
 
         StringBuilder builder = new StringBuilder();
 
         builder.append("Forward -> ");
-        for (Node<Integer> node = result.getFirst(); node != null; node = node.getNext()) {
+        Node<Integer> node = result;
+        Node<Integer> nonNull = node;
+        for (; node != null; node = node.getRight()) {
             builder.append(node.getData()).append(" ");
+            nonNull = node;
         }
 
         builder.append("\n").append("Backward -> ");
-        for (Node<Integer> node = result.getLast(); node != null; node = node.getPrevious()) {
+        for (node = nonNull; node != null; node = node.getLeft()) {
             builder.append(node.getData()).append(" ");
         }
 

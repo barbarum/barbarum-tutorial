@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.datastructure;
+package com.barbarum.tutorial.code.tree.data;
 
 import com.barbarum.tutorial.util.BasicUtil;
 
