@@ -1,6 +1,7 @@
 package com.barbarum.tutorial.code.tree;
 
-import java.util.LinkedList;
+import com.barbarum.tutorial.code.tree.data.Node;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -152,31 +153,51 @@ public class BinarySearchTree extends BinaryTree {
         return tail;
     }
 
-    public static void main(String args[]) {
-        Node<Integer> bst = BinarySearchTree.buildBST(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
-
-        List<Integer> list = traversalLDR(bst);
-
-        System.out.println(list);
-
-        Node<Integer> result = convert(bst);
-
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("Forward -> ");
-        Node<Integer> node = result;
-        Node<Integer> nonNull = node;
-        for (; node != null; node = node.getRight()) {
-            builder.append(node.getData()).append(" ");
-            nonNull = node;
+    /**
+     * Find the largest data in the tree which is less than or equals to the target.
+     */
+    public static <T extends Comparable<T>> Optional<T> floor(Node<T> root, T target) {
+        if (root == null) {
+            return Optional.empty();
         }
-
-        builder.append("\n").append("Backward -> ");
-        for (node = nonNull; node != null; node = node.getLeft()) {
-            builder.append(node.getData()).append(" ");
+        int diff = root.getData().compareTo(target);
+        // if the root data is equals to target, then we found it.
+        if (diff == 0) {
+            return Optional.of(root.getData());
         }
+        // if root data is larger than target, try to find from the left child.
+        if (diff > 0) {
+            return floor(root.getLeft(), target);
+        }
+        // if the root data is smaller than target,
+        // then we look for if any data exists from the right child otherwise we return the root data.
+        T result = floor(root.getRight(), target)
+                .orElse(root.getData());
 
-        System.out.println(builder.toString());
+        return Optional.of(result);
+    }
 
+    /**
+     * Find the smallest data in the tree which is greater than or equals to the target.
+     */
+    public static <T extends Comparable<T>> Optional<T> ceiling(Node<T> root, T target) {
+        if (root == null) {
+            return Optional.empty();
+        }
+        int diff = root.getData().compareTo(target);
+        // if the root data is equals to the target, then we found it.
+        if (diff == 0) {
+            return Optional.of(root.getData());
+        }
+        // if the root data is smaller than the target, then look for the data from the right child.
+        if (diff < 0) {
+            return ceiling(root.getRight(), target);
+        }
+        // if the root data is greater than the target,
+        // then we look for whether any data can be found from the right child, otherwise we return the root data.
+        T result = ceiling(root.getLeft(), target)
+                .orElse(root.getData());
+        
+        return Optional.of(result);
     }
 }

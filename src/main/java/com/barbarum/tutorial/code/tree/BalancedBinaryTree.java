@@ -1,5 +1,7 @@
 package com.barbarum.tutorial.code.tree;
 
+import com.barbarum.tutorial.code.tree.data.Node;
+
 import java.util.HashMap;
 import java.util.Map;
 

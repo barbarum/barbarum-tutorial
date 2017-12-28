@@ -1,14 +1,16 @@
-package com.barbarum.tutorial.code.tree;
+package com.barbarum.tutorial.code.tree.data;
 
 public class Node<T> {
     private T data;
     private Node<T> left;
     private Node<T> right;
 
+    private Node<T> parent;
+
     public Node(T data, Node<T> left, Node<T> right) {
         this.data = data;
-        this.left = left;
-        this.right = right;
+        this.setLeft(left);
+        this.setRight(right);
     }
 
     public Node(T data) {
@@ -33,6 +35,7 @@ public class Node<T> {
 
     public Node<T> setLeft(Node<T> left) {
         this.left = left;
+        this.left.setParent(this);
         return this.left;
     }
 
@@ -46,6 +49,7 @@ public class Node<T> {
 
     public Node<T> setRight(Node<T> right) {
         this.right = right;
+        this.right.setParent(this);
         return this.right;
     }
 
@@ -58,20 +62,13 @@ public class Node<T> {
         setChildren(new Node<T>(left), new Node<T>(right));
     }
 
-    public Node<T> getPrevious() {
-        return this.getLeft();
+    public Node<T> getParent() {
+        return parent;
     }
 
-    public void setPrevious(Node<T> previous) {
-        this.setLeft(previous);
-    }
-
-    public Node<T> getNext() {
-        return this.getRight();
-    }
-
-    public void setNext(Node<T> next) {
-        this.setRight(next);
+    public Node<T> setParent(Node<T> parent) {
+        this.parent = parent;
+        return this.parent;
     }
 
     public static <T> Node<T> createLeftNode(T data, Node<T> left) {

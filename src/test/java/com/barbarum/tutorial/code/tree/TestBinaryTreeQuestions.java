@@ -1,10 +1,15 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.tree;
 
+import com.barbarum.tutorial.code.BasicTestCase;
 import com.barbarum.tutorial.code.tree.BinarySearchTree;
 import com.barbarum.tutorial.code.tree.BinaryTree;
 import com.barbarum.tutorial.code.tree.BinaryTreeQuestions;
-import com.barbarum.tutorial.code.tree.Node;
+import com.barbarum.tutorial.code.tree.data.Node;
 import org.junit.Assert;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static com.barbarum.tutorial.code.tree.BinaryTreeQuestions.isCousin;
 import static com.barbarum.tutorial.code.tree.BinaryTreeQuestions.removeNodesOnPathSumLessThanK;
@@ -44,6 +49,18 @@ public class TestBinaryTreeQuestions extends BasicTestCase {
         assertFalse(BinaryTreeQuestions.symmetricTree(root));
     }
 
+    public void testBottomView() {
+        Node<Integer> root1 = new Node<Integer>(1);
+        root1.setChildren(2, 3);
+        root1.getLeft().setChildren(4, 5);
+        root1.getRight().setChildren(6, 7);
+
+        System.out.println(BinaryTreeQuestions.printBottomView(root1)
+                .stream()
+                .map(Node::getData)
+                .collect(Collectors.toList()));
+    }
+
     public void testDoubleLinkedListConverter() {
         Node<Integer> root = new Node<Integer>(1);
 
@@ -67,5 +84,25 @@ public class TestBinaryTreeQuestions extends BasicTestCase {
 
         Assert.assertArrayEquals(new int[]{4, 2, 5, 1, 6, 3, 7}, forwardActual);
         Assert.assertArrayEquals(new int[]{4, 2, 5, 1, 6, 3, 7}, backwardActual);
+    }
+
+    public void testBuildBSTWithArrays() {
+        int inOrder[] = new int[]{4, 2, 5, 1, 6, 3, 7};
+        int preOrder[] = new int[]{4, 5, 2, 6, 7, 3, 1};
+
+        Node<Integer> root = BinaryTreeQuestions.buildBST(inOrder, preOrder);
+
+        Assert.assertEquals(Arrays.asList(4, 2, 5, 1, 6, 3, 7), BinaryTree.traversalLDR(root));
+        Assert.assertEquals(Arrays.asList(4, 5, 2, 6, 7, 3, 1), BinaryTree.traversalLRD(root, new ArrayList<>()));
+    }
+
+    public void testBuildBSTWithParents() {
+        int[] parents = new int[]{3, 5, 0, -1, 5, 3, 0};
+        Node<Integer> root = BinaryTreeQuestions.buildBST(parents);
+        Assert.assertEquals(Arrays.asList(2, 0, 6, 3, 1, 5, 4), BinaryTree.traversalLDR(root));
+
+        parents = new int[]{-1, 0, 1, 5, 1, 0};
+        root = BinaryTreeQuestions.buildBST(parents);
+        Assert.assertEquals(Arrays.asList(2, 1, 4, 0, 3, 5), BinaryTree.traversalLDR(root));
     }
 }

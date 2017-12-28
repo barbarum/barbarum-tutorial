@@ -1,6 +1,9 @@
 package com.barbarum.tutorial.code.tree;
 
-import com.barbarum.tutorial.util.PrintUtil;
+import com.barbarum.tutorial.code.tree.data.Node;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinarySearchTreeQuestions {
 
@@ -70,10 +73,6 @@ public class BinarySearchTreeQuestions {
         return true;
     }
 
-    public static void main(String args[]) {
-        PrintUtil.println(new int[]{20, 10, 11, 13, 12}, BinarySearchTreeQuestions::hasOnlyOneChildren);
-    }
-
     /**
      * http://www.ideserve.co.in/learn/check-if-identical-binary-search-trees-without-building-them-set-1
      * Given two arrays which would be used to construct two different binary search trees(BSTs), write a program to identify if the BSTs constructed from these would be identical. The condition is that the program should be able to identify this without actually building BSTs.
@@ -109,6 +108,43 @@ public class BinarySearchTreeQuestions {
                 && identical(tree1, tree2, tree1Right, tree2Right, tree1[tree1Root], maximum);
     }
 
+    public static Node<Integer> convertDoubleLinkedListToBST(Node<Integer> head) {
+        int length = getLength(head);
+
+        Node<Integer> newHead = new Node<Integer>(null);
+        newHead.setRight(head);
+
+        return traversal(newHead, length);
+    }
+
+    private static Node<Integer> traversal(Node<Integer> head, int length) {
+        if (length == 0) {
+            return null;
+        }
+
+        int mid = length / 2;
+
+        Node<Integer> left = traversal(head, mid);
+
+        Node<Integer> root = head.getRight();
+        head.setRight(root.getRight());
+
+        Node<Integer> right = traversal(head, length - mid - 1);
+
+        root.setLeft(left);
+        root.setRight(right);
+
+        return root;
+    }
+
+    private static int getLength(Node<Integer> head) {
+        int length = 0;
+        for (Node<Integer> node = head; node != null; node = node.getRight()) {
+            length++;
+        }
+        return length;
+    }
+
     private static int findNode(int[] tree, int minimum, int maximum, int index) {
         for (int i = index; i < tree.length; i++) {
             if (tree[i] > minimum && tree[i] < maximum) {
@@ -117,4 +153,66 @@ public class BinarySearchTreeQuestions {
         }
         return -1;
     }
+
+    public static Node<Integer> buildBST(int[] items) {
+        if (items == null || items.length == 0) {
+            return null;
+        }
+        return buildBST(items, 0, items.length - 1);
+    }
+
+    private static Node<Integer> buildBST(int[] items, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = (start + end + 1) / 2;
+
+        Node<Integer> left = buildBST(items, start, mid - 1);
+        Node<Integer> root = new Node<Integer>(items[mid]);
+        Node<Integer> right = buildBST(items, mid + 1, end);
+
+        root.setLeft(left);
+        root.setRight(right);
+
+        return root;
+    }
+
+    public static boolean isComplete(Node<Integer> root) {
+        if (root == null) {
+            return true;
+        }
+
+        Queue<Node<Integer>> queue = new LinkedList<>();
+        queue.add(root);
+
+        boolean previousNotComplete = false;
+
+        while (!queue.isEmpty()) {
+            Node<Integer> node = queue.poll();
+            addNodeIfNotNull(queue, node.getLeft());
+            addNodeIfNotNull(queue, node.getRight());
+
+            if (node.getLeft() == null && node.getRight() != null) {
+                return false;
+            }
+            if (previousNotComplete && !isLeaf(node)) {
+                return false;
+            }
+            if (!previousNotComplete && !isFull(node)) {
+                previousNotComplete = true;
+            }
+        }
+        return true;
+    }
+
+    private static void addNodeIfNotNull(Queue<Node<Integer>> queue, Node<Integer> node) {
+        if (node != null) {
+            queue.add(node);
+        }
+    }
+
+    private static boolean isFull(Node<Integer> node) {
+        return node.getLeft() != null && node.getRight() != null;
+    }
+
 }

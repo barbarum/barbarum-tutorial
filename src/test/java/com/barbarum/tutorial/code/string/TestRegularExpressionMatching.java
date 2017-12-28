@@ -1,5 +1,6 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.string;
 
+import com.barbarum.tutorial.code.BasicTestCase;
 import com.barbarum.tutorial.code.regexp.RegularExpressionMatching;
 import org.junit.Test;
 

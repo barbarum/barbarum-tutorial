@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.code.array.MedianOfSortedArrays;
 import com.barbarum.tutorial.code.array.MedianOfSortedArraysV2;

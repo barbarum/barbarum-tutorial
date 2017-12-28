@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.number;
 
 
 import com.barbarum.tutorial.code.number.sum.TwoSum;

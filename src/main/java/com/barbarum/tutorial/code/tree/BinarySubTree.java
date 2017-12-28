@@ -1,5 +1,7 @@
 package com.barbarum.tutorial.code.tree;
 
+import com.barbarum.tutorial.code.tree.data.Node;
+
 public class BinarySubTree {
 
     public static boolean check(Node<Integer> tree1, Node<Integer> tree2) {

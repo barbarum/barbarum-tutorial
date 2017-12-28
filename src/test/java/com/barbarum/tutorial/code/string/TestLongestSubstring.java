@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.string;
 
 import com.barbarum.tutorial.code.string.LongestSubstring;
 import org.junit.Test;

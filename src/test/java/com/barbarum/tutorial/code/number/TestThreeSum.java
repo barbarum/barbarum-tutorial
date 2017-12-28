@@ -1,4 +1,4 @@
-package com.barbarum.tutorial.code;
+package com.barbarum.tutorial.code.number;
 
 import com.barbarum.tutorial.code.number.sum.ThreeSum;
 import org.junit.Assert;
@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestThreeSum extends BasicTestCase {
+public class TestThreeSum {
 
     @Test
     public void testThreeSum() throws Exception {

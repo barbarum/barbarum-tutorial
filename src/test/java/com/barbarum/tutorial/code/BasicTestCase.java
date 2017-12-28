@@ -3,13 +3,12 @@ package com.barbarum.tutorial.code;
 import com.barbarum.common.testframework.FunctionUtil;
 import com.barbarum.tutorial.util.AssertUtil;
 import junit.framework.TestCase;
-import org.junit.runner.Runner;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
+
 
 public abstract class BasicTestCase extends TestCase {
 

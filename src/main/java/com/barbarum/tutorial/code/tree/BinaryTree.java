@@ -1,6 +1,8 @@
 package com.barbarum.tutorial.code.tree;
 
 
+import com.barbarum.tutorial.code.tree.data.Node;
+
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;

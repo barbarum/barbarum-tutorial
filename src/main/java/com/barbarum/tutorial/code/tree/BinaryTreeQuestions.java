@@ -1,10 +1,11 @@
 package com.barbarum.tutorial.code.tree;
 
+import com.barbarum.tutorial.code.tree.data.Node;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BinaryTreeQuestions {
 
@@ -161,15 +162,83 @@ public class BinaryTreeQuestions {
         return tail;
     }
 
-    public static void main(String args[]) {
-        Node<Integer> root1 = new Node<Integer>(1);
-        root1.setChildren(2, 3);
-        root1.getLeft().setChildren(4, 5);
-        root1.getRight().setChildren(6, 7);
+    public static Node<Integer> buildBST(int[] inOrder, int[] preOrder) {
 
-        System.out.println(printBottomView(root1)
-                .stream()
-                .map(Node::getData)
-                .collect(Collectors.toList()));
+        if (inOrder == null || preOrder == null || inOrder.length == 0 || preOrder.length == 0) {
+            return null;
+        }
+        if (inOrder.length != preOrder.length) {
+            throw new IllegalArgumentException();
+        }
+        return buildBST(inOrder, preOrder, 0, inOrder.length - 1, 0, preOrder.length - 1);
+    }
+
+    private static Node<Integer> buildBST(int[] inOrder, int[] preOrder, int inOrderStart, int inOrderEnd, int preOrderStart, int preOrderEnd) {// [1,2,3], [1,3,2], 0, 2, 0, 2
+        if (inOrderStart > inOrderEnd) {
+            return null;
+        }
+        int inOrderRootIndex = findRootIndex(inOrder, inOrderStart, inOrderEnd, preOrder[preOrderEnd]);// [1,2,3], 0, 2, 2 -> 1
+        int leftDistance = inOrderRootIndex - inOrderStart; // 1
+
+        Node<Integer> left = buildBST(inOrder, preOrder, inOrderStart, inOrderRootIndex - 1, preOrderStart, preOrderStart + leftDistance - 1); // 0, 0, 0, 0
+        Node<Integer> right = buildBST(inOrder, preOrder, inOrderRootIndex + 1, inOrderEnd, preOrderStart + leftDistance, preOrderEnd - 1);// 2,2,1,1
+
+        Node<Integer> root = new Node<Integer>(preOrder[preOrderEnd]);// 2
+
+        root.setLeft(left);
+        root.setRight(right);
+
+        return root;
+    }
+
+    private static int findRootIndex(int[] items, int start, int end, int target) {
+        for (int i = start; i <= end; i++) {
+            if (items[i] == target) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static Node<Integer> buildBST(int[] parents) {
+        if (parents == null || parents.length == 0) {
+            return null;
+        }
+
+        Node<Integer> nodes[] = new Node[parents.length];
+        int rootIndex = buildBST(parents, nodes);
+
+        return nodes[rootIndex];
+    }
+
+    private static int buildBST(int[] parents, Node<Integer>[] nodes) {
+        int rootIndex = -1;
+
+        for (int i = 0; i < parents.length; i++) {
+            Node<Integer> currentNode = getOrConstruct(nodes, i);
+            if (parents[i] != -1) {
+                Node<Integer> parentNode = getOrConstruct(nodes, parents[i]);
+                setChild(currentNode, parentNode);
+            } else {
+                rootIndex = i;
+            }
+        }
+
+        return rootIndex;
+    }
+
+    private static void setChild(Node<Integer> node, Node<Integer> parent) {
+        if (parent.getLeft() == null) {
+            parent.setLeft(node);
+        } else {
+            parent.setRight(node);
+        }
+    }
+
+    private static Node<Integer> getOrConstruct(Node<Integer>[] nodes, int value) {
+        if (nodes[value] == null) {
+            nodes[value] = new Node<Integer>(value);
+        }
+        return nodes[value];
     }
 }
