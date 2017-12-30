@@ -26,7 +26,7 @@ public class DataType {
 
         /* Print the sum of the double variables on a new line. */
 
-        /* Concatenate and print the String variables on a new line;
+        /* Concatenate and vertical the String variables on a new line;
             the 's' variable above should be printed first. */
 
         int iplus = scan.nextInt();

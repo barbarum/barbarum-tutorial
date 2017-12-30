@@ -35,7 +35,9 @@ public class Node<T> {
 
     public Node<T> setLeft(Node<T> left) {
         this.left = left;
-        this.left.setParent(this);
+        if (this.left != null) {
+            this.left.setParent(this);
+        }
         return this.left;
     }
 
@@ -49,7 +51,9 @@ public class Node<T> {
 
     public Node<T> setRight(Node<T> right) {
         this.right = right;
-        this.right.setParent(this);
+        if (this.right != null) {
+            this.right.setParent(this);
+        }
         return this.right;
     }
 

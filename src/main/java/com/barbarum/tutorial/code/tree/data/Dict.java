@@ -1,8 +1,11 @@
 package com.barbarum.tutorial.code.tree.data;
 
 import com.barbarum.tutorial.util.BasicUtil;
+import com.sun.istack.internal.NotNull;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -22,35 +25,79 @@ import static com.google.common.base.Preconditions.checkArgument;
  *                  d
  * </pre>
  */
-public class Dict {
+public class Dict<T extends Comparable<T>> {
 
-    private Node root;
+    private Node<T> root;
 
     public Dict() {
-        this.root = new Node(Character.MIN_VALUE, false);
+        this.root = new Node<>(Character.MIN_VALUE, false);
     }
 
-    public void insert(String word) {
+    public Dict<T> insert(String word) {
         if (!BasicUtil.hasContent(word)) {
-            return;
+            return this;
         }
-        Node current = root;
+        Node<T> current = root;
         for (char item : word.toCharArray()) {
             current = current.addChild(item);
         }
         current.markWord();
+
+        return this;
+    }
+
+    public Dict<T> insert(String word, int start, Function<Integer, T> function) {
+        return insert(word, start, word.length() - 1, function);
+    }
+
+    public Dict<T> insert(String word, int start, int end, Function<Integer, T> function) {
+        if (!BasicUtil.hasContent(word)) {
+            return this;
+        }
+        Node<T> current = root;
+        for (int i = start; i <= end; i++) {
+            current = current.addChild(word.charAt(i), function.apply(i));
+        }
+        current.markWord();
+        return this;
     }
 
     public boolean lookup(String word) {
         if (!BasicUtil.hasContent(word)) {
             return false;
         }
-        Node current = findNode(word);
+        Node<T> current = findNode(word);
         return current != null && current.isWord();
     }
 
-    private Node findNode(String word) {
-        Node current = root;
+    public List<T> match(String pattern) {
+        if (!BasicUtil.hasContent(pattern)) {
+            return Collections.emptyList();
+        }
+        Node<T> node = findNode(pattern);
+        return node != null && node.isWord() ? node.values() : Collections.emptyList();
+    }
+
+    public boolean delete(String word) {
+        if (!lookup(word)) {
+            return false;
+        }
+        delete(root, -1, word);
+        return true;
+    }
+
+    private Node<T> delete(Node<T> root, int depth, String word) {
+        if (depth != word.length() - 1) {
+            char child = word.charAt(depth + 1);
+            root.setChild(child, delete(root.findChild(child), depth + 1, word));
+        } else {
+            root.exists = false;
+        }
+        return root.hasChildren() ? root : null;
+    }
+
+    private Node<T> findNode(String word) {
+        Node<T> current = root;
         for (char item : word.toCharArray()) {
             if ((current = current.findChild(item)) == null) {
                 return null;
@@ -63,7 +110,7 @@ public class Dict {
         if (!BasicUtil.hasContent(prefix)) {
             return Collections.emptyList();
         }
-        Node current = findNode(prefix);
+        Node<T> current = findNode(prefix);
         List<String> list = new ArrayList<>();
 
         addWord(current, prefix, list);
@@ -75,7 +122,7 @@ public class Dict {
         if (!BasicUtil.hasContent(prefix)) {
             return Collections.emptyList();
         }
-        Node current = findNode(prefix);
+        Node<T> current = findNode(prefix);
         List<String> list = new ArrayList<>();
 
         addWord(list, current, prefix, depth);
@@ -83,7 +130,33 @@ public class Dict {
         return list;
     }
 
-    private void addWord(List<String> list, Node current, String prefix, int depth) {
+    public String findLongPrefixKey(String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            return null;
+        }
+        int index = findLongPrefixIndex(root, pattern, -1);
+        return isValid(pattern, index) ? pattern.substring(0, index + 1) : null;
+    }
+
+    private int findLongPrefixIndex(Node<T> root, String pattern, int current) {
+        if (root == null || current == pattern.length()) {
+            return -1;
+        }
+        int childIndex = current + 1;
+        char childKey = isValid(pattern, childIndex) ? pattern.charAt(childIndex) : 0;
+        int result = findLongPrefixIndex(root.findChild(childKey), pattern, childIndex);
+        if (isValid(pattern, result)) {
+            return result;
+        }
+
+        return root.isWord() ? current : -1;
+    }
+
+    private boolean isValid(String pattern, int index) {
+        return index >= 0 && index < pattern.length();
+    }
+
+    private void addWord(List<String> list, Node<T> current, String prefix, int depth) {
         if (current == null) {
             return;
         }
@@ -94,35 +167,36 @@ public class Dict {
             return;
         }
 
-        for (Node node : current) {
+        for (Node<T> node : current) {
             if (node != null) {
-                addWord(list, node, prefix + node.getValue(), depth - 1);
+                addWord(list, node, prefix + node.getKey(), depth - 1);
             }
         }
     }
 
-    private void addWord(Node current, String currentWord, List<String> list) {
+    private void addWord(Node<T> current, String currentWord, List<String> list) {
         if (current == null) {
             return;
         }
         if (current.isWord()) {
             list.add(currentWord);
         }
-        for (Node node : current) {
+        for (Node<T> node : current) {
             if (node != null) {
-                addWord(node, currentWord + node.getValue(), list);
+                addWord(node, currentWord + node.getKey(), list);
             }
         }
     }
 
-    public static class Node implements Iterable<Node> {
+    public static class Node<T extends Comparable<T>> implements Iterable<Node<T>> {
 
         private static char BASE_CHAR = 'a';
         private static int CHILDREN_LENGTH = 26;
 
-        private Node[] children;
+        private Node<T>[] children;
         private boolean exists;
-        private final char value;
+        private final char key;
+        private List<T> data = new ArrayList<>();
 
         Node(char ch) {
             this(ch, false);
@@ -130,14 +204,14 @@ public class Dict {
 
         Node(char ch, boolean exists) {
             this.children = new Node[CHILDREN_LENGTH];
-            this.value = ch;
+            this.key = ch;
             this.exists = exists;
         }
 
         @Override
-        public Iterator<Node> iterator() {
+        public Iterator<Node<T>> iterator() {
 
-            return new Iterator<Node>() {
+            return new Iterator<Node<T>>() {
 
                 private int cursor = 0;
 
@@ -147,7 +221,7 @@ public class Dict {
                 }
 
                 @Override
-                public Node next() {
+                public Node<T> next() {
                     if (!this.hasNext()) {
                         throw new IndexOutOfBoundsException("There is no more children found from the list.");
                     }
@@ -156,13 +230,32 @@ public class Dict {
             };
         }
 
-        Node addChild(char item) {
+        Node<T> addChild(char item) {
             checkArgument(BasicUtil.inRangeOf(children, index(item)),
                     "the given char (%s) is not a lower case english letter.", item);
             if (this.children[index(item)] == null) {
-                this.children[index(item)] = new Node(item);
+                this.children[index(item)] = new Node<T>(item);
             }
             return this.children[index(item)];
+        }
+
+        Node<T> addChild(char key, T value) {
+            checkArgument(BasicUtil.inRangeOf(children, index(key)),
+                    "the given char (%s) is not a lower case english letter.", key);
+            if (this.children[index(key)] == null) {
+                this.children[index(key)] = new Node<T>(key);
+            }
+            this.children[index(key)].data.add(value);
+            return this.children[index(key)];
+        }
+
+        boolean hasChildren() {
+            for (Node child : this.children) {
+                if (child != null) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private int index(char item) {
@@ -177,15 +270,26 @@ public class Dict {
             return this.exists;
         }
 
-        Node findChild(char item) {
+        Node<T> findChild(char item) {
             if (!BasicUtil.inRangeOf(children, index(item))) {
                 return null;
             }
             return this.children[index(item)];
         }
 
-        public char getValue() {
-            return value;
+        void setChild(char item, Node<T> node) {
+            if (!BasicUtil.inRangeOf(children, index(item))) {
+                return;
+            }
+            this.children[index(item)] = node;
+        }
+
+        public char getKey() {
+            return key;
+        }
+
+        public List<T> values() {
+            return new ArrayList<>(this.data);
         }
 
         public static char toChar(int index) {

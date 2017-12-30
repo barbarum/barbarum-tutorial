@@ -2,6 +2,7 @@ package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.tree.data.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -197,7 +198,58 @@ public class BinarySearchTree extends BinaryTree {
         // then we look for whether any data can be found from the right child, otherwise we return the root data.
         T result = ceiling(root.getLeft(), target)
                 .orElse(root.getData());
-        
+
         return Optional.of(result);
+    }
+
+    /**
+     * Serialize BST to an array in post order traversal.
+     */
+    public static <T> T[] serialize(Node<T> root) {
+        if (root == null) {
+            return null;
+        }
+        List<T> result = new ArrayList<>();
+        serialize(root, result);
+        return (T[]) result.toArray();
+    }
+
+    private static <T> void serialize(Node<T> root, List<T> result) {
+        if (root == null) {
+            return;
+        }
+        serialize(root.getLeft(), result);
+        serialize(root.getRight(), result);
+        result.add(root.getData());
+    }
+
+    public static <T extends Comparable<T>> Node<T> deserialize(T[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+        return deserialize(data, 0, data.length - 1);
+    }
+
+    private static <T extends Comparable<T>> Node<T> deserialize(T[] data, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        if (start == end) {
+            return new Node<T>(data[start]);
+        }
+        int pivotIndex = findPivotIndex(data, start, end - 1, data[end]);
+        Node<T> root = new Node<T>(data[end]);
+        root.setLeft(deserialize(data, start, pivotIndex != -1 ? pivotIndex - 1 : end - 1));
+        root.setRight(pivotIndex != -1 ? deserialize(data, pivotIndex, end - 1) : null);
+        return root;
+    }
+
+    private static <T extends Comparable<T>> int findPivotIndex(T[] data, int start, int end, T target) {
+        for (int i = start; i <= end; i++) {
+            if (data[i].compareTo(target) > 0) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

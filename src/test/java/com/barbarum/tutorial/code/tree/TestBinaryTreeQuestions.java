@@ -1,9 +1,6 @@
 package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.BasicTestCase;
-import com.barbarum.tutorial.code.tree.BinarySearchTree;
-import com.barbarum.tutorial.code.tree.BinaryTree;
-import com.barbarum.tutorial.code.tree.BinaryTreeQuestions;
 import com.barbarum.tutorial.code.tree.data.Node;
 import org.junit.Assert;
 
@@ -55,7 +52,7 @@ public class TestBinaryTreeQuestions extends BasicTestCase {
         root1.getLeft().setChildren(4, 5);
         root1.getRight().setChildren(6, 7);
 
-        System.out.println(BinaryTreeQuestions.printBottomView(root1)
+        System.out.println(BinaryTreeView.bottom(root1)
                 .stream()
                 .map(Node::getData)
                 .collect(Collectors.toList()));
@@ -104,5 +101,40 @@ public class TestBinaryTreeQuestions extends BasicTestCase {
         parents = new int[]{-1, 0, 1, 5, 1, 0};
         root = BinaryTreeQuestions.buildBST(parents);
         Assert.assertEquals(Arrays.asList(2, 1, 4, 0, 3, 5), BinaryTree.traversalLDR(root));
+    }
+
+    public void testNodesWithoutSiblings() {
+        Node<Integer> root = new Node<Integer>(0);
+        root.setLeft(1).setLeft(3).setRight(6).setRight(8);
+        root.getLeft().setRight(4);
+        root.setRight(2).setLeft(5).setRight(7);
+
+        Assert.assertEquals(Arrays.asList(6, 8, 5, 7), BinaryTreeQuestions.collectNodesWithoutSiblings(root));
+    }
+
+    public void testRemoveHalfNodes() {
+        Node<Integer> root = new Node<Integer>(0);
+        root.setLeft(1).setLeft(3).setRight(6).setRight(8);
+        root.getLeft().setRight(4);
+        root.setRight(2).setLeft(5).setRight(7);
+
+        BinaryTreeQuestions.removeHalfNodes(root);
+        Assert.assertEquals(Arrays.asList(8, 1, 4, 0, 7), BinaryTree.traversalLDR(root));
+    }
+
+
+    public void testLargestBSTSize() {
+        Node<Integer> testcaseA = new Node<Integer>(10);
+        testcaseA.setChildren(15, 1);
+        testcaseA.getLeft().setChildren(7, 16);
+        testcaseA.getRight().setChildren(9, 14);
+        Assert.assertEquals(3, BinaryTreeQuestions.findLargestBSTSize(testcaseA));
+
+        Node<Integer> testcaseB = new Node<Integer>(10);
+        testcaseB.setChildren(6, 12);
+        testcaseB.getLeft().setChildren(7, 4);
+        testcaseB.getRight().setChildren(9, 14);
+        testcaseB.getRight().getRight().setChildren(13, 16);
+        Assert.assertEquals(5, BinaryTreeQuestions.findLargestBSTSize(testcaseB));
     }
 }

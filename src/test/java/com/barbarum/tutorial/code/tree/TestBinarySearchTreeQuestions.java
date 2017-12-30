@@ -1,7 +1,5 @@
 package com.barbarum.tutorial.code.tree;
 
-import com.barbarum.tutorial.code.tree.BinarySearchTree;
-import com.barbarum.tutorial.code.tree.BinarySearchTreeQuestions;
 import com.barbarum.tutorial.code.tree.data.Node;
 import com.barbarum.tutorial.util.PrintUtil;
 import org.junit.Assert;
@@ -77,6 +75,26 @@ public class TestBinarySearchTreeQuestions {
         assertTrue(BinarySearchTreeQuestions.isComplete(data.completeBST2));
         assertFalse(BinarySearchTreeQuestions.isComplete(data.inCompleteBST1));
         assertFalse(BinarySearchTreeQuestions.isComplete(data.inCompleteBST2));
+    }
+
+    @Test
+    public void testRangeOut() {
+        Node<Integer> root = new Node<Integer>(8);
+        root.setChildren(5, 11);
+        root.getLeft().setChildren(2, 7);
+        root.getRight().setChildren(9, 12);
+        root.getLeft().getRight().setLeft(6);
+        root.getRight().getLeft().setRight(10);
+        root.getRight().getRight().setRight(13);
+
+        BinarySearchTreeQuestions.remove(root, 3, 9);
+        Assert.assertEquals(Arrays.asList(5, 6, 7, 8, 9), BinarySearchTree.traversalLDR(root));
+    }
+
+    @Test
+    public void testCountBST() {
+        Assert.assertEquals(5, BinarySearchTreeQuestions.countTrees(3));
+        Assert.assertEquals(42, BinarySearchTreeQuestions.countTrees(5));
     }
 
     private static class Data {

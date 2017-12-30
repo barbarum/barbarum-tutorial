@@ -2,10 +2,7 @@ package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.tree.data.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BinaryTreeQuestions {
 
@@ -64,51 +61,35 @@ public class BinaryTreeQuestions {
         return Math.min(leftRemaining, rightRemaining);
     }
 
-    public static List<Node<Integer>> printBottomView(Node<Integer> root) {
-        Map<Integer, WrappedNode<Integer>> cache = new HashMap<>();
-        traversal(root, 0, 1, cache);
-        return convert(cache);
-    }
-
-    private static List<Node<Integer>> convert(Map<Integer, WrappedNode<Integer>> cache) {
-        List<Node<Integer>> result = new ArrayList<>();
-        for (WrappedNode<Integer> node : cache.values()) {
-            result.add(node.node);
+    public static List<Integer> collectNodesWithoutSiblings(Node<Integer> root) {
+        if (root == null) {
+            return Collections.emptyList();
         }
+        List<Integer> result = new ArrayList<>();
+        collectNodesWithoutSiblings(root, result);
         return result;
     }
 
-    private static void traversal(Node<Integer> root, int currentHorizontalDistance, int depth, Map<Integer, WrappedNode<Integer>> cache) {
-        if (root == null) {
+    private static void collectNodesWithoutSiblings(Node<Integer> root, List<Integer> result) {
+        if (root == null || isLeaf(root)) {
             return;
         }
-        traversal(root.getLeft(), currentHorizontalDistance - 1, depth + 1, cache);
-
-        if (!cache.containsKey(currentHorizontalDistance)) {
-            cache.put(currentHorizontalDistance, new WrappedNode<>(root, depth));
-        } else {
-            WrappedNode<Integer> wrappedNode = cache.get(currentHorizontalDistance);
-            if (wrappedNode.depth <= depth) {
-                wrappedNode.node = root;
-                wrappedNode.depth = depth;
-            }
+        if (hasOnlyOneChildren(root)) {
+            result.add(root.getLeft() != null ? root.getLeft().getData() : root.getRight().getData());
         }
-        traversal(root.getRight(), currentHorizontalDistance + 1, depth + 1, cache);
+        collectNodesWithoutSiblings(root.getLeft(), result);
+        collectNodesWithoutSiblings(root.getRight(), result);
     }
 
-    private static class WrappedNode<T> {
-        Node<T> node;
-        int depth;
-
-        public WrappedNode() {
-
-        }
-
-        public WrappedNode(Node<T> node, int depth) {
-            this.node = node;
-            this.depth = depth;
-        }
+    private static <T> boolean isLeaf(Node<T> root) {
+        return root.getLeft() == null && root.getRight() == null;
     }
+
+    private static boolean hasOnlyOneChildren(Node<Integer> root) {
+        return (root.getLeft() != null && root.getRight() == null)
+                || (root.getLeft() == null && root.getRight() != null);
+    }
+
 
     public static boolean symmetricTree(Node<Integer> root) {
         if (root == null) {
@@ -241,4 +222,62 @@ public class BinaryTreeQuestions {
         }
         return nodes[value];
     }
+
+    public static Node<Integer> removeHalfNodes(Node<Integer> root) {
+        if (root == null) {
+            return null;
+        }
+        root.setLeft(removeHalfNodes(root.getLeft()));
+        root.setRight(removeHalfNodes(root.getRight()));
+
+        if (hasOnlyOneChildren(root)) {
+            return root.getLeft() != null ? root.getLeft() : root.getRight();
+        }
+
+        return root;
+    }
+
+    public static int findLargestBSTSize(Node<Integer> root) {
+        if (root == null) {
+            return 0;
+        }
+        Map<Node<Integer>, Integer> minimum = new HashMap<>();
+        Map<Node<Integer>, Integer> maximum = new HashMap<>();
+        return findLargestBSTSize(root, minimum, maximum);
+    }
+
+    private static int findLargestBSTSize(Node<Integer> root, Map<Node<Integer>, Integer> minimum, Map<Node<Integer>, Integer> maximum) {
+        if (root == null) {
+            return 0;
+        }
+        int leftSize = findLargestBSTSize(root.getLeft(), minimum, maximum);
+        int rightSize = findLargestBSTSize(root.getRight(), minimum, maximum);
+
+        determineBSTOnCurrentLevel(root, minimum, maximum);
+        return minimum.containsKey(root) ? (1 + leftSize + rightSize) : Math.max(leftSize, rightSize);
+    }
+
+    private static void determineBSTOnCurrentLevel(Node<Integer> root, Map<Node<Integer>, Integer> minimum, Map<Node<Integer>, Integer> maximum) {
+        if (isLeaf(root)) {
+            minimum.put(root, root.getData());
+            maximum.put(root, root.getData());
+            return;
+        }
+        if (!isBST(root.getLeft(), minimum, maximum) || !isBST(root.getRight(), minimum, maximum)) {
+            return;
+        }
+
+        int leftLargest = root.getLeft() == null ? Integer.MIN_VALUE : maximum.get(root.getLeft());
+        int rightSmallest = root.getRight() == null ? Integer.MAX_VALUE : minimum.get(root.getRight());
+
+        if (leftLargest < root.getData() && root.getData() < rightSmallest) {
+            minimum.put(root, root.getLeft() == null ? root.getData() : minimum.get(root.getLeft()));
+            maximum.put(root, root.getRight() == null ? root.getData() : maximum.get(root.getRight()));
+        }
+    }
+
+    private static boolean isBST(Node<Integer> node, Map<Node<Integer>, Integer> minimum, Map<Node<Integer>, Integer> maximum) {
+        return node == null || minimum.containsKey(node);
+    }
+
 }

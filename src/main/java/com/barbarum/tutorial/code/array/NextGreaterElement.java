@@ -8,7 +8,7 @@ import java.util.Map;
 public class NextGreaterElement {
 
     /**
-     * Given an array of integers(positive or negative), print the next greater element of all elements in the array. If there is no greater element then print null.
+     * Given an array of integers(positive or negative), vertical the next greater element of all elements in the array. If there is no greater element then vertical null.
      * Next greater element of an array element array[i], is an integer array[j], such that
      * 1. array[i] < array[j]
      * 2. i < j

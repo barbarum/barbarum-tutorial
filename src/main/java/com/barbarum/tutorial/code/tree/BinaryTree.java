@@ -46,6 +46,20 @@ public class BinaryTree {
     }
 
     /**
+     * Binary Tree - Count minimum depth of current tree.
+     *
+     * @param root root node.
+     * @param <T>  generalized type.
+     * @return max depth of current tree.
+     */
+    public static <T extends Comparable<T>> int minDepth(Node<T> root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + Math.min(minDepth(root.getLeft()), minDepth(root.getRight()));
+    }
+
+    /**
      * Binary Tree - Print Tree in nature order
      */
     public static <T extends Comparable<T>> void printTree(Node<T> root) {
@@ -150,26 +164,25 @@ public class BinaryTree {
         if (root == null) {
             return;
         }
-        collectPaths(root, result, new LinkedList<>());
+        collectPaths(root, result, new ArrayList<>());
     }
 
-    private static <T extends Comparable<T>> void collectPaths(Node<T> root, List<List<T>> result, LinkedList<T> steps) {
+    private static <T extends Comparable<T>> void collectPaths(Node<T> root, List<List<T>> result, List<T> steps) {
+        // Abandon empty branch of single child case.
+        if (root == null) {
+            return;
+        }
         steps.add(root.getData());
 
         // Handle leaf case
         if (isLeaf(root)) {
-            result.add(steps);
-            return;
+            result.add(new ArrayList<>(steps));
+        } else {
+            collectPaths(root.getLeft(), result, steps);
+            collectPaths(root.getRight(), result, steps);
         }
 
-        // Double children case
-        if (root.getLeft() != null && root.getRight() != null) {
-            collectPaths(root.getLeft(), result, new LinkedList<>(steps));
-            collectPaths(root.getRight(), result, new LinkedList<>(steps));
-        }
-
-        // Single child case
-        collectPaths(root.getLeft() != null ? root.getLeft() : root.getRight(), result, steps);
+        steps.remove(steps.size() - 1);
     }
 
     private static <T extends Comparable<T>> boolean isLeaf(Node<T> root) {

@@ -2,8 +2,7 @@ package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.tree.data.Node;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class BinarySearchTreeQuestions {
 
@@ -75,7 +74,7 @@ public class BinarySearchTreeQuestions {
 
     /**
      * http://www.ideserve.co.in/learn/check-if-identical-binary-search-trees-without-building-them-set-1
-     * Given two arrays which would be used to construct two different binary search trees(BSTs), write a program to identify if the BSTs constructed from these would be identical. The condition is that the program should be able to identify this without actually building BSTs.
+     * Given two arrays which would be used to construct two different binary match trees(BSTs), write a program to identify if the BSTs constructed from these would be identical. The condition is that the program should be able to identify this without actually building BSTs.
      */
     public static boolean identical(int[] tree1, int[] tree2) {
         if (tree1 == null || tree2 == null) {
@@ -215,4 +214,37 @@ public class BinarySearchTreeQuestions {
         return node.getLeft() != null && node.getRight() != null;
     }
 
+    public static Node<Integer> remove(Node<Integer> root, int low, int high) {
+        if (root == null) {
+            return null;
+        }
+
+        root.setLeft(remove(root.getLeft(), low, high));
+        root.setRight(remove(root.getRight(), low, high));
+
+        if (root.getData() < low) {
+            return root.getRight();
+        }
+        if (root.getData() > high) {
+            return root.getLeft();
+        }
+        return root;
+    }
+
+    public static int countTrees(int n) {
+        if (n < 0) {
+            return 0;
+        }
+        int[] cache = new int[n + 1];
+        cache[0] = 1;
+        cache[1] = 1;
+
+        for (int length = 2; length <= n; length++) {
+            for (int root = 0; root < length; root++) {
+                cache[length] += cache[root] * cache[length - 1 - root];
+            }
+        }
+
+        return cache[n];
+    }
 }

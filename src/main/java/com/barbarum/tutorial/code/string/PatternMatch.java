@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SearchForPatterns {
+public class PatternMatch {
 
-    public static List<Integer> search(String s, String pattern) {
+    public static List<Integer> match(String s, String pattern) {
         if (s == null || s.length() == 0 || pattern == null || pattern.length() == 0) {
             return Collections.emptyList();
         }
@@ -15,7 +15,7 @@ public class SearchForPatterns {
         calculateRepeat(pattern, cache);
 
         List<Integer> result = new ArrayList<>();
-        search(s, pattern, cache, result);
+        match(s, pattern, cache, result);
 
         return result;
     }
@@ -38,7 +38,7 @@ public class SearchForPatterns {
         }
     }
 
-    private static void search(String s, String pattern, int[] cache, List<Integer> result) {
+    private static void match(String s, String pattern, int[] cache, List<Integer> result) {
         for (int i = 0, j = 0; i < s.length(); ) {
             if (s.charAt(i) == pattern.charAt(j)) {
                 i++;
@@ -59,6 +59,6 @@ public class SearchForPatterns {
     }
 
     public static void main(String args[]) {
-        System.out.println(search("AABAACAADAABAABA", "AABA"));
+        System.out.println(match("AABAACAADAABAABA", "AABA"));
     }
 }
