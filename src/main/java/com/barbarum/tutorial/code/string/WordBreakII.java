@@ -8,12 +8,12 @@ public class WordBreakII {
     /**
      * Break word by dynamic programming.
      */
-    public static List<String> wordBreak(String s, List<String> wordDict) {
+    public static List<String> makeBreak(String s, List<String> wordDict) {
         if (s == null || s.length() == 0) {
             return Collections.emptyList();
         }
 
-        List<String> cache[] = new ArrayList[s.length() + 1];
+        List<Integer> cache[] = new ArrayList[s.length() + 1];
         cache[0] = new ArrayList<>();
 
         breakWords(s, wordDict, cache);
@@ -23,12 +23,12 @@ public class WordBreakII {
         }
 
         List<String> result = new ArrayList<>();
-        fillSentence(cache, s.length(), result, new LinkedList<>());
+        fillSentence(s, s.length(), result, cache, new LinkedList<>());
 
         return result;
     }
 
-    private static void breakWords(String s, List<String> dict, List<String>[] cache) {
+    private static void breakWords(String s, List<String> dict, List<Integer>[] cache) {
         for (int start = 0; start < s.length(); start++) {
             if (cache[start] == null) {
                 continue;
@@ -42,19 +42,19 @@ public class WordBreakII {
                 if (cache[end] == null) {
                     cache[end] = new ArrayList<>();
                 }
-                cache[end].add(word);
+                cache[end].add(start);
             }
         }
     }
 
-    private static void fillSentence(List<String>[] dp, int index, List<String> result, Deque<String> workingCopy) {
-        if (index == 0) {
+    private static void fillSentence(String s, int length, List<String> result, List<Integer>[] dp, Deque<String> workingCopy) {
+        if (length == 0) {
             addSentenceIntoCollection(workingCopy, result);
             return;
         }
-        for (String word : dp[index]) {
-            workingCopy.push(word);
-            fillSentence(dp, index - word.length(), result, workingCopy);
+        for (int start : dp[length]) {
+            workingCopy.push(s.substring(start, length));
+            fillSentence(s, start, result, dp, workingCopy);
             workingCopy.pop();
         }
     }
@@ -74,9 +74,9 @@ public class WordBreakII {
     }
 
     public static void main(String[] args) {
-        System.out.println(WordBreakII.wordBreak("catsanddog", Arrays.asList("cat", "cats", "and", "sand", "dog")));
-        System.out.println(wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
-        System.out.println(wordBreak("aaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
+        System.out.println(WordBreakII.makeBreak("catsanddog", Arrays.asList("cat", "cats", "and", "sand", "dog")));
+        System.out.println(makeBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
+        System.out.println(makeBreak("aaaaaa", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa")));
 
     }
 }

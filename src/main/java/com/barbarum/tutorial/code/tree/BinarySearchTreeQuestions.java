@@ -54,7 +54,7 @@ public class BinarySearchTreeQuestions {
     }
 
     /**
-     * Given Pre-order traversal of a BST, check if each non-leaf node has only one child. Assume that the BST contains unique entries.
+     * Given Pre-order traversal of a BST, examine if each non-leaf node has only one child. Assume that the BST contains unique entries.
      * Input: pre[] = {20, 10, 11, 13, 12}
      * Output: Yes
      * The give array represents following BST. In the following BST, every internal
@@ -105,43 +105,6 @@ public class BinarySearchTreeQuestions {
 
         return identical(tree1, tree2, tree1Left, tree2Left, minimum, tree1[tree1Root])
                 && identical(tree1, tree2, tree1Right, tree2Right, tree1[tree1Root], maximum);
-    }
-
-    public static Node<Integer> convertDoubleLinkedListToBST(Node<Integer> head) {
-        int length = getLength(head);
-
-        Node<Integer> newHead = new Node<Integer>(null);
-        newHead.setRight(head);
-
-        return traversal(newHead, length);
-    }
-
-    private static Node<Integer> traversal(Node<Integer> head, int length) {
-        if (length == 0) {
-            return null;
-        }
-
-        int mid = length / 2;
-
-        Node<Integer> left = traversal(head, mid);
-
-        Node<Integer> root = head.getRight();
-        head.setRight(root.getRight());
-
-        Node<Integer> right = traversal(head, length - mid - 1);
-
-        root.setLeft(left);
-        root.setRight(right);
-
-        return root;
-    }
-
-    private static int getLength(Node<Integer> head) {
-        int length = 0;
-        for (Node<Integer> node = head; node != null; node = node.getRight()) {
-            length++;
-        }
-        return length;
     }
 
     private static int findNode(int[] tree, int minimum, int maximum, int index) {

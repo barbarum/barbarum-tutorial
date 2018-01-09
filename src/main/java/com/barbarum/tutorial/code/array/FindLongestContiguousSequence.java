@@ -4,7 +4,7 @@ import com.barbarum.tutorial.util.PrintUtil;
 
 import java.util.HashSet;
 
-public class FindContiguousSequenceII {
+public class FindLongestContiguousSequence {
 
     /**
      * Given an array with all distinct elements, find the length of the longest sub-array which has elements(not in any particular order) that could form a contiguous sequence.
@@ -40,7 +40,7 @@ public class FindContiguousSequenceII {
         for (int num : nums) {
 
             // If the num is the starting point.
-            if (!table.contains(num - 1)) {
+            if (isStartPoint(table, num)) {
 
                 int distance = 1;
                 while (table.contains(num + distance)) {
@@ -54,7 +54,11 @@ public class FindContiguousSequenceII {
         return result;
     }
 
+    private static boolean isStartPoint(HashSet<Integer> table, int target) {
+        return !table.contains(target - 1);
+    }
+
     public static void main(String args[]) {
-        PrintUtil.println(new int[]{4, 100, 1, 200, 2, 3}, FindContiguousSequenceII::findLongestLength);
+        PrintUtil.println(new int[]{4, 100, 1, 200, 2, 3}, FindLongestContiguousSequence::findLongestLength);
     }
 }

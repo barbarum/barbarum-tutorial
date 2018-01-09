@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class NextGreaterElement {
+public class FindNextGreaterElement {
 
     /**
      * Given an array of integers(positive or negative), vertical the next greater element of all elements in the array. If there is no greater element then vertical null.

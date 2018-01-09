@@ -42,7 +42,7 @@ public class ReadEventHandler implements CompletionHandler<Integer, Object> {
         System.out.println(MessageFormat.format("{0} - Data transferring, {1} bytes transferred this time."
                 , this.socketChannel.toString(), temp.length));
 
-        // check items if 0x3B is expected.
+        // examine items if 0x3B is expected.
         for (byte item : temp) {
             if (item == 0x3B) {
                 this.transferData(attachment);

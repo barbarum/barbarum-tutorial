@@ -52,9 +52,9 @@ public class TestBinarySearchTreeQuestions {
                 node.getRight().setLeft(node);
             }
         }
-        Node<Integer> tree = BinarySearchTreeQuestions.convertDoubleLinkedListToBST(head);
+        Node<Integer> tree = BalancedBinaryTree.convert(head);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5), BinarySearchTree.traversalLDR(tree));
-        Assert.assertNull(BinarySearchTreeQuestions.convertDoubleLinkedListToBST(null));
+        Assert.assertNull(BalancedBinaryTree.convert(null));
     }
 
     @Test

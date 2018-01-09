@@ -9,23 +9,21 @@ import java.util.Set;
 
 public class WordBreak {
 
-    public static Boolean wordBreakDP(String word, List<String> dict) {
+    public static Boolean makeBreak(String word, List<String> dict) {
         if (word == null || word.isEmpty()) {
             return true;
         }
 
         Set<String> newDict = new HashSet<>(dict);
         int maxLength = findMaxLength(dict);
-
         boolean cache[] = new boolean[word.length() + 1];
         cache[0] = true;
 
-        return wordBreakDP(word, newDict, maxLength, cache);
+        return makeBreak(word, newDict, maxLength, cache);
     }
 
-    private static boolean wordBreakDP(String word, Set<String> dict, int maxLength, boolean cache[]) {
+    private static boolean makeBreak(String word, Set<String> dict, int maxLength, boolean cache[]) {
         int length = word.length();
-
 
         for (int i = 0; i < length; i++) {
             if (!cache[i]) {
@@ -56,11 +54,11 @@ public class WordBreak {
 
     public static void main(String args[]) {
         PrintUtil.println("ilike", InputUtil.convertToStringList("i, like, sam, sung, samsung, mobile, ice, \n" +
-                "  cream, icecream, man, go, mango"), WordBreak::wordBreakDP);
+                "  cream, icecream, man, go, mango"), WordBreak::makeBreak);
 
         PrintUtil.println("ilikesamsung", InputUtil.convertToStringList("i, like, sam, sung, samsung, mobile, ice, \n" +
-                "  cream, icecream, man, go, mango"), WordBreak::wordBreakDP);
+                "  cream, icecream, man, go, mango"), WordBreak::makeBreak);
 
-        PrintUtil.println("abcde", InputUtil.convertToStringList("a, ab, b, c"), WordBreak::wordBreakDP);
+        PrintUtil.println("abcde", InputUtil.convertToStringList("a, ab, b, c"), WordBreak::makeBreak);
     }
 }

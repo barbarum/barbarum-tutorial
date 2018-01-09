@@ -19,14 +19,14 @@ public class FindMinimumSubArrayEqualsToSumK {
             sum += nums[i];
 
             if (sum == k) {
-                minimum = Math.min(minimum, i + 1);
+                minimum = Math.min(minimum, i + 1); // (i+1) - 0
                 continue;
             }
 
             int diff = sum - k;
 
             if (map.containsKey(diff)) {
-                minimum = Math.min(minimum, i - map.get(diff));
+                minimum = Math.min(minimum, i - map.get(diff)); // (i+1) - (map.get(diff)+1)
             } else {
                 map.put(sum, i);
             }

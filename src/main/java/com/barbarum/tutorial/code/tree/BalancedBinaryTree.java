@@ -10,11 +10,11 @@ public class BalancedBinaryTree {
     /**
      * Check if the given tree is balanced.
      */
-    public static boolean check(Node<Integer> root) {
-        return check(root, new HashMap<>());
+    public static boolean examine(Node<Integer> root) {
+        return examine(root, new HashMap<>());
     }
 
-    private static boolean check(Node<Integer> root, Map<Node<Integer>, Integer> cache) {
+    private static boolean examine(Node<Integer> root, Map<Node<Integer>, Integer> cache) {
         if (root == null) {
             return true;
         }
@@ -23,8 +23,8 @@ public class BalancedBinaryTree {
         int rightHeight = getHeight(root.getRight(), cache);
 
         return Math.abs(leftHeight - rightHeight) <= 1
-                && check(root.getLeft(), cache)
-                && check(root.getRight(), cache);
+                && examine(root.getLeft(), cache)
+                && examine(root.getRight(), cache);
     }
 
     private static int getHeight(Node<Integer> root, Map<Node<Integer>, Integer> cache) {
@@ -39,6 +39,49 @@ public class BalancedBinaryTree {
         return height;
     }
 
+    /**
+     * Convert a double linked list to balanced binary search tree.
+     *
+     * @param head the given head.
+     * @return the root of the built tree.
+     */
+    public static Node<Integer> convert(Node<Integer> head) {
+        int length = getLength(head);
+
+        Node<Integer> newHead = new Node<Integer>(null);
+        newHead.setRight(head);
+
+        return inOrderTraversal(newHead, length);
+    }
+
+    private static Node<Integer> inOrderTraversal(Node<Integer> head, int length) {
+        if (length == 0) {
+            return null;
+        }
+
+        int mid = length / 2;
+
+        Node<Integer> left = inOrderTraversal(head, mid);
+
+        Node<Integer> root = head.getRight();
+        head.setRight(root.getRight());
+
+        Node<Integer> right = inOrderTraversal(head, length - mid - 1);
+
+        root.setLeft(left);
+        root.setRight(right);
+
+        return root;
+    }
+
+    private static int getLength(Node<Integer> head) {
+        int length = 0;
+        for (Node<Integer> node = head; node != null; node = node.getRight()) {
+            length++;
+        }
+        return length;
+    }
+
     public static void main(String args[]) {
         Node<Integer> root = new Node<Integer>(0);
 
@@ -48,6 +91,6 @@ public class BalancedBinaryTree {
 
         root.getLeft().getLeft().setRight(1);
 
-        System.out.println(check(root));
+        System.out.println(examine(root));
     }
 }

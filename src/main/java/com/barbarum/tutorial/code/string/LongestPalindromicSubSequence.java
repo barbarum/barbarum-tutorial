@@ -30,7 +30,7 @@ public class LongestPalindromicSubSequence {
                 if (str.charAt(start) == str.charAt(end)) {
                     dp[start][end] = dp[start + 1][end - 1] + 2;
                 } else {
-                    dp[start][end] = Math.max(dp[start + 1][end], dp[start][end - 1]);
+                    dp[start][end] = Math.max(dp[start][end - 1], dp[start + 1][end]);
                 }
             }
 

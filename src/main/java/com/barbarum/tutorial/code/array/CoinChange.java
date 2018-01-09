@@ -12,10 +12,11 @@ public class CoinChange {
         // Pick all coins one by one and update the table[]
         // values after the index greater than or equal to
         // the value of the picked coin
-        for (int i = 0; i < coins.length; i++)
-            for (int j = coins[i]; j <= n; j++)
-                table[j] += table[j - coins[i]];
-
+        for (int coin : coins) {
+            for (int j = coin; j <= n; j++) {
+                table[j] += table[j - coin];
+            }
+        }
         return table[n];
     }
 

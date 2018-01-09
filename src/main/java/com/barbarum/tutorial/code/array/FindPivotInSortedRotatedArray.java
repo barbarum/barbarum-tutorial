@@ -2,25 +2,25 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class FindPivot {
+public class FindPivotInSortedRotatedArray {
 
 
     /**
      * Binary Search
      */
-    public static int findPivot(int[] nums) {
-        if (nums == null || nums.length == 0) {
+    public static int findPivot(int[] num) {
+        if (num == null || num.length == 0) {
             throw new IllegalArgumentException("");
         }
 
-        if (nums.length == 1 || nums[0] < nums[nums.length - 1]) {
+        if (num.length == 1 || num[0] < num[num.length - 1]) {
             return 0;
         }
 
-        return findPivotIndex(nums, 0, nums.length - 1);
+        return findPivotIndex(num, 0, num.length - 1);
     }
 
-    private static int findPivotIndex(int nums[], int start, int end) {
+    private static int findPivotIndex(int num[], int start, int end) {
         if (start > end) {
             return -1;
         }
@@ -28,15 +28,15 @@ public class FindPivot {
         int mid = (start + end) / 2;
 
         // if the mid element is pivot
-        if (mid > start && nums[mid - 1] > nums[mid]) {
+        if (mid > start && num[mid - 1] > num[mid]) {
             return mid;
         }
         // if next element of the mid element is pivot
-        if (mid < end && nums[mid] > nums[mid + 1]) {
+        if (mid < end && num[mid] > num[mid + 1]) {
             return mid + 1;
         }
 
-        return nums[start] >= nums[mid] ? findPivotIndex(nums, start, mid - 1) : findPivotIndex(nums, mid + 1, end);
+        return num[start] >= num[mid] ? findPivotIndex(num, start, mid - 1) : findPivotIndex(num, mid + 1, end);
     }
 
 

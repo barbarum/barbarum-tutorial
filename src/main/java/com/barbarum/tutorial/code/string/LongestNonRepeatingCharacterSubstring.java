@@ -18,7 +18,7 @@ import java.util.Set;
  * <p>
  * Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
-public class LongestSubstring {
+public class LongestNonRepeatingCharacterSubstring {
 
     public static int lengthOfLongestSubstring(String s) {
         if (s.length() == 1) {

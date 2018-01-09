@@ -24,7 +24,7 @@ public class LongestPalindromicSubstring {
 
 
     public static List<String> findLongestPalindromicSubString(String s) {
-        int length = 0;
+        int length;
         if (s == null || (length = s.length()) == 0) {
             return Collections.emptyList();
         }
@@ -62,9 +62,9 @@ public class LongestPalindromicSubstring {
 
     private static List<String> convert(String s, int distance, boolean[][] dp) {
         Set<String> result = new HashSet<>();
-        for (int i = distance; i <= s.length(); i++) {
-            if (dp[i - distance][i - 1]) {
-                result.add(s.substring(i - distance, i));
+        for (int start = 0, end = start + distance - 1; end < s.length(); start++, end++) {
+            if (dp[start][end]) {
+                result.add(s.substring(start, end + 1));
             }
         }
         return new ArrayList<>(result);

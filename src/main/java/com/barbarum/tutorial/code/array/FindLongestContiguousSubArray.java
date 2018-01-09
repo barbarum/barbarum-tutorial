@@ -2,7 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class FindContiguousSequence {
+public class FindLongestContiguousSubArray {
 
 
     /**
@@ -50,7 +50,7 @@ public class FindContiguousSequence {
     }
 
     public static void main(String args[]) {
-        PrintUtil.println(new int[]{10, 12, 11, 94, 56, 32, 34, 36, 33, 35, 37}, FindContiguousSequence::findLength);
-        PrintUtil.println(new int[]{-1, 1, 2, 3, 4, 5}, FindContiguousSequence::findLength);
+        PrintUtil.println(new int[]{10, 12, 11, 94, 56, 32, 34, 36, 33, 35, 37,1000}, FindLongestContiguousSubArray::findLength);
+        PrintUtil.println(new int[]{-1, 1, 2, 3, 4, 5}, FindLongestContiguousSubArray::findLength);
     }
 }

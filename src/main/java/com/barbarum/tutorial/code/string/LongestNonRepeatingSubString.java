@@ -7,27 +7,24 @@ public class LongestNonRepeatingSubString {
             return string;
         }
 
-        int charTable[] = initialTraverseTable();
-
+        int lastSeenTable[] = initialTraverseTable();
         int maxDistance = 1;
         int index = 1;
 
         for (int start = 0, end = 1; end < string.length(); end++) {
-            int previousSeen = charTable[string.charAt(end)];
+            int lastSeen = lastSeenTable[string.charAt(end)];
+            start = lastSeen == -1 || lastSeen < start ? start : lastSeen + 1;
+            int distance = end - start + 1;
 
-            if (previousSeen != -1) {
-                start = Math.max(start, previousSeen + 1);
-                int distance = end - start + 1;
-                if (distance > maxDistance) {
-                    maxDistance = distance;
-                    index = end + 1;
-                }
+            if (distance > maxDistance) {
+                maxDistance = distance;
+                index = start;
             }
 
-            charTable[string.charAt(end)] = end;
+            lastSeenTable[string.charAt(end)] = end;
         }
 
-        return string.substring(index - maxDistance, index);
+        return string.substring(index, index + maxDistance);
     }
 
     private static int[] initialTraverseTable() {
@@ -40,6 +37,7 @@ public class LongestNonRepeatingSubString {
 
     public static void main(String args[]) {
         System.out.println(findLongestNonRepeatingSubString("ABCDABDEFGCABD"));
+        System.out.println(findLongestNonRepeatingSubString("ABCDEFGHIJKLM"));
     }
 
 }

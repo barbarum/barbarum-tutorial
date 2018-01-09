@@ -8,16 +8,8 @@ public class knapsackProblem {
 
     public static int calculateMaximumBenefit(int[] weight, int[] benefit, int limit) {
         int dp[][] = new int[limit + 1][weight.length];
-
         fillDP(dp);
-
         return calculate(weight, benefit, 0, limit, dp);
-    }
-
-    private static void fillDP(int[][] dp) {
-        for (int[] item : dp) {
-            Arrays.fill(item, -1);
-        }
     }
 
     private static int calculate(int[] weight, int[] benefit, int start, int limit, int[][] dp) {
@@ -32,11 +24,17 @@ public class knapsackProblem {
             dp[limit][start] = calculate(weight, benefit, start + 1, limit, dp);
         } else {
             int maximumIfInclude = benefit[start] + calculate(weight, benefit, start + 1, limit - weight[start], dp);
-            int maximumInExclude = calculate(weight, benefit, start + 1, limit, dp);
-            dp[limit][start] = Math.max(maximumIfInclude, maximumInExclude);
+            int maximumIfExclude = calculate(weight, benefit, start + 1, limit, dp);
+            dp[limit][start] = Math.max(maximumIfInclude, maximumIfExclude);
         }
 
         return dp[limit][start];
+    }
+
+    private static void fillDP(int[][] dp) {
+        for (int[] item : dp) {
+            Arrays.fill(item, -1);
+        }
     }
 
     public static void main(String args[]) {

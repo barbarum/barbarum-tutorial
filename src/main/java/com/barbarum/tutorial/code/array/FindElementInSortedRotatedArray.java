@@ -19,7 +19,7 @@ public class FindElementInSortedRotatedArray {
             return nums[0] == target ? 0 : -1;
         }
 
-        int pivot = findPivotFrom(nums);
+        int pivot = findPivot(nums);
 
         // Eliminate the case if pivot is 0.
         int previousPivot = (pivot - 1 + nums.length) % nums.length;
@@ -50,7 +50,7 @@ public class FindElementInSortedRotatedArray {
         return target < nums[mid] ? binarySearch(nums, target, start, mid - 1) : binarySearch(nums, target, mid + 1, end);
     }
 
-    private static int findPivotFrom(int[] nums) {
+    private static int findPivot(int[] nums) {
         if (nums[0] < nums[nums.length - 1]) {
             return 0;
         }
@@ -73,6 +73,44 @@ public class FindElementInSortedRotatedArray {
         }
 
         return nums[start] >= nums[mid] ? findPivotIndex(nums, start, mid - 1) : findPivotIndex(nums, mid + 1, end);
+    }
+
+    public static int findElementV2(int[] num, int target) {
+        if (num == null || num.length == 0) {
+            return -1;
+        }
+        if (num.length == 1) {
+            return num[0] == target ? 0 : -1;
+        }
+        return findElementV2(num, 0, num.length - 1, target);
+    }
+
+    private static int findElementV2(int[] nums, int start, int end, int target) {
+        if (start > end) {
+            return -1;
+        }
+        int mid = (start + end) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        }
+
+        if (isSorted(nums, start, mid)) {
+            return isRangeOf(nums, start, mid, target)
+                    ? findElementV2(nums, start, mid - 1, target)
+                    : findElementV2(nums, mid + 1, end, target);
+        } else {
+            return isRangeOf(nums, mid, end, target)
+                    ? findElementV2(nums, mid + 1, end, target)
+                    : findElementV2(nums, start, mid - 1, target);
+        }
+    }
+
+    private static boolean isSorted(int[] num, int start, int end) {
+        return num[start] < num[end];
+    }
+
+    private static boolean isRangeOf(int[] num, int start, int end, int target) {
+        return num[start] <= target && target <= num[end];
     }
 
 

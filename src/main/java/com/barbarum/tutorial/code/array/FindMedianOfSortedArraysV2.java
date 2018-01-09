@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.array;
 
-public class MedianOfSortedArraysV2 {
+public class FindMedianOfSortedArraysV2 {
 
 
     public static double findMedianSortedArrays(int[] a, int[] b) {

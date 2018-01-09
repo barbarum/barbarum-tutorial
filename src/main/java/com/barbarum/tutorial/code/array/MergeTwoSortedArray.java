@@ -19,12 +19,12 @@ public class MergeTwoSortedArray {
     public static void merge(int[] a, int[] b) {
 
         // Move invalid num and return the start point contains the first element
-        int aStart = moveInvalidNum(a);
+        int aStart = moveInvalidNumToEnd(a);
 
         merge(a, b, aStart, 0);
     }
 
-    private static int moveInvalidNum(int[] a) {
+    private static int moveInvalidNumToEnd(int[] a) {
         int end = a.length;
 
         for (int i = a.length - 1; i >= 0; i--) {

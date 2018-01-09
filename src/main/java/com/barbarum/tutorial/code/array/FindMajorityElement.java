@@ -1,6 +1,6 @@
 package com.barbarum.tutorial.code.array;
 
-public class MajorityElement {
+public class FindMajorityElement {
 
     /**
      * Using Moore’s Voting Algorithm.

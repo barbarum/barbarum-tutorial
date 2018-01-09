@@ -4,28 +4,31 @@ import com.barbarum.tutorial.util.InputUtil;
 import com.barbarum.tutorial.util.PrintUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Skyline {
+public class SkylineProblem {
 
-    public static void find(List<int[]> buidings, List<int[]> skyline) {
-        List<int[]> result = findSkyline(buidings, 0, buidings.size() - 1);
-        skyline.addAll(result);
+    public static List<int[]> find(List<int[]> buildings) {
+        if (buildings == null || buildings.size() == 0) {
+            return Collections.emptyList();
+        }
+        return findSkyline(buildings, 0, buildings.size() - 1);
     }
 
-    private static List<int[]> findSkyline(List<int[]> buidings, int start, int end) {
+    private static List<int[]> findSkyline(List<int[]> buildings, int start, int end) {
         List<int[]> result = new ArrayList<>();
 
         if (start == end) {
-            result.add(new int[]{buidings.get(start)[0], buidings.get(start)[2]});
-            result.add(new int[]{buidings.get(start)[1], 0});
+            result.add(new int[]{buildings.get(start)[0], buildings.get(start)[2]});
+            result.add(new int[]{buildings.get(start)[1], 0});
             return result;
         }
 
         int mid = (start + end) / 2;
 
-        List<int[]> left = findSkyline(buidings, start, mid);
-        List<int[]> right = findSkyline(buidings, mid + 1, end);
+        List<int[]> left = findSkyline(buildings, start, mid);
+        List<int[]> right = findSkyline(buildings, mid + 1, end);
 
         merge(result, left, right);
 
@@ -89,9 +92,7 @@ public class Skyline {
                 "13, 16, 10",
                 "15, 17, 5");
 
-        List<int[]> result = new ArrayList<>();
-
-        find(builds, result);
+        List<int[]> result = find(builds);
 
         System.out.println("Output ->");
         for (int[] item : result) {

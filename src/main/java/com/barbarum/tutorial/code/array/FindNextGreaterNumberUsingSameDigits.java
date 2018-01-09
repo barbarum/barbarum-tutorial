@@ -4,7 +4,7 @@ import com.barbarum.tutorial.util.PrintUtil;
 
 import static com.barbarum.tutorial.util.InputUtil.swap;
 
-public class NextGreaterNumberUsingSameDigits {
+public class FindNextGreaterNumberUsingSameDigits {
 
 
     public static void findNextGreaterNumber(int[] nums) {

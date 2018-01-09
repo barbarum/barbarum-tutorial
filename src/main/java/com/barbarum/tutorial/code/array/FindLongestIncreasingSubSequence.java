@@ -2,7 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class LongestIncreasingSubSequence {
+public class FindLongestIncreasingSubSequence {
 
     public static int find(int[] nums) {
         int len;
@@ -34,7 +34,7 @@ public class LongestIncreasingSubSequence {
 
     private static int findLongest(int[] nums, int target, int start, int[] dp) {
         int longest = 0;
-        for (int i = start; i < nums.length; i++) {// Some duplications?
+        for (int i = start; i < nums.length; i++) {// Some duplication work?
             if (nums[i] > target) {
                 longest = Math.max(longest, dp[i]);
             }
@@ -45,23 +45,21 @@ public class LongestIncreasingSubSequence {
     /**
      * http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
      */
-    public static int findV2(int[] nums) {
+    public static int findV2(int[] num) {
         // Store the tail element index of each list.
-        int[] table = new int[nums.length];
+        int[] table = new int[num.length];
         int len;
 
-        table[0] = nums[0];
+        table[0] = num[0];
         len = 1;
 
-
-        for (int i = 1; i < nums.length; i++) {
-
-            if (nums[i] < table[0]) {
-                table[0] = nums[i];
-            } else if (nums[i] > table[len - 1]) {
-                table[len++] = nums[i];
+        for (int i = 1; i < num.length; i++) {
+            if (num[i] < table[0]) {
+                table[0] = num[i];
+            } else if (num[i] > table[len - 1]) {
+                table[len++] = num[i];
             } else {
-                table[binarySearch(table, nums[i], len - 1)] = nums[i];
+                table[binarySearch(table, num[i], len - 1)] = num[i];
             }
         }
 
@@ -86,9 +84,9 @@ public class LongestIncreasingSubSequence {
     }
 
     public static void main(String args[]) {
-        PrintUtil.println(new int[]{12, 18, 7, 34, 30, 28, 90, 88}, LongestIncreasingSubSequence::findV2);
-        PrintUtil.println(new int[]{-99, 12, 18, 7, 34, 30, 28, 90, 88}, LongestIncreasingSubSequence::findV2);
-
-//        LIS(new int[]{-99, 12, 18, 7, 34, 30, 28, 90, 88});
+        PrintUtil.println(new int[]{12, 18, 7, 34, 30, 28, 90, 88}, FindLongestIncreasingSubSequence::find);
+        PrintUtil.println(new int[]{-99, 12, 18, 7, 34, 30, 28, 90, 88}, FindLongestIncreasingSubSequence::find);
+        PrintUtil.println(new int[]{12, 18, 7, 34, 30, 28, 90, 88}, FindLongestIncreasingSubSequence::findV2);
+        PrintUtil.println(new int[]{-99, 12, 18, 7, 34, 30, 28, 90, 88}, FindLongestIncreasingSubSequence::findV2);
     }
 }

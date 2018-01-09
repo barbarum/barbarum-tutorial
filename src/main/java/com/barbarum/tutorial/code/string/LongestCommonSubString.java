@@ -41,8 +41,9 @@ public class LongestCommonSubString {
 
         for (int i = 0; i < cache.length; i++) {
             for (int j = 0; j < cache[i].length; j++) {
-                if (cache[i][j] != -1 && length == j - cache[i][j]) {
-                    result.add(b.substring(cache[i][j], j));
+                int start = cache[i][j];
+                if (start != -1 && length == j - start) {
+                    result.add(b.substring(start, j));
                 }
             }
         }

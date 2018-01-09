@@ -10,10 +10,7 @@ public class FindElementInSortedMatrix {
         if (element < matrix[0][0] || element > matrix[len - 1][len - 1]) {
             return false;
         }
-
-        int row = findRowToSearch(matrix, 0, len - 1, element);
-
-        System.out.println(String.format("Row (%s) -> %s", row, element));
+        int row = findRow(matrix, 0, len - 1, element);
         return searchRow(matrix, row, 0, len - 1, element);
     }
 
@@ -36,20 +33,20 @@ public class FindElementInSortedMatrix {
     }
 
 
-    private static int findRowToSearch(int[][] matrix, int start, int end, int element) {
+    private static int findRow(int[][] matrix, int start, int end, int element) {
         if (start == end) {
             return start;
         }
 
         int mid = (start + end) / 2;
 
-        if (matrix[mid][0] > element) {
-            return findRowToSearch(matrix, start, mid - 1, element);
+        if (element < matrix[mid][0]) {
+            return findRow(matrix, start, mid - 1, element);
         }
-        if (matrix[mid][0] == element || matrix[mid][matrix.length - 1] >= element) {
+        if (element <= matrix[mid][matrix.length - 1]) {
             return mid;
         }
-        return findRowToSearch(matrix, mid + 1, end, element);
+        return findRow(matrix, mid + 1, end, element);
     }
 
     public static void main(String args[]) {

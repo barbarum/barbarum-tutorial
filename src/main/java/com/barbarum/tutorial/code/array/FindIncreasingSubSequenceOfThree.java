@@ -2,7 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class IncreasingSubSequenceOfThree {
+public class FindIncreasingSubSequenceOfThree {
 
     public static void findSequence(int nums[], int result[]) {
         int maximum = 0;
