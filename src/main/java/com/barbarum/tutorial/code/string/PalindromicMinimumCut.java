@@ -9,9 +9,9 @@ public class PalindromicMinimumCut {
         }
 
         boolean dp[][] = new boolean[length][length];
-        int minimum[] = new int[length];
-
         determinePalindromicSubString(s, dp);
+
+        int minimum[] = new int[length];
         calculateMinimumCut(s, dp, minimum);
 
         return minimum[length - 1];

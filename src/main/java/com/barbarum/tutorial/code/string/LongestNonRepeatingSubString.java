@@ -9,9 +9,9 @@ public class LongestNonRepeatingSubString {
 
         int lastSeenTable[] = initialTraverseTable();
         int maxDistance = 1;
-        int index = 1;
+        int index = 0;
 
-        for (int start = 0, end = 1; end < string.length(); end++) {
+        for (int start = 0, end = 0; end < string.length(); end++) {
             int lastSeen = lastSeenTable[string.charAt(end)];
             start = lastSeen == -1 || lastSeen < start ? start : lastSeen + 1;
             int distance = end - start + 1;
