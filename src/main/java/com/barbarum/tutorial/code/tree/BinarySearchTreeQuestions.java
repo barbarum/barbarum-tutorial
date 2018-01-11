@@ -2,7 +2,8 @@ package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.tree.data.Node;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinarySearchTreeQuestions {
 
@@ -21,36 +22,28 @@ public class BinarySearchTreeQuestions {
             return root;
         }
 
-        return replaceNewRoot(root);
+        return performDelete(root);
     }
 
-    private static Node<Integer> replaceNewRoot(Node<Integer> root) {
-        if (isLeaf(root)) {
+    private static Node<Integer> performDelete(Node<Integer> root) {
+        if (BinaryTree.isLeaf(root)) {
             return null;
         }
-        if (root.getLeft() == null) {
-            return root.getRight();
+        if (BinaryTree.hasOnlyOneChild(root)) {
+            return root.getLeft() != null ? root.getLeft() : root.getRight();
         }
-        if (root.getRight() == null) {
-            return root.getLeft();
-        }
-
-        int key = findMinimumKey(root.getRight());
-        delete(root, key);
-        root.setData(key);
+        int nextGreaterKey = minimum(root.getRight());
+        root.setData(nextGreaterKey);
+        root.setRight(delete(root.getRight(), nextGreaterKey));
         return root;
     }
 
-    private static int findMinimumKey(Node<Integer> root) {
-        Node<Integer> node = root;
-        while (node.getLeft() != null) {
-            node = node.getLeft();
+    private static int minimum(Node<Integer> root) {
+        Node<Integer> target = root;
+        for (Node<Integer> node = root; node != null; node = node.getLeft()) {
+            target = node;
         }
-        return node.getData();
-    }
-
-    private static boolean isLeaf(Node<Integer> node) {
-        return node.getRight() == null && node.getLeft() == null;
+        return target.getData();
     }
 
     /**
@@ -97,84 +90,29 @@ public class BinarySearchTreeQuestions {
             return false;
         }
 
-        int tree1Left = findNode(tree1, minimum, tree1[tree1Root], tree1Root + 1);
-        int tree2Left = findNode(tree2, minimum, tree2[tree2Root], tree2Root + 1);
+        int tree1Left = findNodeIndex(tree1, tree1Root + 1, minimum, tree1[tree1Root]);
+        int tree2Left = findNodeIndex(tree2, tree2Root + 1, minimum, tree2[tree2Root]);
 
-        int tree1Right = findNode(tree1, tree1[tree1Root], maximum, tree1Root + 1);
-        int tree2Right = findNode(tree2, tree2[tree2Root], maximum, tree2Root + 1);
+        int tree1Right = findNodeIndex(tree1, tree1Root + 1, tree1[tree1Root], maximum);
+        int tree2Right = findNodeIndex(tree2, tree2Root + 1, tree2[tree2Root], maximum);
 
-        return identical(tree1, tree2, tree1Left, tree2Left, minimum, tree1[tree1Root])
-                && identical(tree1, tree2, tree1Right, tree2Right, tree1[tree1Root], maximum);
+        int rootData = tree1[tree1Root];
+
+        return identical(tree1, tree2, tree1Left, tree2Left, minimum, rootData)
+                && identical(tree1, tree2, tree1Right, tree2Right, rootData, maximum);
     }
 
-    private static int findNode(int[] tree, int minimum, int maximum, int index) {
-        for (int i = index; i < tree.length; i++) {
-            if (tree[i] > minimum && tree[i] < maximum) {
+    private static int findNodeIndex(int[] tree, int start, int minimum, int maximum) {
+        for (int i = start; i < tree.length; i++) {
+            if (isRangeOf(tree[i], minimum, maximum)) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static Node<Integer> buildBST(int[] items) {
-        if (items == null || items.length == 0) {
-            return null;
-        }
-        return buildBST(items, 0, items.length - 1);
-    }
-
-    private static Node<Integer> buildBST(int[] items, int start, int end) {
-        if (start > end) {
-            return null;
-        }
-        int mid = (start + end + 1) / 2;
-
-        Node<Integer> left = buildBST(items, start, mid - 1);
-        Node<Integer> root = new Node<Integer>(items[mid]);
-        Node<Integer> right = buildBST(items, mid + 1, end);
-
-        root.setLeft(left);
-        root.setRight(right);
-
-        return root;
-    }
-
-    public static boolean isComplete(Node<Integer> root) {
-        if (root == null) {
-            return true;
-        }
-
-        Queue<Node<Integer>> queue = new LinkedList<>();
-        queue.add(root);
-
-        boolean previousNotComplete = false;
-
-        while (!queue.isEmpty()) {
-            Node<Integer> node = queue.poll();
-            addNodeIfNotNull(queue, node.getLeft());
-            addNodeIfNotNull(queue, node.getRight());
-
-            if (node.getLeft() == null && node.getRight() != null) {
-                return false;
-            }
-            if (previousNotComplete && !isLeaf(node)) {
-                return false;
-            }
-            if (!previousNotComplete && !isFull(node)) {
-                previousNotComplete = true;
-            }
-        }
-        return true;
-    }
-
-    private static void addNodeIfNotNull(Queue<Node<Integer>> queue, Node<Integer> node) {
-        if (node != null) {
-            queue.add(node);
-        }
-    }
-
-    private static boolean isFull(Node<Integer> node) {
-        return node.getLeft() != null && node.getRight() != null;
+    private static boolean isRangeOf(int target, int minimum, int maximum) {
+        return target > minimum && target < maximum;
     }
 
     public static Node<Integer> remove(Node<Integer> root, int low, int high) {
@@ -192,22 +130,5 @@ public class BinarySearchTreeQuestions {
             return root.getLeft();
         }
         return root;
-    }
-
-    public static int countTrees(int n) {
-        if (n < 0) {
-            return 0;
-        }
-        int[] cache = new int[n + 1];
-        cache[0] = 1;
-        cache[1] = 1;
-
-        for (int length = 2; length <= n; length++) {
-            for (int root = 0; root < length; root++) {
-                cache[length] += cache[root] * cache[length - 1 - root];
-            }
-        }
-
-        return cache[n];
     }
 }

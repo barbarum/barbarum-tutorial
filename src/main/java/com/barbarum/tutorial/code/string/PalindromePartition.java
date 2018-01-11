@@ -2,7 +2,6 @@ package com.barbarum.tutorial.code.string;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PalindromePartition {
@@ -16,14 +15,13 @@ public class PalindromePartition {
         List<List<String>> result = new ArrayList<>();
         boolean[][] dp = new boolean[string.length()][string.length()];
 
-        fillPalinedrome(string, dp);
-
-        fillResults(string, dp, string.length() - 1, new LinkedList<>(), result);
+        determinePalindrome(string, dp);
+        fillResults(string, dp, 0, string.length() - 1, new ArrayList<>(), result);
 
         return result;
     }
 
-    private static void fillPalinedrome(String string, boolean[][] dp) {
+    private static void determinePalindrome(String string, boolean[][] dp) {
         for (int i = 0; i < string.length(); i++) {
             dp[i][i] = true;
         }
@@ -37,20 +35,19 @@ public class PalindromePartition {
         }
     }
 
-    private static void fillResults(String string, boolean[][] dp, int end, LinkedList<String> suffix, List<List<String>> result) {
+    private static void fillResults(String string, boolean[][] dp, int start, int end, List<String> cache, List<List<String>> result) {
         // opt-out
-        if (end < 0) {
-            result.add(new LinkedList<>(suffix));
+        if (start > end) {
+            result.add(new ArrayList<>(cache));
             return;
         }
 
         // loop index (end), find previous palindrome start.
-        for (int start = 0; start <= end; start++) {
-            if (dp[start][end]) {
-                suffix.addFirst(string.substring(start, end + 1));
-                fillResults(string, dp, start - 1, suffix, result);
-                suffix.removeFirst();
-
+        for (int i = start; i <= end; i++) {
+            if (dp[start][i]) {
+                cache.add(string.substring(start, i + 1));
+                fillResults(string, dp, i + 1, end, cache, result);
+                cache.remove(cache.size() - 1);
             }
         }
     }

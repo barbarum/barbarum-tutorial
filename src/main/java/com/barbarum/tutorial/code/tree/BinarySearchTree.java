@@ -16,87 +16,6 @@ import java.util.Optional;
 public class BinarySearchTree extends BinaryTree {
 
     /**
-     * Binary Search Tree -> Lookup
-     *
-     * @param root   root node
-     * @param target the searched data
-     * @param <T>    Generalized type
-     * @return true if found, otherwise false.
-     */
-    public static <T extends Comparable<T>> boolean lookup(Node<T> root, T target) {
-        if (root == null) {
-            return false;
-        }
-        int result = target.compareTo(root.getData());
-        return result == 0 || lookup(result < 0 ? root.getLeft() : root.getRight(), target);
-    }
-
-    /**
-     * Binary Search Tree -> Insert (Unbalanced)
-     * <p>
-     * Node: this method doesn't offer balance factor to the new tree.
-     * So the drawback is the tree might become LinkedList in the worst situation.
-     *
-     * @param root   root node
-     * @param target the inserted data
-     * @param <T>    generalized type.
-     */
-    public static <T extends Comparable<T>> Node<T> insert(Node<T> root, T target) {
-        if (root == null) {
-            return new Node<T>(target);
-        }
-        int result = target.compareTo(root.getData());
-        if (result <= 0) {
-            root.setLeft(insert(root.getLeft(), target));
-        } else {
-            root.setRight(insert(root.getRight(), target));
-        }
-
-        return root;
-    }
-
-    /**
-     * Binary Search Tree -> Build (balanced)
-     * <p>
-     * The method would try making the tree as balanced as possible, as complete as possible.
-     * </p>
-     *
-     * @param data data array
-     * @param <T>  Generalized type.
-     * @return the new built binary lookup tree.
-     */
-    public static <T extends Comparable<T>> Node<T> buildBST(T[] data) {
-        if (data == null || data.length == 0) {
-            return null;
-        }
-        return buildBST(data, 0, data.length - 1);
-    }
-
-    private static <T extends Comparable<T>> Node<T> buildBST(T[] data, int start, int end) {
-        if (start > end || start >= data.length || end < 0) {
-            return null;
-        }
-        int median = (start + end + 1) / 2;
-        return new Node<T>(data[median], buildBST(data, start, median - 1), buildBST(data, median + 1, end));
-    }
-
-    /**
-     * Binary Search Tree - Find the smallest element from the given tree.
-     *
-     * @param root root node.
-     * @param <T>  generalized type.
-     * @return minimum data, or null if the tree is empty.
-     */
-    public static <T extends Comparable<T>> T findSmallestElement(Node<T> root) {
-        if (root == null) {
-            return null;
-        }
-        return Optional.ofNullable(findSmallestElement(root.getLeft()))
-                .filter(item -> item.compareTo(root.getData()) <= 0)
-                .orElse(root.getData());
-    }
-
-    /**
      * Examine if the given tree is a binary lookup tree.
      *
      * @param root the given root node.
@@ -112,7 +31,6 @@ public class BinarySearchTree extends BinaryTree {
         if (minData != null && minData.compareTo(root.getData()) > 0) {
             return false;
         }
-
         // examine right child is greater than root node's data if exists.
         if (maxData != null && maxData.compareTo(root.getData()) <= 0) {
             return false;
@@ -123,35 +41,18 @@ public class BinarySearchTree extends BinaryTree {
     }
 
     /**
-     * Convert a binary lookup tree to double linked list.
+     * Binary Search Tree - Find the smallest element from the given tree.
      *
-     * @param root the given root node.
+     * @param root root node.
      * @param <T>  generalized type.
-     * @return head node
+     * @return minimum data, or null if the tree is empty.
      */
-    public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
-        Node<T> head = new Node<T>(null);
-        convert(root, head);
-        if (head.getRight() != null) {
-            head.getRight().setLeft((Node<T>) null);
-        }
-        return head.getRight();
-    }
-
-    private static <T extends Comparable<T>> Node<T> convert(Node<T> root, Node<T> tail) {
+    public static <T extends Comparable<T>> T smallest(Node<T> root) {
         if (root == null) {
-            return tail;
+            return null;
         }
-
-        tail = convert(root.getLeft(), tail);
-
-        tail.setRight(root);
-        root.setLeft(tail);
-        tail = root;
-
-        tail = convert(root.getRight(), tail);
-
-        return tail;
+        return Optional.ofNullable(smallest(root.getLeft()))
+                .orElse(root.getData());
     }
 
     /**
@@ -200,6 +101,104 @@ public class BinarySearchTree extends BinaryTree {
                 .orElse(root.getData());
 
         return Optional.of(result);
+    }
+
+    /**
+     * Binary Search Tree -> Build (balanced)
+     * <p>
+     * The method would try making the tree as balanced as possible, as complete as possible.
+     * </p>
+     *
+     * @param data data array
+     * @param <T>  Generalized type.
+     * @return the new built binary lookup tree.
+     */
+    public static <T extends Comparable<T>> Node<T> build(T[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+        return build(data, 0, data.length - 1);
+    }
+
+    private static <T extends Comparable<T>> Node<T> build(T[] data, int start, int end) {
+        if (start > end || start >= data.length || end < 0) {
+            return null;
+        }
+        int median = (start + end + 1) / 2;
+        return new Node<T>(data[median], build(data, start, median - 1), build(data, median + 1, end));
+    }
+
+    public static Node<Integer> build(int[] data) {
+        if (data == null || data.length == 0) {
+            return null;
+        }
+        return build(data, 0, data.length - 1);
+    }
+
+    private static Node<Integer> build(int[] data, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+        int mid = (start + end + 1) / 2;
+        return new Node<>(data[mid], build(data, start, mid - 1), build(data, mid + 1, end));
+    }
+
+    /**
+     * Convert a binary search tree to double linked list.
+     *
+     * @param root the given root node.
+     * @param <T>  generalized type.
+     * @return head node
+     */
+    public static <T extends Comparable<T>> Node<T> convert(Node<T> root) {
+        Node<T> head = new Node<T>(null);
+        convert(root, head);
+
+        Node<T> result = head.getRight();
+        if (result != null) {
+            result.setLeft((Node<T>) null);
+        }
+        return result;
+    }
+
+    private static <T extends Comparable<T>> Node<T> convert(Node<T> root, Node<T> tail) {
+        if (root == null) {
+            return tail;
+        }
+
+        tail = convert(root.getLeft(), tail);
+
+        tail.setRight(root);
+        root.setLeft(tail);
+        tail = root;
+
+        tail = convert(root.getRight(), tail);
+
+        return tail;
+    }
+
+    /**
+     * Binary Search Tree -> Insert (Unbalanced)
+     * <p>
+     * Node: this method doesn't offer balance factor to the new tree.
+     * So the drawback is the tree might become LinkedList in the worst situation.
+     *
+     * @param root   root node
+     * @param target the inserted data
+     * @param <T>    generalized type.
+     */
+    public static <T extends Comparable<T>> Node<T> insert(Node<T> root, T target) {
+        if (root == null) {
+            return new Node<T>(target);
+        }
+        int result = target.compareTo(root.getData());
+        if (result <= 0) {
+            root.setLeft(insert(root.getLeft(), target));
+        } else {
+            root.setRight(insert(root.getRight(), target));
+        }
+
+        return root;
     }
 
     /**

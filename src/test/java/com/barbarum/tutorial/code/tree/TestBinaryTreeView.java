@@ -38,7 +38,7 @@ public class TestBinaryTreeView {
         root.setChildren(2, 3);
         root.getLeft().setChildren(4, 5);
         root.getRight().setChildren(6, 7);
-        Assert.assertArrayEquals(new int[]{4, 2, 6, 3, 7}, bottomV2(root));
+        Assert.assertArrayEquals(new int[]{4, 2, 6, 3, 7}, bottom(root));
 
         Node<Integer> test2 = new Node<Integer>(1);
         test2.setChildren(2, 3);
@@ -48,7 +48,12 @@ public class TestBinaryTreeView {
         test2.getLeft().getRight().setLeft(9);
         test2.getRight().getLeft().setRight(10);
         test2.getRight().getRight().setRight(11);
-        Assert.assertArrayEquals(new int[]{4, 9, 6, 10, 7, 11}, bottomV2(test2));
+        Assert.assertArrayEquals(new int[]{4, 9, 6, 10, 7, 11}, bottom(test2));
+
+        Node<Integer> test3 = new Node<Integer>(8, 4, 9);
+        test3.getLeft().setLeft(1);
+        test3.getLeft().setRight(5).setRight(6);
+        Assert.assertArrayEquals(new int[]{1, 4, 5, 6}, bottom(test3));
     }
 
 

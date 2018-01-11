@@ -22,4 +22,30 @@ public class TestBinarySearchTree {
         Node<Integer> root = BinarySearchTree.deserialize(items);
         Assert.assertArrayEquals(items, BinarySearchTree.serialize(root));
     }
+
+    @Test
+    public void testConvert() {
+        Node<Integer> root = new Node<Integer>(1);
+
+        root.setChildren(2, 3);
+        root.getLeft().setChildren(4, 5);
+        root.getRight().setChildren(6, 7);
+
+        Node<Integer> head = BinarySearchTree.convert(root);
+        Node<Integer> tail = head;
+
+        int[] forwardActual = new int[7];
+        int[] backwardActual = new int[7];
+        int index = -1;
+        for (Node<Integer> node = head; node != null; node = node.getRight()) {
+            forwardActual[++index] = node.getData();
+            tail = node;
+        }
+        for (Node<Integer> node = tail; node != null; node = node.getLeft()) {
+            backwardActual[index--] = node.getData();
+        }
+
+        Assert.assertArrayEquals(new int[]{4, 2, 5, 1, 6, 3, 7}, forwardActual);
+        Assert.assertArrayEquals(new int[]{4, 2, 5, 1, 6, 3, 7}, backwardActual);
+    }
 }

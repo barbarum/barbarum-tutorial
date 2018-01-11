@@ -8,13 +8,18 @@ import java.util.Map;
 public class BalancedBinaryTree {
 
     /**
-     * Check if the given tree is balanced.
+     * Definition of height balanced tree - the height differences of any node's left and right subtree is not greater than 1.
+     *
+     * @param root the given tree.
+     * @param <T>  generalized type.
+     * @return true if the tree is balanced, otherwise false
      */
-    public static boolean examine(Node<Integer> root) {
+
+    public static <T> boolean examine(Node<T> root) {
         return examine(root, new HashMap<>());
     }
 
-    private static boolean examine(Node<Integer> root, Map<Node<Integer>, Integer> cache) {
+    private static <T> boolean examine(Node<T> root, Map<Node<T>, Integer> cache) {
         if (root == null) {
             return true;
         }
@@ -27,7 +32,7 @@ public class BalancedBinaryTree {
                 && examine(root.getRight(), cache);
     }
 
-    private static int getHeight(Node<Integer> root, Map<Node<Integer>, Integer> cache) {
+    private static <T> int getHeight(Node<T> root, Map<Node<T>, Integer> cache) {
         if (root == null) {
             return 0;
         }
@@ -51,22 +56,22 @@ public class BalancedBinaryTree {
         Node<Integer> newHead = new Node<Integer>(null);
         newHead.setRight(head);
 
-        return inOrderTraversal(newHead, length);
+        return convert(newHead, length);
     }
 
-    private static Node<Integer> inOrderTraversal(Node<Integer> head, int length) {
+    private static Node<Integer> convert(Node<Integer> head, int length) {
         if (length == 0) {
             return null;
         }
 
         int mid = length / 2;
 
-        Node<Integer> left = inOrderTraversal(head, mid);
+        Node<Integer> left = convert(head, mid);
 
         Node<Integer> root = head.getRight();
         head.setRight(root.getRight());
 
-        Node<Integer> right = inOrderTraversal(head, length - mid - 1);
+        Node<Integer> right = convert(head, length - (mid + 1));
 
         root.setLeft(left);
         root.setRight(right);

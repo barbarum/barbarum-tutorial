@@ -13,6 +13,12 @@ public class Node<T> {
         this.setRight(right);
     }
 
+    public Node(T data, T left, T right) {
+        this.data = data;
+        this.setLeft(left);
+        this.setRight(right);
+    }
+
     public Node(T data) {
         this.data = data;
     }

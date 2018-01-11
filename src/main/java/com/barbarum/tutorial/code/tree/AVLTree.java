@@ -7,6 +7,7 @@ public class AVLTree<T extends Comparable<T>> {
     private AVLNode<T> root;
 
     public AVLTree() {
+        // Do nothing, empty constructor
     }
 
     public AVLTree(AVLNode<T> root) {
@@ -49,7 +50,7 @@ public class AVLTree<T extends Comparable<T>> {
         }
         // left-right case
         if (balanceWeight > 1 && data.compareTo(root.getLeft().getData()) > 0) {
-            root.setLeft(leftRotate((AVLNode<T>) root.getLeft()));
+            root.setLeft(leftRotate(root.getLeft()));
             return rightRotate(root);
         }
         // right-left case
@@ -113,36 +114,20 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     private AVLNode<T> performDelete(AVLNode<T> root) {
-        if (isLeaf(root)) {
+        if (BinaryTree.isLeaf(root)) {
             return null;
         }
-        if (hasOnlyOneChild(root)) {
+        if (BinaryTree.hasOnlyOneChild(root)) {
             return (AVLNode<T>) (root.getLeft() != null ? root.getLeft() : root.getRight());
         }
 
-        T nextGreaterData = findMinimum(root.getRight());
+        T nextGreaterData = minimum(root.getRight());
         root.setData(nextGreaterData);
         root.setRight(delete((AVLNode<T>) root.getRight(), nextGreaterData));
 
         return root;
     }
 
-    private T findMinimum(Node<T> root) {
-        Node<T> result = root;
-        for (Node<T> node = root; node != null; node = node.getLeft()) {
-            result = node;
-        }
-        return result.getData();
-    }
-
-    private boolean hasOnlyOneChild(AVLNode<T> root) {
-        return (root.getLeft() != null && root.getRight() == null)
-                || (root.getLeft() == null && root.getRight() != null);
-    }
-
-    private boolean isLeaf(AVLNode<T> root) {
-        return root.getLeft() == null && root.getRight() == null;
-    }
 
     private AVLNode<T> leftRotate(Node<T> root) {
         Node<T> newRoot = root.getRight();
@@ -181,6 +166,14 @@ public class AVLTree<T extends Comparable<T>> {
             return 0;
         }
         return ((AVLNode<T>) node).getHeight();
+    }
+
+    private T minimum(Node<T> root) {
+        Node<T> result = root;
+        for (Node<T> node = root; node != null; node = node.getLeft()) {
+            result = node;
+        }
+        return result.getData();
     }
 
     public Node<T> getRoot() {

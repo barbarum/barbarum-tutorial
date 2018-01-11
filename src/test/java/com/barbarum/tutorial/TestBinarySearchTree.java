@@ -16,14 +16,14 @@ public class TestBinarySearchTree {
 
     @Test
     public void testTraversalLDR() {
-        Node<Integer> bst = BinarySearchTree.buildBST(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
+        Node<Integer> bst = BinarySearchTree.build(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
         List<Integer> list = traversalLDR(bst);
         System.out.println(list);
     }
 
     @Test
     public void testDoubleLinkedListConvector() {
-        Node<Integer> bst = BinarySearchTree.buildBST(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
+        Node<Integer> bst = BinarySearchTree.build(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19});
         Node<Integer> result = BinarySearchTree.convert(bst);
         StringBuilder builder = new StringBuilder();
 

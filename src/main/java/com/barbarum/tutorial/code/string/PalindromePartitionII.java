@@ -1,5 +1,10 @@
 package com.barbarum.tutorial.code.string;
 
+/**
+ * This is the same feature as {@link PalindromicMinimumCut#findMinimumCut(String)}.
+ *
+ * @see PalindromicMinimumCut#findMinimumCut(String)
+ */
 public class PalindromePartitionII {
 
     public static int getMinimumPalindromePartition(String string) {
@@ -8,10 +13,9 @@ public class PalindromePartitionII {
         }
 
         boolean[][] dp = new boolean[string.length()][string.length()];
-        int[] result = new int[string.length()];
-
-
         findAllPalindrome(string, dp);
+
+        int[] result = new int[string.length()];
         calculateMinimumCuts(dp, result);
 
         return result[string.length() - 1];

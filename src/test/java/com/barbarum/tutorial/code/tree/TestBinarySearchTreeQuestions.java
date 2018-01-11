@@ -65,16 +65,16 @@ public class TestBinarySearchTreeQuestions {
 
     @Test
     public void testBuildBST() {
-        Node<Integer> root = BinarySearchTreeQuestions.buildBST(this.data.standardBSTArray);
+        Node<Integer> root = BinarySearchTree.build(this.data.standardBSTArray);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7), BinarySearchTree.traversalLDR(root));
     }
 
     @Test
     public void testCompleteTree() {
-        assertTrue(BinarySearchTreeQuestions.isComplete(data.completeBST1));
-        assertTrue(BinarySearchTreeQuestions.isComplete(data.completeBST2));
-        assertFalse(BinarySearchTreeQuestions.isComplete(data.inCompleteBST1));
-        assertFalse(BinarySearchTreeQuestions.isComplete(data.inCompleteBST2));
+        assertTrue(BinaryTree.isComplete(data.completeBST1));
+        assertTrue(BinaryTree.isComplete(data.completeBST2));
+        assertFalse(BinaryTree.isComplete(data.inCompleteBST1));
+        assertFalse(BinaryTree.isComplete(data.inCompleteBST2));
     }
 
     @Test
@@ -89,12 +89,6 @@ public class TestBinarySearchTreeQuestions {
 
         BinarySearchTreeQuestions.remove(root, 3, 9);
         Assert.assertEquals(Arrays.asList(5, 6, 7, 8, 9), BinarySearchTree.traversalLDR(root));
-    }
-
-    @Test
-    public void testCountBST() {
-        Assert.assertEquals(5, BinarySearchTreeQuestions.countTrees(3));
-        Assert.assertEquals(42, BinarySearchTreeQuestions.countTrees(5));
     }
 
     private static class Data {

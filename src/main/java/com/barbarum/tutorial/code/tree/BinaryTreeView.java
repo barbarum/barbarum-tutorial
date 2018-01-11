@@ -47,42 +47,10 @@ public class BinaryTreeView {
         right(root.getLeft(), depth + 1, result);
     }
 
-    public static List<Node<Integer>> bottom(Node<Integer> root) {
-        Map<Integer, WrappedNode<Integer>> cache = new HashMap<>();
-        traversal(root, 0, 1, cache);
-        return convert(cache);
-    }
-
-    private static void traversal(Node<Integer> root, int currentHorizontalDistance, int depth, Map<Integer, WrappedNode<Integer>> cache) {
-        if (root == null) {
-            return;
-        }
-        traversal(root.getLeft(), currentHorizontalDistance - 1, depth + 1, cache);
-
-        if (!cache.containsKey(currentHorizontalDistance)) {
-            cache.put(currentHorizontalDistance, new WrappedNode<>(root, depth));
-        } else {
-            WrappedNode<Integer> wrappedNode = cache.get(currentHorizontalDistance);
-            if (wrappedNode.depth <= depth) {
-                wrappedNode.node = root;
-                wrappedNode.depth = depth;
-            }
-        }
-        traversal(root.getRight(), currentHorizontalDistance + 1, depth + 1, cache);
-    }
-
-    private static List<Node<Integer>> convert(Map<Integer, WrappedNode<Integer>> cache) {
-        List<Node<Integer>> result = new ArrayList<>();
-        for (WrappedNode<Integer> node : cache.values()) {
-            result.add(node.node);
-        }
-        return result;
-    }
-
     /**
-     * Using post order traversal.
+     * Using level-order traversal.
      */
-    public static int[] bottomV2(Node<Integer> root) {
+    public static int[] bottom(Node<Integer> root) {
         if (root == null) {
             return null;
         }
@@ -92,17 +60,22 @@ public class BinaryTreeView {
         int maximum = findMaximumHorizontalDistance(cache);
 
         int[] result = new int[maximum - minimum + 1];
-        postOrderTraversal(root, result, 0, minimum);
+        Queue<Node<Integer>> queue = new LinkedList<>();
+        queue.add(root);
+
+        levelOrderTraversalForBottom(queue, result, minimum, cache);
         return result;
     }
 
-    private static void postOrderTraversal(Node<Integer> root, int[] result, int horizontalDistance, int base) {
-        if (root == null) {
-            return;
+    private static void levelOrderTraversalForBottom(Queue<Node<Integer>> queue, int[] result, int base, Map<Node<Integer>, Integer> cache) {
+        while (!queue.isEmpty()) {
+            Node<Integer> node = queue.poll();
+            addChildIfNotNull(node.getLeft(), queue);
+            addChildIfNotNull(node.getRight(), queue);
+
+            int horizontalDistance = cache.get(node);
+            result[horizontalDistance - base] = node.getData();
         }
-        result[horizontalDistance - base] = root.getData();
-        postOrderTraversal(root.getLeft(), result, horizontalDistance - 1, base);
-        postOrderTraversal(root.getRight(), result, horizontalDistance + 1, base);
     }
 
     public static int[] top(Node<Integer> root) {
@@ -118,18 +91,8 @@ public class BinaryTreeView {
         int[] result = new int[maximum - minimum + 1];
         initializeResult(result);
 
-        preOrderTraversalForTop(root, result, 0, minimum);
-//        levelOrderTraversalForTop(root, cache, result, minimum);
+        levelOrderTraversalForTop(root, cache, result, minimum);
         return result;
-    }
-
-    private static void preOrderTraversalForTop(Node<Integer> root, int[] result, int horizontalDistance, int base) {
-        if (root == null) {
-            return;
-        }
-        preOrderTraversalForTop(root.getLeft(), result, horizontalDistance - 1, base);
-        preOrderTraversalForTop(root.getRight(), result, horizontalDistance + 1, base);
-        result[horizontalDistance - base] = root.getData();
     }
 
     private static void levelOrderTraversalForTop(Node<Integer> root, Map<Node<Integer>, Integer> cache, int[] result, int base) {
@@ -224,17 +187,4 @@ public class BinaryTreeView {
         }
     }
 
-    private static class WrappedNode<T> {
-        Node<T> node;
-        int depth;
-
-        public WrappedNode() {
-
-        }
-
-        public WrappedNode(Node<T> node, int depth) {
-            this.node = node;
-            this.depth = depth;
-        }
-    }
 }
