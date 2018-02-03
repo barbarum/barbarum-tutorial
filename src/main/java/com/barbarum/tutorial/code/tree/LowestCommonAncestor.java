@@ -8,9 +8,6 @@ public class LowestCommonAncestor {
      * Search LCA in binary tree.
      */
     public static Node<Integer> search(Node<Integer> root, Node<Integer> a, Node<Integer> b) {
-        if (root == null) {
-            return null;
-        }
         return ifPresent(root, a) && ifPresent(root, b) ? searchInternal(root, a, b) : null;
     }
 

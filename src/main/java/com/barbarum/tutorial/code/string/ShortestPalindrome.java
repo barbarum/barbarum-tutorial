@@ -40,7 +40,7 @@ public class ShortestPalindrome {
 
 
     public static void main(String args[]) {
-        System.out.println(findShortInsertToMakePalindrome("aba"));
+        System.out.println(findShortInsertToMakePalindrome("abcdcb"));
     }
 
 }

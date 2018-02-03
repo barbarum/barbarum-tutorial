@@ -2,7 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class LongestBinarySequence {
+public class FindLongestBinarySequenceV2 {
 
     public static int find(int[] nums) {
         int previousOfPrevious;
@@ -40,8 +40,8 @@ public class LongestBinarySequence {
     }
 
     public static void main(String args[]) {
-        PrintUtil.println(new int[]{0, 1, 1, 1, 0, 1, 0}, LongestBinarySequence::find);
-        PrintUtil.println(new int[]{0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0}, LongestBinarySequence::find);
-        PrintUtil.println(new int[]{1, 1, 1, 1, 0, 1}, LongestBinarySequence::find);
+        PrintUtil.println(new int[]{0, 1, 1, 1, 0, 1, 0}, FindLongestBinarySequenceV2::find);
+        PrintUtil.println(new int[]{0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0}, FindLongestBinarySequenceV2::find);
+        PrintUtil.println(new int[]{1, 1, 1, 1, 0, 1}, FindLongestBinarySequenceV2::find);
     }
 }

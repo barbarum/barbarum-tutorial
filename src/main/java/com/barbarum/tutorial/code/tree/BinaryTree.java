@@ -3,10 +3,7 @@ package com.barbarum.tutorial.code.tree;
 
 import com.barbarum.tutorial.code.tree.data.Node;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -29,6 +26,7 @@ public class BinaryTree {
     public static <T> int size(Node<T> root) {
         return root == null ? 0 : 1 + size(root.getLeft()) + size(root.getRight());
     }
+
     /**
      * Binary Tree - Count max depth of current tree.
      *
@@ -39,6 +37,7 @@ public class BinaryTree {
     public static <T> int maxDepth(Node<T> root) {
         return root == null ? 0 : 1 + Math.max(maxDepth(root.getLeft()), maxDepth(root.getRight()));
     }
+
     /**
      * Binary Tree - Count minimum depth of current tree.
      *
@@ -49,6 +48,7 @@ public class BinaryTree {
     public static <T> int minDepth(Node<T> root) {
         return root == null ? 0 : 1 + Math.min(minDepth(root.getLeft()), minDepth(root.getRight()));
     }
+
     /**
      * In-order traversal
      *
@@ -60,6 +60,7 @@ public class BinaryTree {
                 .map(Node::getData)
                 .collect(Collectors.toList());
     }
+
     /**
      * Binary Tree - In-order traversal.
      * <p>
@@ -92,6 +93,7 @@ public class BinaryTree {
 
         return result;
     }
+
     /**
      * Binary Tree - Post-Order/Bottom-Up traversal.
      * <p>
@@ -115,6 +117,30 @@ public class BinaryTree {
         }
         result.add(root.getData());
         return result;
+    }
+
+    public static <T> List<T> breadthTraversalFirst(Node<T> root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.add(root);
+
+        List<T> result = new ArrayList<>();
+        breadthTraversalFirst(queue, result);
+
+        return result;
+    }
+
+    private static <T> void breadthTraversalFirst(Queue<Node<T>> queue, List<T> result) {
+        while (!queue.isEmpty()) {
+            Node<T> node = queue.poll();
+            result.add(node.getData());
+
+            addNodeIfNotNull(queue, node.getLeft());
+            addNodeIfNotNull(queue, node.getRight());
+        }
     }
 
     public static <T> boolean isLeaf(Node<T> root) {
@@ -209,6 +235,7 @@ public class BinaryTree {
         int result = target.compareTo(root.getData());
         return result == 0 ? root : lookup(result < 0 ? root.getLeft() : root.getRight(), target);
     }
+
     /**
      * Binary Tree - same tree
      *
@@ -226,6 +253,7 @@ public class BinaryTree {
                 && identical(a.getLeft(), b.getLeft())
                 && identical(a.getRight(), b.getRight());
     }
+
     /**
      * Check if binary tree b is a sub-tree of tree a.
      *
@@ -244,6 +272,7 @@ public class BinaryTree {
         return subTree != null && identical(subTree, b);
 
     }
+
     /**
      * Binary Tree - has path sum
      *
@@ -256,6 +285,7 @@ public class BinaryTree {
         return hasPathSum(root.getLeft(), target - root.getData())
                 || hasPathSum(root.getRight(), target - root.getData());
     }
+
     /**
      * Binary Tree - collect paths
      *
@@ -287,6 +317,7 @@ public class BinaryTree {
 
         steps.remove(steps.size() - 1);
     }
+
     /**
      * Binary Tree - mirror
      *
@@ -305,6 +336,7 @@ public class BinaryTree {
         mirror(root.getLeft());
         mirror(root.getRight());
     }
+
     /**
      * Count how many tree variants can be built for the given number of nodes.
      *
@@ -327,6 +359,7 @@ public class BinaryTree {
 
         return cache[total];
     }
+
     /**
      * Binary Tree - double tree
      *
@@ -346,5 +379,7 @@ public class BinaryTree {
     public static void main(String args[]) {
         BinaryTreeUtil.printTree(BinarySearchTree.build(new Integer[]{0, 1, 2, 3, 4, 5}));
         System.out.println(countTrees(4));
+
+        System.out.println(BinaryTree.breadthTraversalFirst(BinarySearchTree.build(new Integer[]{0, 1, 2, 3, 4, 5})));
     }
 }

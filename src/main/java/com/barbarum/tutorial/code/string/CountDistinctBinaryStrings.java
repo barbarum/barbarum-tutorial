@@ -7,15 +7,15 @@ public class CountDistinctBinaryStrings {
             return 1;
         }
 
-        int cache[] = new int[n + 1]; // array can be replaced to only store last two caches.
-        cache[0] = 1;
-        cache[1] = 2;
+        int n_2 = 1;
+        int n_1 = 2;
+        int result = n_1;
 
-        for (int i = 2; i <= n; i++) {
-            cache[i] = cache[i - 1] + cache[i - 2];
+        for (int i = 2; i <= n; i++, n_2 = n_1, n_1 = result) {
+            result = n_1 + n_2;
         }
 
-        return cache[n];
+        return result;
     }
 
     public static void main(String args[]) {

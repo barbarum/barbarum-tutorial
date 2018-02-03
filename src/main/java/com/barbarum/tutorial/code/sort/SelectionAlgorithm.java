@@ -10,9 +10,9 @@ public class SelectionAlgorithm {
 
 
     /**
-     * Find kth smallest element in the array.
+     * Find kth smallest element in the array. - Average TC: O(n)
      *
-     * @param data the given unordered array.- Average TC: O(n)
+     * @param data the given unordered array.
      * @param k    the kth smallest element.
      * @return
      */
@@ -47,7 +47,10 @@ public class SelectionAlgorithm {
     private static int partition(int[] data, int start, int end) {
         int index = start;
         int current = start;
-        int pivot = findPivot(data, start, end);
+        int pivotIndex = findPivotIndex(data, start, end);
+        int pivot = data[pivotIndex];
+
+        InputUtil.swap(data, pivotIndex, end);
 
         for (; current <= end - 1; current++) {
             if (data[current] < pivot) {
@@ -63,7 +66,7 @@ public class SelectionAlgorithm {
         return index;
     }
 
-    private static int findPivot(int[] data, int start, int end) {
-        return data[end];
+    private static int findPivotIndex(int[] data, int start, int end) {
+        return end;
     }
 }

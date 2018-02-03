@@ -30,7 +30,7 @@ public class WordBreak {
                 continue;
             }
 
-            for (int j = i + 1; j <= length && (j - i) <= maxLength /*2*/; j++) {
+            for (int j = i + 1; j <= length && (j - i) <= maxLength; j++) {
                 if (!cache[j] && dict.contains(word.substring(i, j))) {
                     cache[j] = true;
                 }

@@ -9,10 +9,10 @@ public class knapsackProblem {
     public static int calculateMaximumBenefit(int[] weight, int[] benefit, int limit) {
         int dp[][] = new int[limit + 1][weight.length];
         fillDP(dp);
-        return calculate(weight, benefit, 0, limit, dp);
+        return calculate(limit, 0, weight, benefit, dp);
     }
 
-    private static int calculate(int[] weight, int[] benefit, int start, int limit, int[][] dp) {
+    private static int calculate(int limit, int start, int[] weight, int[] benefit, int[][] dp) {
         if (start == weight.length) {
             return 0;
         }
@@ -21,10 +21,10 @@ public class knapsackProblem {
         }
         // if weight of current element is greater than limit, then skip it and only calculate excluded case.
         if (weight[start] > limit) {
-            dp[limit][start] = calculate(weight, benefit, start + 1, limit, dp);
+            dp[limit][start] = calculate(limit, start + 1, weight, benefit, dp);
         } else {
-            int maximumIfInclude = benefit[start] + calculate(weight, benefit, start + 1, limit - weight[start], dp);
-            int maximumIfExclude = calculate(weight, benefit, start + 1, limit, dp);
+            int maximumIfInclude = benefit[start] + calculate(limit - weight[start], start + 1, weight, benefit, dp);
+            int maximumIfExclude = calculate(limit, start + 1, weight, benefit, dp);
             dp[limit][start] = Math.max(maximumIfInclude, maximumIfExclude);
         }
 

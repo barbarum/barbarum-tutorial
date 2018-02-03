@@ -3,6 +3,7 @@ package com.barbarum.tutorial.code.array;
 import com.barbarum.tutorial.util.PrintUtil;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class FindLongestContiguousSequence {
 
@@ -25,7 +26,7 @@ public class FindLongestContiguousSequence {
             return 1;
         }
 
-        HashSet<Integer> table = new HashSet<>();
+        Set<Integer> table = new HashSet<>();
 
         for (int num : nums) {
             table.add(num);
@@ -34,7 +35,7 @@ public class FindLongestContiguousSequence {
         return findLongestLength(nums, table);
     }
 
-    private static int findLongestLength(int nums[], HashSet<Integer> table) {
+    private static int findLongestLength(int nums[], Set<Integer> table) {
         int result = 0;
 
         for (int num : nums) {
@@ -54,7 +55,7 @@ public class FindLongestContiguousSequence {
         return result;
     }
 
-    private static boolean isStartPoint(HashSet<Integer> table, int target) {
+    private static boolean isStartPoint(Set<Integer> table, int target) {
         return !table.contains(target - 1);
     }
 

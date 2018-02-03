@@ -2,8 +2,7 @@ package com.barbarum.tutorial.code.array;
 
 import com.barbarum.tutorial.util.PrintUtil;
 
-public class LongestBitonicSubSequence {
-
+public class FindLongestBitonicSubSequence {
 
     public static int find(int[] nums) {
         if (nums == null || nums.length == 0) {
@@ -73,7 +72,7 @@ public class LongestBitonicSubSequence {
 
 
     public static void main(String args[]) {
-        PrintUtil.println(new int[]{12, 18, 7, 34, 30, 28, 90, 88}, LongestBitonicSubSequence::find);
+        PrintUtil.println(new int[]{12, 18, 7, 34, 30, 28, 90, 88}, FindLongestBitonicSubSequence::find);
     }
 
 }

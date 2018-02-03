@@ -23,10 +23,10 @@ public class WordLadder {
         Queue<Node> queue = new LinkedList<>();
         queue.add(new Node(beginWord, 1));
 
-        return dfs(queue, dict, beginWord, endWord);
+        return breadthFirstTraversal(queue, dict, beginWord, endWord);
     }
 
-    private int dfs(Queue<Node> queue, HashSet<String> dict, String beginWord, String endWord) {
+    private int breadthFirstTraversal(Queue<Node> queue, HashSet<String> dict, String beginWord, String endWord) {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 

@@ -6,21 +6,24 @@ import java.util.Arrays;
 
 public class MinimumCoinChange {
 
-    public static int findMinimumCoinToChange(int[] coins, int sum) {
-        if (coins == null || coins.length == 0 || sum <= 0) {
+    public static int findMinimumCoinToChange(int[] coins, int target) {
+        if (coins == null || coins.length == 0 || target < 0) {
+            return -1;
+        }
+        if (target == 0) {
             return 0;
         }
         if (coins.length == 1) {
-            return coins[0] == sum ? 1 : -1;
+            return coins[0] == target ? 1 : -1;
         }
 
-        int[] cache = new int[sum + 1];
+        int[] cache = new int[target + 1];
         initialize(cache);
 
         cache[0] = 0;
 
         for (int coin : coins) {
-            for (int i = coin; i <= sum; i++) {
+            for (int i = coin; i <= target; i++) {
                 int previous = cache[i - coin];
                 if (previous == -1) {
                     continue;
@@ -29,7 +32,7 @@ public class MinimumCoinChange {
             }
         }
 
-        return cache[sum];
+        return cache[target];
     }
 
     private static void initialize(int[] cache) {

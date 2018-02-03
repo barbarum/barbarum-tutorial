@@ -1,7 +1,7 @@
 package com.barbarum.tutorial.code.sort;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * https://leetcode.com/problems/zigzag-conversion/description/
@@ -28,17 +28,17 @@ public class ZigZagConversion {
             return s;
         }
 
-        ArrayList<Character>[] matrix = new ArrayList[numRows];
+        StringBuilder[] matrix = new StringBuilder[numRows];
 
         int rowPoint = 0;
         boolean isDown = true;
 
         for (int i = 0; i < matrix.length; i++) {
-            matrix[i] = new ArrayList<>();
+            matrix[i] = new StringBuilder();
         }
 
         for (Character c : s.toCharArray()) {
-            matrix[isDown ? rowPoint++ : rowPoint--].add(c);
+            matrix[isDown ? rowPoint++ : rowPoint--].append(c);
             if (isDown && rowPoint == numRows - 1) {
                 isDown = false;
             }
@@ -47,9 +47,8 @@ public class ZigZagConversion {
             }
         }
 
-        StringBuilder builder = new StringBuilder();
-        Arrays.stream(matrix).forEach(row -> row.forEach(builder::append));
-        return builder.toString();
+        return Arrays.stream(matrix)
+                .collect(Collectors.joining());
     }
 
 

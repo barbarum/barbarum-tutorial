@@ -18,7 +18,7 @@ package com.barbarum.tutorial.code.array;
  * <p>
  * The median is (2 + 3)/2 = 2.5
  */
-public class MedianOfSortedArrays {
+public class FindMedianOfSortedArrays {
 
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if (nums1 == null || nums1.length == 0) {

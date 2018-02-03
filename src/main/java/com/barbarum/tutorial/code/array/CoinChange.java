@@ -22,6 +22,6 @@ public class CoinChange {
 
 
     public static void main(String args[]) {
-        System.out.println(makeChanges(new int[]{20, 10, 5, 1}, 20));
+        System.out.println(makeChanges(new int[]{20, 10, 5, 1}, 50));
     }
 }
